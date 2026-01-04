@@ -20,19 +20,8 @@ export default function ProductPage() {
     const params = useParams();
     const { products: managedProducts } = useCore();
 
-    // Find static product first
-    const staticProduct = getProductBySlug(params.slug);
-
-    // Try to find managed product data (which might have updated stock/price)
-    const managedProduct = managedProducts.find(p => p.slug === params.slug || p.id === staticProduct?.id);
-
-    // Merge them: Priority to managed data
-    const product = managedProduct ? {
-        ...staticProduct,
-        ...managedProduct,
-        title: managedProduct.name, // Mapping Admin 'name' to Store 'title'
-        images: [managedProduct.image, ...(staticProduct?.images?.slice(1) || [])]
-    } : staticProduct;
+    // Find product from managed products (backend)
+    const product = managedProducts.find(p => p.slug === params.slug);
 
     const { addToCart } = useCart();
     const [quantity, setQuantity] = useState(1);
@@ -52,9 +41,8 @@ export default function ProductPage() {
     }
 
     const discount = calculateDiscount(product.price, product.salePrice);
-    const displayPrice = product.salePrice || product.price;
-    const relatedProducts = getAllProducts()
-        .filter(p => p.category === product.category && p.id !== product.id)
+    const relatedProducts = managedProducts
+        .filter(p => p.category === product.category && p._id !== product._id)
         .slice(0, 4);
 
     const handleAddToCart = () => {
@@ -136,7 +124,7 @@ export default function ProductPage() {
                                     {product.title}
                                 </h1>
                             </div>
-                            <WishlistButton productId={product.id} />
+                            <WishlistButton productId={product._id} />
                         </div>
 
                         {/* Rating */}
@@ -248,7 +236,7 @@ export default function ProductPage() {
                 </div>
 
                 {/* Reviews Section */}
-                <ProductReviews productId={product.id} />
+                <ProductReviews productId={product._id} />
 
                 {/* Related products */}
                 {relatedProducts.length > 0 && (
@@ -258,7 +246,7 @@ export default function ProductPage() {
                         </h2>
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                             {relatedProducts.map((relatedProduct) => (
-                                <ProductCard key={relatedProduct.id} product={relatedProduct} />
+                                <ProductCard key={relatedProduct._id} product={relatedProduct} />
                             ))}
                         </div>
                     </div>

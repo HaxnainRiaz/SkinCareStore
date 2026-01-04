@@ -1,50 +1,95 @@
 'use client';
 
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect, useCallback } from 'react';
 
 const CoreContext = createContext();
 
+const API_URL = "http://localhost:5000/api";
+
 export function CoreProvider({ children }) {
-    // Default fallback data
-    const [cms, setCms] = useState({
-        announcement: "Free Shipping on Orders Over $75",
-        heroHeadline: "Redefining Natural Luxury",
-        heroSubheadline: "Clinically proven, organic skincare for the modern era.",
-        sections: {
-            featuredProducts: true,
-            blog: true,
-            newsletter: true
-        }
+    const [settings, setSettings] = useState({
+        announcementBarText: "Free Shipping on Orders Over $75",
+        showNewsletterSection: true,
+        showFeaturedCollection: true,
+        showBlogSection: true
     });
 
-    const [discounts, setDiscounts] = useState([
-        { id: 1, code: "WELCOME10", type: "percent", value: 10, minSpend: 50 },
-        { id: 2, code: "FSHO", type: "flat", value: 15, minSpend: 100 },
-    ]);
-
+    const [banners, setBanners] = useState([]);
     const [products, setProducts] = useState([]);
+    const [categories, setCategories] = useState([]);
+    const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        // Sync with LocalStorage (shared with Admin conceptually)
-        const updateSync = () => {
-            const savedCms = localStorage.getItem('luminelle_cms');
-            if (savedCms) setCms(JSON.parse(savedCms));
+    const fetchData = useCallback(async () => {
+        try {
+            const [resProd, resCat, resBanners, resSettings] = await Promise.all([
+                fetch(`${API_URL}/products`),
+                fetch(`${API_URL}/categories`),
+                fetch(`${API_URL}/banners`),
+                fetch(`${API_URL}/settings`)
+            ]);
 
-            const savedDiscounts = localStorage.getItem('luminelle_discounts');
-            if (savedDiscounts) setDiscounts(JSON.parse(savedDiscounts));
+            const dataProd = await resProd.json();
+            if (dataProd.success) setProducts(dataProd.data);
 
-            const savedProducts = localStorage.getItem('luminelle_products');
-            if (savedProducts) setProducts(JSON.parse(savedProducts));
-        };
+            const dataCat = await resCat.json();
+            if (dataCat.success) setCategories(dataCat.data);
 
-        updateSync();
-        // Listen for storage changes if multiple tabs are open
-        window.addEventListener('storage', updateSync);
-        return () => window.removeEventListener('storage', updateSync);
+            const dataBanners = await resBanners.json();
+            if (dataBanners.success) setBanners(dataBanners.data);
+
+            const dataSettings = await resSettings.json();
+            if (dataSettings.success) setSettings(dataSettings.data);
+
+            setLoading(false);
+        } catch (error) {
+            console.error("Error fetching store data:", error);
+            setLoading(false);
+        }
     }, []);
 
+    useEffect(() => {
+        fetchData();
+    }, [fetchData]);
+
+    const subscribeNewsletter = async (email) => {
+        try {
+            const res = await fetch(`${API_URL}/newsletter`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email })
+            });
+            const data = await res.json();
+            return data;
+        } catch (err) {
+            return { success: false, message: 'Server error' };
+        }
+    };
+
+    const submitSupportTicket = async (ticketData) => {
+        try {
+            const res = await fetch(`${API_URL}/support-tickets`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(ticketData)
+            });
+            const data = await res.json();
+            return data;
+        } catch (err) {
+            return { success: false, message: 'Server error' };
+        }
+    };
+
     return (
-        <CoreContext.Provider value={{ cms, discounts, products }}>
+        <CoreContext.Provider value={{
+            settings,
+            banners,
+            products,
+            categories,
+            loading,
+            subscribeNewsletter,
+            submitSupportTicket,
+            refreshData: fetchData
+        }}>
             {children}
         </CoreContext.Provider>
     );

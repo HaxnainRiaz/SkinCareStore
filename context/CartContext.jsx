@@ -27,8 +27,19 @@ export function CartProvider({ children }) {
     }, []);
 
     const addToCart = (product, quantity = 1) => {
+        // Sync Cart with Stock Validation
+        const currentItem = cart.find(item => item._id === product._id);
+        const currentQty = currentItem ? currentItem.quantity : 0;
+        const totalRequested = currentQty + quantity;
+
+        if (totalRequested > product.stock) {
+            alert(`Sorry, only ${product.stock} units available in stock.`);
+            return false;
+        }
+
         const updatedCart = addToCartUtil(product, quantity);
-        setCart([...updatedCart]); // Create new reference to trigger render
+        setCart([...updatedCart]);
+        return true;
     };
 
     const removeFromCart = (productId) => {
@@ -36,9 +47,16 @@ export function CartProvider({ children }) {
         setCart([...updatedCart]);
     };
 
-    const updateQuantity = (productId, quantity) => {
-        const updatedCart = updateQuantityUtil(productId, quantity);
+    const updateQuantity = (product, quantity) => {
+        // Sync Cart with Stock Validation
+        if (quantity > product.stock) {
+            alert(`Sorry, only ${product.stock} units available in stock.`);
+            return false;
+        }
+
+        const updatedCart = updateQuantityUtil(product._id, quantity);
         setCart([...updatedCart]);
+        return true;
     };
 
     const clearCart = () => {

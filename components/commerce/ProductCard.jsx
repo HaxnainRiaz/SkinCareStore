@@ -54,7 +54,7 @@ export default function ProductCard({ product }) {
 
                     {/* Wishlist button */}
                     <div className="absolute top-4 right-4 z-10">
-                        <WishlistButton productId={product.id} />
+                        <WishlistButton productId={product._id} />
                     </div>
 
                     {/* Stock indicator */}
