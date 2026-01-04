@@ -4,6 +4,7 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import AnnouncementBar from '@/components/layout/AnnouncementBar';
 import { CartProvider } from '@/context/CartContext';
+import { ReviewsProvider } from '@/context/ReviewsContext';
 
 const inter = Inter({
     subsets: ['latin'],
@@ -41,12 +42,14 @@ export default function RootLayout({ children }) {
         <html lang="en" className={`${inter.variable} ${cormorant.variable}`}>
             <body className="font-body antialiased bg-neutral-cream text-neutral-gray">
                 <CartProvider>
-                    <AnnouncementBar />
-                    <Header />
-                    <main className="min-h-screen">
-                        {children}
-                    </main>
-                    <Footer />
+                    <ReviewsProvider>
+                        <AnnouncementBar />
+                        <Header />
+                        <main className="min-h-screen">
+                            {children}
+                        </main>
+                        <Footer />
+                    </ReviewsProvider>
                 </CartProvider>
             </body>
         </html>

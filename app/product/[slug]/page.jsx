@@ -12,6 +12,7 @@ import { formatPrice, calculateDiscount } from '@/lib/utils';
 import { useCart } from '@/hooks/useCart';
 import WishlistButton from '@/components/commerce/WishlistButton';
 import ProductCard from '@/components/commerce/ProductCard';
+import ProductReviews from '@/components/commerce/ProductReviews';
 
 export default function ProductPage() {
     const params = useParams();
@@ -229,9 +230,12 @@ export default function ProductPage() {
                     </div>
                 </div>
 
+                {/* Reviews Section */}
+                <ProductReviews productId={product.id} />
+
                 {/* Related products */}
                 {relatedProducts.length > 0 && (
-                    <div>
+                    <div className="mt-16">
                         <h2 className="text-3xl font-heading font-bold text-primary mb-8">
                             You May Also Like
                         </h2>
