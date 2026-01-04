@@ -1,20 +1,21 @@
 'use client';
 
 import { useState } from 'react';
-import Link from 'next/link';
 import { Container } from '@/components/ui/Container';
+import { useCore } from '@/context/CoreContext';
 
 export default function AnnouncementBar() {
+    const { cms } = useCore();
     const [isVisible, setIsVisible] = useState(true);
 
-    if (!isVisible) return null;
+    if (!isVisible || !cms?.announcement) return null;
 
     return (
-        <div className="bg-primary text-white py-2 text-sm relative">
+        <div className="bg-primary text-white py-2 text-xs md:text-sm relative z-50">
             <Container>
-                <div className="flex items-center justify-center gap-2">
-                    <p className="text-center">
-                        ✨ Free shipping on orders over $75 | Shop our new arrivals
+                <div className="flex items-center justify-center gap-2 px-8">
+                    <p className="text-center font-medium tracking-wide">
+                        {cms.announcement}
                     </p>
                     <button
                         onClick={() => setIsVisible(false)}

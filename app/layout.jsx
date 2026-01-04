@@ -37,20 +37,27 @@ export const metadata = {
     },
 };
 
+import { StoreAuthProvider } from '@/context/StoreAuthContext';
+import { CoreProvider } from '@/context/CoreContext';
+
 export default function RootLayout({ children }) {
     return (
-        <html lang="en" className={`${inter.variable} ${cormorant.variable}`}>
-            <body className="font-body antialiased bg-neutral-cream text-neutral-gray">
-                <CartProvider>
-                    <ReviewsProvider>
-                        <AnnouncementBar />
-                        <Header />
-                        <main className="min-h-screen">
-                            {children}
-                        </main>
-                        <Footer />
-                    </ReviewsProvider>
-                </CartProvider>
+        <html lang="en" className={`${inter.variable} ${cormorant.variable}`} suppressHydrationWarning>
+            <body className="font-body antialiased bg-neutral-cream text-neutral-gray" suppressHydrationWarning>
+                <StoreAuthProvider>
+                    <CoreProvider>
+                        <CartProvider>
+                            <ReviewsProvider>
+                                <AnnouncementBar />
+                                <Header />
+                                <main className="min-h-screen">
+                                    {children}
+                                </main>
+                                <Footer />
+                            </ReviewsProvider>
+                        </CartProvider>
+                    </CoreProvider>
+                </StoreAuthProvider>
             </body>
         </html>
     );

@@ -3,8 +3,11 @@
 import Link from 'next/link';
 import { Container } from '@/components/ui/Container';
 import { Button } from '@/components/ui/Button';
+import { useCore } from '@/context/CoreContext';
 
 export default function Hero() {
+    const { cms } = useCore();
+
     return (
         <section className="relative min-h-[90vh] flex items-center overflow-hidden bg-gradient-organic">
             {/* Floating organic shapes */}
@@ -16,12 +19,12 @@ export default function Hero() {
 
             <Container className="relative z-10">
                 <div className="max-w-3xl">
-                    <h1 className="text-5xl md:text-7xl font-heading font-bold text-primary mb-6 animate-fadeIn">
-                        Transform your Skin
+                    <h1 className="text-5xl md:text-7xl font-heading font-bold text-primary mb-6 animate-slideDown">
+                        {cms?.heroHeadline || "Transform your Skin"}
                     </h1>
 
                     <p className="text-xl md:text-2xl text-neutral-gray mb-8 animate-fadeIn animation-delay-200">
-                        Get a Youthful, Radiant, and Healthy Glow through Organic Ingredients.
+                        {cms?.heroSubheadline || "Get a Youthful, Radiant, and Healthy Glow through Organic Ingredients."}
                     </p>
 
                     <div className="flex flex-col sm:flex-row gap-4 animate-fadeIn animation-delay-400">

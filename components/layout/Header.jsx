@@ -7,11 +7,14 @@ import { useCart } from '@/hooks/useCart';
 import MobileMenu from './MobileMenu';
 import CartDrawer from '@/components/commerce/CartDrawer';
 
+import { useStoreAuth } from '@/context/StoreAuthContext';
+
 export default function Header() {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isCartOpen, setIsCartOpen] = useState(false);
     const { itemCount, isClient } = useCart();
+    const { user } = useStoreAuth();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -79,10 +82,13 @@ export default function Header() {
                                 </svg>
                             </Link>
 
-                            <Link href="/account/login" className="hidden md:block p-2 text-primary hover:bg-primary/10 rounded-lg transition-colors" aria-label="Account">
+                            <Link href={user ? "/account" : "/account/login"} className="hidden md:block p-2 text-primary hover:bg-primary/10 rounded-lg transition-colors relative" aria-label="Account">
                                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                                 </svg>
+                                {isClient && user && (
+                                    <span className="absolute bottom-1 right-1 w-2 h-2 bg-secondary rounded-full border border-white" />
+                                )}
                             </Link>
 
                             <button

@@ -14,9 +14,26 @@ import WishlistButton from '@/components/commerce/WishlistButton';
 import ProductCard from '@/components/commerce/ProductCard';
 import ProductReviews from '@/components/commerce/ProductReviews';
 
+import { useCore } from '@/context/CoreContext';
+
 export default function ProductPage() {
     const params = useParams();
-    const product = getProductBySlug(params.slug);
+    const { products: managedProducts } = useCore();
+
+    // Find static product first
+    const staticProduct = getProductBySlug(params.slug);
+
+    // Try to find managed product data (which might have updated stock/price)
+    const managedProduct = managedProducts.find(p => p.slug === params.slug || p.id === staticProduct?.id);
+
+    // Merge them: Priority to managed data
+    const product = managedProduct ? {
+        ...staticProduct,
+        ...managedProduct,
+        title: managedProduct.name, // Mapping Admin 'name' to Store 'title'
+        images: [managedProduct.image, ...(staticProduct?.images?.slice(1) || [])]
+    } : staticProduct;
+
     const { addToCart } = useCart();
     const [quantity, setQuantity] = useState(1);
     const [selectedImage, setSelectedImage] = useState(0);

@@ -6,9 +6,16 @@ import { Container } from '@/components/ui/Container';
 import { Button } from '@/components/ui/Button';
 import { useCart } from '@/hooks/useCart';
 import { formatPrice } from '@/lib/utils';
+import { useCore } from '@/context/CoreContext';
 
 export default function CheckoutPage() {
     const { cart, total } = useCart();
+    const { discounts } = useCore();
+
+    const [couponInput, setCouponInput] = useState('');
+    const [appliedDiscount, setAppliedDiscount] = useState(null);
+    const [couponError, setCouponError] = useState('');
+
     const [formData, setFormData] = useState({
         email: '',
         firstName: '',
@@ -21,9 +28,28 @@ export default function CheckoutPage() {
         phone: '',
     });
 
+    const handleApplyCoupon = () => {
+        setCouponError('');
+        const found = discounts.find(d => d.code === couponInput);
+        if (!found) {
+            setCouponError('Invalid coupon code');
+            return;
+        }
+        if (total < found.minSpend) {
+            setCouponError(`Minimum spend of $${found.minSpend} required`);
+            return;
+        }
+        setAppliedDiscount(found);
+        setCouponInput('');
+    };
+
+    const discountAmount = appliedDiscount
+        ? (appliedDiscount.type === 'percent' ? (total * appliedDiscount.value / 100) : appliedDiscount.value)
+        : 0;
+
     const shipping = total > 75 ? 0 : 10;
-    const tax = total * 0.08;
-    const grandTotal = total + shipping + tax;
+    const tax = (total - discountAmount) * 0.08;
+    const grandTotal = total - discountAmount + shipping + tax;
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -210,36 +236,72 @@ export default function CheckoutPage() {
                             <div className="space-y-4 mb-6">
                                 {cart.map((item) => (
                                     <div key={item.id} className="flex gap-3">
-                                        <div className="w-16 h-16 bg-neutral-beige rounded flex-shrink-0" />
+                                        <div className="w-16 h-16 bg-neutral-beige rounded-xl overflow-hidden shrink-0">
+                                            <img src={item.image} alt={item.title} className="w-full h-full object-cover" />
+                                        </div>
                                         <div className="flex-1 min-w-0">
                                             <p className="font-medium text-primary text-sm line-clamp-1">
                                                 {item.title}
                                             </p>
-                                            <p className="text-sm text-neutral-gray">
+                                            <p className="text-sm text-neutral-gray font-medium">
                                                 Qty: {item.quantity}
                                             </p>
                                         </div>
-                                        <p className="font-semibold text-primary text-sm">
+                                        <p className="font-bold text-primary text-sm">
                                             {formatPrice(item.price * item.quantity)}
                                         </p>
                                     </div>
                                 ))}
                             </div>
 
+                            {/* Coupon Input */}
+                            <div className="mb-6 pt-6 border-t border-neutral-beige/50">
+                                <div className="flex gap-2">
+                                    <input
+                                        type="text"
+                                        placeholder="Promo Code"
+                                        className="flex-1 px-3 py-2 text-sm border border-neutral-beige rounded-xl focus:outline-none focus:ring-1 focus:ring-primary uppercase tracking-widest font-bold"
+                                        value={couponInput}
+                                        onChange={(e) => setCouponInput(e.target.value.toUpperCase())}
+                                    />
+                                    <button
+                                        onClick={handleApplyCoupon}
+                                        className="px-4 py-2 bg-primary text-white text-xs font-bold rounded-xl hover:bg-primary-dark transition-colors"
+                                    >
+                                        Apply
+                                    </button>
+                                </div>
+                                {couponError && <p className="text-[10px] text-red-500 font-bold mt-2 ml-1">{couponError}</p>}
+                                {appliedDiscount && (
+                                    <div className="mt-2 flex items-center justify-between bg-green-50 px-3 py-2 rounded-xl border border-green-100">
+                                        <span className="text-[10px] font-bold text-green-700 uppercase tracking-widest">
+                                            Applied: {appliedDiscount.code}
+                                        </span>
+                                        <button onClick={() => setAppliedDiscount(null)} className="text-green-700 hover:text-green-900">✕</button>
+                                    </div>
+                                )}
+                            </div>
+
                             <div className="border-t border-neutral-beige pt-4 space-y-2">
                                 <div className="flex justify-between text-sm">
                                     <span className="text-neutral-gray">Subtotal</span>
-                                    <span>{formatPrice(total)}</span>
+                                    <span className="font-medium">{formatPrice(total)}</span>
                                 </div>
+                                {discountAmount > 0 && (
+                                    <div className="flex justify-between text-sm text-green-600 font-bold">
+                                        <span>Discount ({appliedDiscount.code})</span>
+                                        <span>-{formatPrice(discountAmount)}</span>
+                                    </div>
+                                )}
                                 <div className="flex justify-between text-sm">
                                     <span className="text-neutral-gray">Shipping</span>
-                                    <span>{shipping === 0 ? 'FREE' : formatPrice(shipping)}</span>
+                                    <span className="font-medium">{shipping === 0 ? 'FREE' : formatPrice(shipping)}</span>
                                 </div>
                                 <div className="flex justify-between text-sm">
                                     <span className="text-neutral-gray">Tax</span>
-                                    <span>{formatPrice(tax)}</span>
+                                    <span className="font-medium">{formatPrice(tax)}</span>
                                 </div>
-                                <div className="flex justify-between text-lg font-bold pt-2 border-t border-neutral-beige">
+                                <div className="flex justify-between text-xl font-heading font-bold pt-4 border-t border-neutral-beige mt-4">
                                     <span className="text-primary">Total</span>
                                     <span className="text-primary">{formatPrice(grandTotal)}</span>
                                 </div>

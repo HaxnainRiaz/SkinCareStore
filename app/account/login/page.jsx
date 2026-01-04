@@ -1,91 +1,91 @@
 'use client';
 
 import { useState } from 'react';
-import Link from 'next/link';
+import { useStoreAuth } from '@/context/StoreAuthContext';
 import { Container } from '@/components/ui/Container';
 import { Button } from '@/components/ui/Button';
+import Link from 'next/link';
+import { Mail, Lock, ArrowRight } from 'lucide-react';
 
-export default function LoginPage() {
-    const [formData, setFormData] = useState({
-        email: '',
-        password: '',
-    });
-
-    const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
-    };
+export default function StoreLoginPage() {
+    const [email, setEmail] = useState('elena@example.com');
+    const [password, setPassword] = useState('password123');
+    const [error, setError] = useState('');
+    const { login } = useStoreAuth();
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        alert('This is a demo login. In production, this would authenticate the user.');
+        setError('');
+        const result = login(email, password);
+        if (!result.success) {
+            setError(result.message);
+        }
     };
 
     return (
-        <div className="min-h-screen bg-neutral-cream flex items-center justify-center py-12">
-            <Container>
-                <div className="max-w-md mx-auto">
-                    <div className="bg-white p-8 rounded-2xl shadow-soft">
-                        <h1 className="text-3xl font-heading font-bold text-primary mb-2 text-center">
-                            Welcome Back
-                        </h1>
-                        <p className="text-neutral-gray text-center mb-8">
-                            Sign in to your account
-                        </p>
+        <div className="bg-neutral-beige/30 min-h-[80vh] flex items-center">
+            <Container className="max-w-md py-12">
+                <div className="bg-white p-10 rounded-[2rem] shadow-soft border border-neutral-beige relative overflow-hidden">
+                    <div className="absolute top-0 left-0 w-full h-1 bg-primary/20" />
 
-                        <form onSubmit={handleSubmit} className="space-y-4">
-                            <div>
-                                <label htmlFor="email" className="block text-sm font-medium text-primary mb-2">
-                                    Email
-                                </label>
+                    <div className="text-center mb-8">
+                        <h1 className="text-3xl font-heading font-bold text-primary mb-2">Welcome Back</h1>
+                        <p className="text-sm text-neutral-gray">Sign in to your Luminelle account</p>
+                    </div>
+
+                    <form onSubmit={handleSubmit} className="space-y-6">
+                        {error && (
+                            <div className="p-3 bg-red-50 border border-red-100 rounded-xl text-red-600 text-xs font-bold text-center">
+                                {error}
+                            </div>
+                        )}
+
+                        <div>
+                            <label className="block text-xs font-bold text-primary uppercase tracking-widest mb-2 ml-1">Email</label>
+                            <div className="relative">
+                                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-300" size={18} />
                                 <input
                                     type="email"
-                                    id="email"
-                                    name="email"
-                                    value={formData.email}
-                                    onChange={handleChange}
                                     required
-                                    className="input-field"
-                                    placeholder="you@example.com"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    className="w-full pl-12 pr-4 py-4 bg-neutral-50 border border-neutral-beige rounded-2xl focus:ring-1 focus:ring-primary focus:outline-none transition-all placeholder:text-neutral-300"
+                                    placeholder="elena@example.com"
                                 />
                             </div>
+                        </div>
 
-                            <div>
-                                <label htmlFor="password" className="block text-sm font-medium text-primary mb-2">
-                                    Password
-                                </label>
+                        <div>
+                            <label className="block text-xs font-bold text-primary uppercase tracking-widest mb-2 ml-1">Password</label>
+                            <div className="relative">
+                                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-300" size={18} />
                                 <input
                                     type="password"
-                                    id="password"
-                                    name="password"
-                                    value={formData.password}
-                                    onChange={handleChange}
                                     required
-                                    className="input-field"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    className="w-full pl-12 pr-4 py-4 bg-neutral-50 border border-neutral-beige rounded-2xl focus:ring-1 focus:ring-primary focus:outline-none transition-all placeholder:text-neutral-300"
                                     placeholder="••••••••"
                                 />
                             </div>
+                        </div>
 
-                            <div className="flex items-center justify-between text-sm">
-                                <label className="flex items-center">
-                                    <input type="checkbox" className="mr-2" />
-                                    <span className="text-neutral-gray">Remember me</span>
-                                </label>
-                                <a href="#" className="text-primary hover:underline">
-                                    Forgot password?
-                                </a>
-                            </div>
+                        <div className="flex justify-end">
+                            <button type="button" className="text-xs text-secondary-dark font-medium hover:underline">Forgot password?</button>
+                        </div>
 
-                            <Button type="submit" className="w-full" size="lg">
-                                Sign In
-                            </Button>
-                        </form>
+                        <Button type="submit" className="w-full rounded-2xl py-6 text-base font-bold shadow-lg shadow-primary/10">
+                            Sign In
+                        </Button>
+                    </form>
 
-                        <p className="text-center text-neutral-gray mt-6">
-                            Don't have an account?{' '}
-                            <Link href="/account/register" className="text-primary hover:underline font-medium">
-                                Create one
-                            </Link>
-                        </p>
+                    <div className="mt-8 pt-8 border-t border-neutral-beige text-center">
+                        <p className="text-sm text-neutral-gray mb-4">Don't have an account?</p>
+                        <Link href="/account/register">
+                            <button className="flex items-center gap-2 mx-auto text-primary font-bold hover:gap-3 transition-all">
+                                Create Account <ArrowRight size={16} />
+                            </button>
+                        </Link>
                     </div>
                 </div>
             </Container>
