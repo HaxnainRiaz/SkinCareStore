@@ -9,7 +9,7 @@ export default function ShippingPolicyPage() {
         <div className="min-h-screen bg-neutral-cream">
             <div className="bg-primary text-white py-16">
                 <Container>
-                    <h1 className="text-4xl md:text-5xl font-heading font-bold">Shipping Policy</h1>
+                    <h1 className="text-4xl text-white md:text-5xl font-heading font-bold">Shipping Policy</h1>
                 </Container>
             </div>
 

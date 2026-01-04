@@ -25,7 +25,7 @@ export default function SearchPage() {
         <div className="min-h-screen bg-neutral-cream">
             <div className="bg-primary text-white py-16">
                 <Container>
-                    <h1 className="text-4xl md:text-5xl font-heading font-bold mb-6">Search Products</h1>
+                    <h1 className="text-4xl text-white md:text-5xl font-heading font-bold mb-6">Search Products</h1>
 
                     <form onSubmit={handleSearch} className="max-w-2xl">
                         <div className="flex gap-4">

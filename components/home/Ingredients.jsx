@@ -29,7 +29,7 @@ export default function Ingredients() {
             <Container>
                 <div className="grid lg:grid-cols-2 gap-12 items-center">
                     <div>
-                        <h2 className="text-4xl md:text-5xl font-heading font-bold text-primary mb-6">
+                        <h2 className="text-4xl text-white md:text-5xl font-heading font-bold text-primary mb-6">
                             Powered by Nature's Finest
                         </h2>
                         <p className="text-lg text-neutral-gray mb-8">

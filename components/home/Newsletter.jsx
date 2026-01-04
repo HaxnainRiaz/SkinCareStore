@@ -21,7 +21,7 @@ export default function Newsletter() {
         <section className="section-padding bg-secondary">
             <Container>
                 <div className="max-w-2xl mx-auto text-center">
-                    <h2 className="text-4xl md:text-5xl font-heading font-bold text-primary mb-4">
+                    <h2 className="text-4xl text-white md:text-5xl font-heading font-bold text-primary mb-4">
                         Join Our Community
                     </h2>
                     <p className="text-lg text-primary/80 mb-8">

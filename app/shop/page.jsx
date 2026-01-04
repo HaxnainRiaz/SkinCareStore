@@ -38,7 +38,7 @@ function ShopContent() {
         <>
             <div className="bg-primary text-white py-16">
                 <Container>
-                    <h1 className="text-4xl md:text-5xl font-heading font-bold mb-4">
+                    <h1 className="text-4xl text-white md:text-5xl font-heading font-bold mb-4">
                         Shop All Products
                     </h1>
                     <p className="text-lg text-white/80">

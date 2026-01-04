@@ -18,7 +18,7 @@ export default function CartPage() {
         <div className="min-h-screen bg-neutral-cream">
             <div className="bg-primary text-white py-16">
                 <Container>
-                    <h1 className="text-4xl md:text-5xl font-heading font-bold">
+                    <h1 className="text-4xl text-white md:text-5xl font-heading font-bold">
                         Shopping Cart
                     </h1>
                 </Container>

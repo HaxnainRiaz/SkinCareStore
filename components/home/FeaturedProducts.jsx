@@ -9,7 +9,7 @@ export default function FeaturedProducts() {
         <section className="section-padding bg-white">
             <Container>
                 <div className="text-center mb-12">
-                    <h2 className="text-4xl md:text-5xl font-heading font-bold text-primary mb-4">
+                    <h2 className="text-4xl text-white md:text-5xl font-heading font-bold text-primary mb-4">
                         Featured Collection
                     </h2>
                     <p className="text-lg text-neutral-gray max-w-2xl mx-auto">

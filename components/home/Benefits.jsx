@@ -38,7 +38,7 @@ export default function Benefits() {
         <section className="section-padding bg-primary text-white">
             <Container>
                 <div className="text-center mb-12">
-                    <h2 className="text-4xl md:text-5xl font-heading font-bold mb-4 text-white">
+                    <h2 className="text-4xl text-white md:text-5xl font-heading font-bold mb-4 text-white">
                         The Luminelle Organics Difference
                     </h2>
                     <p className="text-lg text-white/80 max-w-2xl mx-auto">
