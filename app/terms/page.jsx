@@ -1,7 +1,7 @@
 import { Container } from '@/components/ui/Container';
 
 export const metadata = {
-    title: 'Terms of Service - Luxe Botanica',
+    title: 'Terms of Service - Luminelle Organics',
 };
 
 export default function TermsPage() {
@@ -19,12 +19,12 @@ export default function TermsPage() {
 
                     <h2 className="text-2xl font-heading font-bold text-primary mt-8 mb-4">1. Agreement to Terms</h2>
                     <p className="text-neutral-gray mb-6">
-                        By accessing and using Luxe Botanica's website and services, you agree to be bound by these Terms of Service and all applicable laws and regulations.
+                        By accessing and using Luminelle Organics's website and services, you agree to be bound by these Terms of Service and all applicable laws and regulations.
                     </p>
 
                     <h2 className="text-2xl font-heading font-bold text-primary mt-8 mb-4">2. Use License</h2>
                     <p className="text-neutral-gray mb-6">
-                        Permission is granted to temporarily download one copy of the materials on Luxe Botanica's website for personal, non-commercial transitory viewing only.
+                        Permission is granted to temporarily download one copy of the materials on Luminelle Organics's website for personal, non-commercial transitory viewing only.
                     </p>
 
                     <h2 className="text-2xl font-heading font-bold text-primary mt-8 mb-4">3. Product Information</h2>
@@ -49,7 +49,7 @@ export default function TermsPage() {
 
                     <h2 className="text-2xl font-heading font-bold text-primary mt-8 mb-4">7. Limitation of Liability</h2>
                     <p className="text-neutral-gray mb-6">
-                        Luxe Botanica shall not be liable for any indirect, incidental, special, consequential, or punitive damages resulting from your use of or inability to use the service.
+                        Luminelle Organics shall not be liable for any indirect, incidental, special, consequential, or punitive damages resulting from your use of or inability to use the service.
                     </p>
 
                     <h2 className="text-2xl font-heading font-bold text-primary mt-8 mb-4">8. Contact Information</h2>

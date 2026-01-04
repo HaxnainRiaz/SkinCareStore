@@ -30,7 +30,7 @@ export default function Footer() {
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
                         {/* Brand */}
                         <div>
-                            <h3 className="text-2xl font-heading font-semibold mb-4 text-white">Luxe Botanica</h3>
+                            <h3 className="text-2xl font-heading font-semibold mb-4 text-white">Luminelle Organics</h3>
                             <p className="text-white/80 mb-6">
                                 Premium botanical skincare for radiant, healthy skin. Crafted with nature's finest ingredients.
                             </p>
@@ -101,7 +101,7 @@ export default function Footer() {
                 <div className="border-t border-white/20 py-6">
                     <div className="flex flex-col md:flex-row justify-between items-center gap-4">
                         <p className="text-white/60 text-sm">
-                            © {new Date().getFullYear()} Luxe Botanica. All rights reserved.
+                            © {new Date().getFullYear()} Luminelle Organics. All rights reserved.
                         </p>
                         <div className="flex gap-6 text-sm text-white/60">
                             <span>🌿 Cruelty-Free</span>

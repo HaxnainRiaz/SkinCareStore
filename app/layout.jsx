@@ -19,19 +19,19 @@ const cormorant = Cormorant_Garamond({
 });
 
 export const metadata = {
-    title: 'Luxe Botanica - Premium Luxury Skincare',
+    title: 'Luminelle Organics - Premium Luxury Skincare',
     description: 'Discover our collection of premium, botanical-infused skincare products. Luxury formulations for radiant, healthy skin.',
     keywords: 'luxury skincare, premium skincare, botanical skincare, natural beauty, anti-aging, serums, moisturizers',
     openGraph: {
-        title: 'Luxe Botanica - Premium Luxury Skincare',
+        title: 'Luminelle Organics - Premium Luxury Skincare',
         description: 'Discover our collection of premium, botanical-infused skincare products.',
         type: 'website',
         locale: 'en_US',
-        siteName: 'Luxe Botanica',
+        siteName: 'Luminelle Organics',
     },
     twitter: {
         card: 'summary_large_image',
-        title: 'Luxe Botanica - Premium Luxury Skincare',
+        title: 'Luminelle Organics - Premium Luxury Skincare',
         description: 'Discover our collection of premium, botanical-infused skincare products.',
     },
 };

@@ -3,7 +3,7 @@ import { Card } from '@/components/ui/Card';
 import Link from 'next/link';
 
 export const metadata = {
-    title: 'Collections - Luxe Botanica',
+    title: 'Collections - Luminelle Organics',
 };
 
 export default function CollectionsPage() {

@@ -1,7 +1,7 @@
 import { Container } from '@/components/ui/Container';
 
 export const metadata = {
-    title: 'Refund Policy - Luxe Botanica',
+    title: 'Refund Policy - Luminelle Organics',
 };
 
 export default function RefundPolicyPage() {

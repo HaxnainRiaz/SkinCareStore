@@ -10,7 +10,7 @@ export default function BrandStory() {
                     </h2>
 
                     <p className="text-lg text-neutral-gray mb-6">
-                        Luxe Botanica was born from a simple belief: that luxury skincare should be both effective and ethical. Founded in 2020, we set out to create products that honor both your skin and our planet.
+                        Luminelle Organics was born from a simple belief: that luxury skincare should be both effective and ethical. Founded in 2020, we set out to create products that honor both your skin and our planet.
                     </p>
 
                     <p className="text-lg text-neutral-gray mb-6">

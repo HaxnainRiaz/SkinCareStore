@@ -48,7 +48,7 @@ export default function Header() {
                         {/* Logo */}
                         <Link href="/" className="flex items-center">
                             <h1 className="text-2xl md:text-3xl font-heading font-semibold text-primary">
-                                Luxe Botanica
+                                Luminelle Organics
                             </h1>
                         </Link>
 

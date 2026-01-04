@@ -1,4 +1,4 @@
-# Luxe Botanica - Premium Skincare E-commerce
+# Luminelle Organics - Premium Skincare E-commerce
 
 A luxury skincare e-commerce website built with Next.js 13+ App Router, Tailwind CSS, and React Server Components.
 

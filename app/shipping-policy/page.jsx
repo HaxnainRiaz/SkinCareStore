@@ -1,7 +1,7 @@
 import { Container } from '@/components/ui/Container';
 
 export const metadata = {
-    title: 'Shipping Policy - Luxe Botanica',
+    title: 'Shipping Policy - Luminelle Organics',
 };
 
 export default function ShippingPolicyPage() {

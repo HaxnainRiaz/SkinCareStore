@@ -17,7 +17,7 @@ export default function Testimonials() {
             name: 'Emily Chen',
             location: 'Los Angeles, CA',
             rating: 5,
-            text: 'I have sensitive skin and most products irritate it, but Luxe Botanica is so gentle yet effective. The Deep Hydration Cream is my holy grail!',
+            text: 'I have sensitive skin and most products irritate it, but Luminelle Organics is so gentle yet effective. The Deep Hydration Cream is my holy grail!',
             product: 'Deep Hydration Cream',
         },
         {

@@ -36,7 +36,7 @@ export default function RegisterPage() {
                             Create Account
                         </h1>
                         <p className="text-neutral-gray text-center mb-8">
-                            Join Luxe Botanica today
+                            Join Luminelle Organics today
                         </p>
 
                         <form onSubmit={handleSubmit} className="space-y-4">

@@ -1,12 +1,12 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { Container } from '@/components/ui/Container';
 import ProductCard from '@/components/commerce/ProductCard';
 import { getAllProducts, categories, concerns, sortProducts, filterProducts } from '@/lib/products';
 import { useSearchParams } from 'next/navigation';
 
-export default function ShopPage() {
+function ShopContent() {
     const searchParams = useSearchParams();
     const [products, setProducts] = useState(getAllProducts());
     const [sortBy, setSortBy] = useState('featured');
@@ -35,7 +35,7 @@ export default function ShopPage() {
     }, [sortBy, selectedCategory, selectedConcern]);
 
     return (
-        <div className="min-h-screen bg-neutral-cream">
+        <>
             <div className="bg-primary text-white py-16">
                 <Container>
                     <h1 className="text-4xl md:text-5xl font-heading font-bold mb-4">
@@ -118,6 +118,20 @@ export default function ShopPage() {
                     </div>
                 )}
             </Container>
+        </>
+    );
+}
+
+export default function ShopPage() {
+    return (
+        <div className="min-h-screen bg-neutral-cream">
+            <Suspense fallback={
+                <div className="min-h-screen flex items-center justify-center">
+                    <div className="text-primary">Loading shop...</div>
+                </div>
+            }>
+                <ShopContent />
+            </Suspense>
         </div>
     );
 }

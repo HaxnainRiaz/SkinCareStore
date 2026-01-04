@@ -1,16 +1,16 @@
 import { Container } from '@/components/ui/Container';
 
 export const metadata = {
-    title: 'About Us - Luxe Botanica',
+    title: 'About Us - Luminelle Organics',
     description: 'Learn about our mission to create premium, ethical skincare products.',
 };
 
 export default function AboutPage() {
     return (
         <div className="min-h-screen bg-neutral-cream">
-            <div className="bg-primary text-white py-16">
+            <div className="bg-primary py-16">
                 <Container>
-                    <h1 className="text-4xl md:text-5xl font-heading font-bold">About Luxe Botanica</h1>
+                    <h1 className="text-4xl text-white md:text-5xl font-heading font-bold">Who We Are</h1>
                 </Container>
             </div>
 
@@ -20,13 +20,10 @@ export default function AboutPage() {
                         <h2 className="text-3xl font-heading font-bold text-primary mb-6">Our Story</h2>
                         <div className="space-y-4 text-lg text-neutral-gray">
                             <p>
-                                Founded in 2020, Luxe Botanica was born from a passion for clean, effective skincare that honors both your skin and our planet. Our founder, inspired by the healing power of botanical ingredients, set out to create a luxury skincare line that would deliver transformative results without compromise.
-                            </p>
-                            <p>
-                                Every product in our collection is thoughtfully formulated with premium natural ingredients, combining ancient botanical wisdom with modern scientific innovation. We believe that true luxury lies not just in beautiful packaging and elegant textures, but in the integrity of our ingredients and our commitment to sustainability.
-                            </p>
-                            <p>
-                                Today, Luxe Botanica is trusted by over 50,000 customers worldwide who share our values of clean beauty, ethical sourcing, and environmental responsibility.
+                                At Luminelle we believe that healthy, radiant skin comes from nature, not chemicals. Every soap we craft is carefully formulated with natural, plant-based ingredients like Aloe Vera, Neem, Kalonji, Carrot Seed Oil, Licorice Root, Witch Hazel, and Kojic Acid — chosen for their proven benefits in cleansing, nourishing, and rejuvenating skin.
+                                Our mission is simple: to empower people to care for their skin naturally. We don’t just create soap — we provide educational, value-driven solutions that help our customers understand their skin, address their concerns, and achieve youthful, glowing, and healthy skin safely.
+                                At Luminelle, quality, transparency, and trust guide everything we do. We combine nature’s best ingredients with modern knowledge to craft products that are gentle, effective, and good for your skin — every day.
+
                             </p>
                         </div>
                     </section>

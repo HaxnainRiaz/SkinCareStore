@@ -1,7 +1,7 @@
 import { Container } from '@/components/ui/Container';
 
 export const metadata = {
-    title: 'Privacy Policy - Luxe Botanica',
+    title: 'Privacy Policy - Luminelle Organics',
 };
 
 export default function PrivacyPage() {

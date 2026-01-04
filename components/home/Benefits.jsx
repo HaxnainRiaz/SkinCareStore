@@ -39,7 +39,7 @@ export default function Benefits() {
             <Container>
                 <div className="text-center mb-12">
                     <h2 className="text-4xl md:text-5xl font-heading font-bold mb-4 text-white">
-                        The Luxe Botanica Difference
+                        The Luminelle Organics Difference
                     </h2>
                     <p className="text-lg text-white/80 max-w-2xl mx-auto">
                         More than skincare—a commitment to your skin, our planet, and ethical beauty

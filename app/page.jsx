@@ -9,7 +9,7 @@ import Newsletter from '@/components/home/Newsletter';
 import BrandStory from '@/components/home/BrandStory';
 
 export const metadata = {
-    title: 'Luxe Botanica - Premium Luxury Skincare',
+    title: 'Luminelle Organics - Premium Luxury Skincare',
     description: 'Discover our collection of premium, botanical-infused skincare products. Luxury formulations for radiant, healthy skin.',
 };
 
@@ -19,9 +19,9 @@ export default function HomePage() {
             <Hero />
             <FeaturedProducts />
             {/* <ShopByConcern /> */}
-            <Ingredients />
-            <Benefits />
+            {/* <Ingredients /> */}
             <Bestsellers />
+            <Benefits />
             <Testimonials />
             <BrandStory />
             <Newsletter />
