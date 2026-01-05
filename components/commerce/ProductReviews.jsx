@@ -1,18 +1,24 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useReviews } from '@/context/ReviewsContext';
 import { Button } from '@/components/ui/Button';
 
 export default function ProductReviews({ productId }) {
-    const { getReviews, addReview, isClient } = useReviews();
+    const { getReviews, addReview, fetchReviews, isClient } = useReviews();
     const reviews = getReviews(productId);
+
+    useEffect(() => {
+        if (productId) {
+            fetchReviews(productId);
+        }
+    }, [productId, fetchReviews]);
 
     // Form State
     const [showForm, setShowForm] = useState(false);
     const [hoverRating, setHoverRating] = useState(0);
     const [newReview, setNewReview] = useState({
-        name: '',
+        // name: '', // User name comes from auth
         rating: 0,
         title: '',
         comment: '',
@@ -32,24 +38,28 @@ export default function ProductReviews({ productId }) {
         if (ratingCounts[r.rating] !== undefined) ratingCounts[r.rating]++;
     });
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (newReview.rating === 0) {
             alert("Please select a star rating.");
             return;
         }
-        addReview(productId, newReview);
-        setNewReview({
-            name: '',
-            rating: 0,
-            title: '',
-            comment: '',
-            resultsTime: '1 week',
-            skinType: 'Combination',
-            recommend: 'Yes',
-            image: null
-        });
-        setShowForm(false);
+
+        const result = await addReview(productId, newReview);
+        if (result.success) {
+            setNewReview({
+                rating: 0,
+                title: '',
+                comment: '',
+                resultsTime: '1 week',
+                skinType: 'Combination',
+                recommend: 'Yes',
+                image: null
+            });
+            setShowForm(false);
+        } else {
+            alert(result.message || "Failed to submit review");
+        }
     };
 
     const handleImageUpload = (e) => {
@@ -132,8 +142,8 @@ export default function ProductReviews({ productId }) {
                                     >
                                         <svg
                                             className={`w-10 h-10 ${(hoverRating || newReview.rating) >= star
-                                                    ? 'text-yellow-400 fill-current'
-                                                    : 'text-gray-200 fill-current'
+                                                ? 'text-yellow-400 fill-current'
+                                                : 'text-gray-200 fill-current'
                                                 }`}
                                             viewBox="0 0 20 20"
                                         >
@@ -151,30 +161,17 @@ export default function ProductReviews({ productId }) {
                             </p>
                         </div>
 
-                        {/* Title & Name */}
-                        <div className="grid md:grid-cols-2 gap-6">
-                            <div>
-                                <label className="block text-sm font-medium text-primary mb-2">Review Title</label>
-                                <input
-                                    required
-                                    type="text"
-                                    className="input-field"
-                                    value={newReview.title}
-                                    onChange={(e) => setNewReview({ ...newReview, title: e.target.value })}
-                                    placeholder="Amazing glow results!"
-                                />
-                            </div>
-                            <div>
-                                <label className="block text-sm font-medium text-primary mb-2">Your Name</label>
-                                <input
-                                    required
-                                    type="text"
-                                    className="input-field"
-                                    value={newReview.name}
-                                    onChange={(e) => setNewReview({ ...newReview, name: e.target.value })}
-                                    placeholder="Jane Doe"
-                                />
-                            </div>
+                        {/* Title - Name Removed as it is auth based */}
+                        <div>
+                            <label className="block text-sm font-medium text-primary mb-2">Review Title</label>
+                            <input
+                                required
+                                type="text"
+                                className="input-field"
+                                value={newReview.title}
+                                onChange={(e) => setNewReview({ ...newReview, title: e.target.value })}
+                                placeholder="Amazing glow results!"
+                            />
                         </div>
 
                         {/* Dropdowns */}
@@ -290,7 +287,7 @@ export default function ProductReviews({ productId }) {
                     </p>
                 ) : (
                     reviews.map((review) => (
-                        <div key={review.id} className="bg-white p-8 rounded-2xl shadow-sm border border-neutral-beige/50">
+                        <div key={review._id || review.id} className="bg-white p-8 rounded-2xl shadow-sm border border-neutral-beige/50">
                             <div className="flex flex-col md:flex-row justify-between items-start mb-4 gap-4">
                                 <div className="flex-1">
                                     {/* Stars */}
@@ -307,11 +304,11 @@ export default function ProductReviews({ productId }) {
 
                                     {/* Author & Date */}
                                     <div className="text-sm text-neutral-gray flex items-center gap-2 mb-4">
-                                        <span className="font-semibold">{review.name}</span>
+                                        <span className="font-semibold">{review.user?.name || 'Customer'}</span>
                                         <span className="w-1 h-1 bg-neutral-gray rounded-full"></span>
                                         <span>Verified Buyer</span>
                                         <span className="w-1 h-1 bg-neutral-gray rounded-full"></span>
-                                        <span>{review.date}</span>
+                                        <span>{new Date(review.createdAt || review.date).toLocaleDateString()}</span>
                                     </div>
 
                                     {/* Review Text */}

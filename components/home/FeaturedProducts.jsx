@@ -1,9 +1,14 @@
+'use client';
+
 import { Container } from '@/components/ui/Container';
 import ProductCard from '@/components/commerce/ProductCard';
-import { getFeaturedProducts } from '@/lib/products';
+import { useCore } from '@/context/CoreContext';
 
 export default function FeaturedProducts() {
-    const featured = getFeaturedProducts();
+    const { products } = useCore();
+    const featured = products.filter(product => product.isFeatured);
+
+    if (featured.length === 0) return null;
 
     return (
         <section className="section-padding bg-white">
@@ -19,7 +24,7 @@ export default function FeaturedProducts() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                     {featured.map((product) => (
-                        <ProductCard key={product.id} product={product} />
+                        <ProductCard key={product._id || product.id} product={product} />
                     ))}
                 </div>
             </Container>

@@ -1,25 +1,26 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { isInWishlist, toggleWishlist } from '@/lib/cart';
+import { useRouter } from 'next/navigation';
+import { useStoreAuth } from '@/context/StoreAuthContext';
 
 export default function WishlistButton({ productId, className = '' }) {
-    const [isWishlisted, setIsWishlisted] = useState(false);
-    const [isClient, setIsClient] = useState(false);
+    const { user, toggleWishlist } = useStoreAuth();
+    const router = useRouter();
 
-    useEffect(() => {
-        setIsClient(true);
-        setIsWishlisted(isInWishlist(productId));
-    }, [productId]);
+    // Check if product is in user's wishlist
+    const isWishlisted = user?.wishlist?.includes(productId);
 
-    const handleToggle = (e) => {
+    const handleToggle = async (e) => {
         e.preventDefault();
         e.stopPropagation();
-        toggleWishlist(productId);
-        setIsWishlisted(!isWishlisted);
-    };
 
-    if (!isClient) return null;
+        if (!user) {
+            router.push('/account/login');
+            return;
+        }
+
+        await toggleWishlist(productId);
+    };
 
     return (
         <button

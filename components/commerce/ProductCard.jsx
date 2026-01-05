@@ -47,7 +47,7 @@ export default function ProductCard({ product }) {
                         {product.salePrice && (
                             <Badge variant="sale">-{discount}%</Badge>
                         )}
-                        {product.bestseller && (
+                        {product.isBestSeller && (
                             <Badge variant="secondary">Bestseller</Badge>
                         )}
                     </div>
@@ -113,7 +113,7 @@ export default function ProductCard({ product }) {
                             ))}
                         </div>
                         <span className="text-sm text-neutral-gray">
-                            {product.rating} ({product.reviews})
+                            {product.rating} ({product.totalReviews || 0})
                         </span>
                     </div>
 

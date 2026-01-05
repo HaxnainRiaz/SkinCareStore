@@ -22,10 +22,10 @@ export function CoreProvider({ children }) {
     const fetchData = useCallback(async () => {
         try {
             const [resProd, resCat, resBanners, resSettings] = await Promise.all([
-                fetch(`${API_URL}/products`),
-                fetch(`${API_URL}/categories`),
-                fetch(`${API_URL}/banners`),
-                fetch(`${API_URL}/settings`)
+                fetch(`${API_URL}/products`, { cache: 'no-store' }),
+                fetch(`${API_URL}/categories`, { cache: 'no-store' }),
+                fetch(`${API_URL}/banners`, { cache: 'no-store' }),
+                fetch(`${API_URL}/settings`, { cache: 'no-store' })
             ]);
 
             const dataProd = await resProd.json();

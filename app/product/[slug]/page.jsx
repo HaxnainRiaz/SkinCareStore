@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { Container } from '@/components/ui/Container';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
-import { getProductBySlug, getAllProducts } from '@/lib/products';
+
 import { formatPrice, calculateDiscount } from '@/lib/utils';
 import { useCart } from '@/hooks/useCart';
 import WishlistButton from '@/components/commerce/WishlistButton';
@@ -40,6 +40,7 @@ export default function ProductPage() {
         );
     }
 
+    const displayPrice = product.salePrice || product.price;
     const discount = calculateDiscount(product.price, product.salePrice);
     const relatedProducts = managedProducts
         .filter(p => p.category === product.category && p._id !== product._id)
@@ -117,7 +118,7 @@ export default function ProductPage() {
                     <div>
                         <div className="flex items-start justify-between mb-4">
                             <div>
-                                {product.bestseller && (
+                                {product.isBestSeller && (
                                     <Badge variant="secondary" className="mb-2">Bestseller</Badge>
                                 )}
                                 <h1 className="text-4xl font-heading font-bold text-primary mb-2">
@@ -142,7 +143,7 @@ export default function ProductPage() {
                                 ))}
                             </div>
                             <span className="text-neutral-gray">
-                                {product.rating} ({product.reviews} reviews)
+                                {product.rating} ({product.totalReviews || 0} reviews)
                             </span>
                         </div>
 

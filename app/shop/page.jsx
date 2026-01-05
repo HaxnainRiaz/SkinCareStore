@@ -3,15 +3,29 @@
 import { useState, useEffect, Suspense } from 'react';
 import { Container } from '@/components/ui/Container';
 import ProductCard from '@/components/commerce/ProductCard';
-import { getAllProducts, categories, concerns, sortProducts, filterProducts } from '@/lib/products';
+import { concerns, sortProducts, filterProducts } from '@/lib/products';
 import { useSearchParams } from 'next/navigation';
+import { useCore } from '@/context/CoreContext';
 
 function ShopContent() {
+    const { products: allProducts, categories: apiCategories, loading } = useCore();
     const searchParams = useSearchParams();
-    const [products, setProducts] = useState(getAllProducts());
+    const [products, setProducts] = useState([]);
     const [sortBy, setSortBy] = useState('featured');
     const [selectedCategory, setSelectedCategory] = useState('all');
     const [selectedConcern, setSelectedConcern] = useState('');
+
+    // Transform API categories to match UI format
+    const categories = [
+        { value: 'all', label: 'All Products' },
+        ...apiCategories.map(cat => ({ value: cat._id, label: cat.title }))
+    ];
+
+    useEffect(() => {
+        if (!loading) {
+            setProducts(allProducts);
+        }
+    }, [allProducts, loading]);
 
     useEffect(() => {
         const concernParam = searchParams.get('concern');
@@ -21,7 +35,7 @@ function ShopContent() {
     }, [searchParams]);
 
     useEffect(() => {
-        let filtered = getAllProducts();
+        let filtered = [...allProducts];
 
         const filters = {
             category: selectedCategory,
@@ -32,7 +46,7 @@ function ShopContent() {
         filtered = sortProducts(filtered, sortBy);
 
         setProducts(filtered);
-    }, [sortBy, selectedCategory, selectedConcern]);
+    }, [sortBy, selectedCategory, selectedConcern, allProducts]);
 
     return (
         <>
