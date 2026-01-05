@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 
 const StoreAuthContext = createContext();
 
-const API_URL = "http://localhost:5000/api";
+const API_URL = process.env.NEXT_PUBLIC_API_URL ? `${process.env.NEXT_PUBLIC_API_URL}/api` : "http://localhost:5000/api";
 
 export function StoreAuthProvider({ children }) {
     const [user, setUser] = useState(null);
