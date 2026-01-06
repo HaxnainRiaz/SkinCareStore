@@ -18,7 +18,7 @@ import { useCore } from '@/context/CoreContext';
 
 export default function ProductPage() {
     const params = useParams();
-    const { products: managedProducts } = useCore();
+    const { products: managedProducts, loading: coreLoading } = useCore();
 
     // Find product from managed products (backend)
     const product = managedProducts.find(p => p.slug === params.slug);
@@ -28,6 +28,15 @@ export default function ProductPage() {
     const [selectedImage, setSelectedImage] = useState(0);
     const [showToast, setShowToast] = useState(false);
     const [imageError, setImageError] = useState(false);
+
+    if (coreLoading) {
+        return (
+            <div className="min-h-screen flex flex-col items-center justify-center bg-neutral-cream">
+                <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin mb-4" />
+                <p className="text-primary font-heading font-medium">Loading Product Details...</p>
+            </div>
+        );
+    }
 
     if (!product) {
         return (
@@ -177,7 +186,7 @@ export default function ProductPage() {
                                     onClick={() => setQuantity(Math.max(1, quantity - 1))}
                                     className="px-4 py-3 hover:bg-neutral-beige transition-colors"
                                 >
-                                    −
+                                    -
                                 </button>
                                 <span className="px-6 py-3 border-x-2 border-neutral-beige">{quantity}</span>
                                 <button

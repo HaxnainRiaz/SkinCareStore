@@ -336,26 +336,39 @@ export default function ProductReviews({ productId }) {
                                     </p>
 
                                     {/* Review Metadata Chips */}
-                                    <div className="flex flex-wrap gap-3">
+                                    <div className="flex flex-wrap gap-3 mb-6">
                                         {review.skinType && (
-                                            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-neutral-beige text-primary">
+                                            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-neutral-beige text-primary">
                                                 Skin Type: {review.skinType}
                                             </span>
                                         )}
                                         {review.resultsTime && (
-                                            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-neutral-beige text-primary">
+                                            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-neutral-beige text-primary">
                                                 Results in: {review.resultsTime}
                                             </span>
                                         )}
                                         {review.recommend === 'Yes' && (
-                                            <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium bg-green-50 text-green-700 border border-green-100">
+                                            <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold bg-green-50 text-green-700 border border-green-100">
                                                 <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                                                 </svg>
-                                                Recommends this product
+                                                Recommends
                                             </span>
                                         )}
                                     </div>
+
+                                    {/* Admin Reply */}
+                                    {review.adminReply && (
+                                        <div className="mt-4 p-6 bg-neutral-beige/50 rounded-2xl border border-primary/5 relative">
+                                            <div className="flex items-center gap-2 mb-3">
+                                                <div className="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
+                                                <span className="text-[10px] font-bold text-primary uppercase tracking-[0.2em]">Curator Response</span>
+                                            </div>
+                                            <p className="text-sm text-primary font-medium italic leading-relaxed">
+                                                {review.adminReply}
+                                            </p>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </div>

@@ -11,7 +11,7 @@ export default function Bestsellers() {
 
     // Logic for bestsellers: Manual flag OR Highest rated
     const bestsellers = [...products]
-        .filter(p => p.isBestSeller || p.rating >= 4)
+        .filter(p => p.isBestSeller)
         .sort((a, b) => {
             if (a.isBestSeller && !b.isBestSeller) return -1;
             if (!a.isBestSeller && b.isBestSeller) return 1;
