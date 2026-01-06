@@ -5,7 +5,7 @@ export default function BrandStory() {
         <section className="section-padding bg-gradient-organic">
             <Container>
                 <div className="max-w-4xl mx-auto text-center">
-                    <h2 className="text-4xl text-white md:text-5xl font-heading font-bold text-primary mb-6">
+                    <h2 className="text-4xl text-[#0b2f26] md:text-5xl font-heading font-bold text-primary mb-6">
                         Our Story
                     </h2>
 
