@@ -40,24 +40,28 @@ export const metadata = {
 import { StoreAuthProvider } from '@/context/StoreAuthContext';
 import { CoreProvider } from '@/context/CoreContext';
 
+import { ToastProvider } from '@/context/ToastContext';
+
 export default function RootLayout({ children }) {
     return (
         <html lang="en" className={`${inter.variable} ${cormorant.variable}`} suppressHydrationWarning>
             <body className="font-body antialiased bg-neutral-cream text-neutral-gray" suppressHydrationWarning>
-                <StoreAuthProvider>
-                    <CoreProvider>
-                        <CartProvider>
-                            <ReviewsProvider>
-                                <AnnouncementBar />
-                                <Header />
-                                <main className="min-h-screen">
-                                    {children}
-                                </main>
-                                <Footer />
-                            </ReviewsProvider>
-                        </CartProvider>
-                    </CoreProvider>
-                </StoreAuthProvider>
+                <ToastProvider>
+                    <StoreAuthProvider>
+                        <CoreProvider>
+                            <CartProvider>
+                                <ReviewsProvider>
+                                    <AnnouncementBar />
+                                    <Header />
+                                    <main className="min-h-screen">
+                                        {children}
+                                    </main>
+                                    <Footer />
+                                </ReviewsProvider>
+                            </CartProvider>
+                        </CoreProvider>
+                    </StoreAuthProvider>
+                </ToastProvider>
             </body>
         </html>
     );

@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { useToast } from './ToastContext';
 
 const StoreAuthContext = createContext();
 
@@ -11,6 +12,7 @@ export function StoreAuthProvider({ children }) {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const router = useRouter();
+    const { addToast } = useToast();
 
     const loadUser = async () => {
         const token = localStorage.getItem("token");
@@ -56,12 +58,15 @@ export function StoreAuthProvider({ children }) {
             if (data.success) {
                 localStorage.setItem("token", data.token);
                 setUser(data.user);
+                addToast(`Welcome back, ${data.user.name.split(' ')[0]}!`, 'success');
                 router.push("/account");
                 return { success: true };
             } else {
+                addToast(data.message || "Login failed", 'error');
                 return { success: false, message: data.message };
             }
         } catch (error) {
+            addToast("Server connection failed", 'error');
             return { success: false, message: "Server error" };
         }
     };
@@ -73,19 +78,22 @@ export function StoreAuthProvider({ children }) {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ name, email, password, role: 'user' })
+                body: JSON.stringify({ name, email, password, role: 'customer' })
             });
             const data = await res.json();
 
             if (data.success) {
                 localStorage.setItem("token", data.token);
                 setUser(data.user);
+                addToast("Account created successfully! Welcome to Luminelle.", 'success');
                 router.push("/account");
                 return { success: true };
             } else {
+                addToast(data.message || "Registration failed", 'error');
                 return { success: false, message: data.message };
             }
         } catch (error) {
+            addToast("Registration failed. Please try again later.", 'error');
             return { success: false, message: "Server error" };
         }
     };
@@ -93,6 +101,7 @@ export function StoreAuthProvider({ children }) {
     const logout = () => {
         setUser(null);
         localStorage.removeItem("token");
+        addToast("Signed out successfully", 'info');
         router.push('/');
     };
 

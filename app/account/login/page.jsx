@@ -13,10 +13,10 @@ export default function StoreLoginPage() {
     const [error, setError] = useState('');
     const { login } = useStoreAuth();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
-        const result = login(email, password);
+        const result = await login(email, password);
         if (!result.success) {
             setError(result.message);
         }

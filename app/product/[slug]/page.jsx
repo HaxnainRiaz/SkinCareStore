@@ -15,6 +15,7 @@ import ProductCard from '@/components/commerce/ProductCard';
 import ProductReviews from '@/components/commerce/ProductReviews';
 
 import { useCore } from '@/context/CoreContext';
+import { useToast } from '@/context/ToastContext';
 
 export default function ProductPage() {
     const params = useParams();
@@ -26,7 +27,7 @@ export default function ProductPage() {
     const { addToCart } = useCart();
     const [quantity, setQuantity] = useState(1);
     const [selectedImage, setSelectedImage] = useState(0);
-    const [showToast, setShowToast] = useState(false);
+    const { addToast } = useToast();
     const [imageError, setImageError] = useState(false);
 
     if (coreLoading) {
@@ -57,19 +58,11 @@ export default function ProductPage() {
 
     const handleAddToCart = () => {
         addToCart(product, quantity);
-        setShowToast(true);
-        setTimeout(() => setShowToast(false), 3000);
+        addToast(`${product.title} added to cart`, 'success');
     };
 
     return (
         <div className="min-h-screen bg-neutral-cream">
-            {/* Toast notification */}
-            {showToast && (
-                <div className="fixed top-24 right-4 bg-primary text-white px-6 py-3 rounded-lg shadow-large z-50 animate-fadeIn">
-                    ✓ Added to cart
-                </div>
-            )}
-
             <Container className="py-12">
                 {/* Breadcrumb */}
                 <nav className="mb-8 text-sm text-neutral-gray">
