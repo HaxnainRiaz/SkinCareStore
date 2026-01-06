@@ -3,7 +3,7 @@
 import { createContext, useContext, useState, useCallback } from 'react';
 
 const ReviewsContext = createContext();
-const API_URL = process.env.NEXT_PUBLIC_API_URL ? `${process.env.NEXT_PUBLIC_API_URL}/api` : "http://localhost:5000/api";
+const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/api`;
 
 export function ReviewsProvider({ children }) {
     const [reviews, setReviews] = useState({}); // { [productId]: Review[] }
