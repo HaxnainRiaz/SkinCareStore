@@ -4,7 +4,7 @@ import { createContext, useContext, useState, useEffect, useCallback } from 'rea
 
 const CoreContext = createContext();
 
-const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/api`;
+const API_URL = "http://localhost:5000/api";
 
 export function CoreProvider({ children }) {
     const [settings, setSettings] = useState({

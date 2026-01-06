@@ -9,7 +9,7 @@ import { useCart } from '@/hooks/useCart';
 import { formatPrice } from '@/lib/utils';
 import { useStoreAuth } from '@/context/StoreAuthContext';
 
-const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/api`;
+const API_URL = "http://localhost:5000/api";
 
 export default function CheckoutPage() {
     const { cart, total, clearCart } = useCart();
