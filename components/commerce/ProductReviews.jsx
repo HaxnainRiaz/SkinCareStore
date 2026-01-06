@@ -3,9 +3,11 @@
 import { useState, useEffect } from 'react';
 import { useReviews } from '@/context/ReviewsContext';
 import { Button } from '@/components/ui/Button';
+import { useStoreAuth } from '@/context/StoreAuthContext';
 
 export default function ProductReviews({ productId }) {
     const { getReviews, addReview, fetchReviews, isClient } = useReviews();
+    const { user } = useStoreAuth();
     const reviews = getReviews(productId);
 
     useEffect(() => {
@@ -18,14 +20,14 @@ export default function ProductReviews({ productId }) {
     const [showForm, setShowForm] = useState(false);
     const [hoverRating, setHoverRating] = useState(0);
     const [newReview, setNewReview] = useState({
-        // name: '', // User name comes from auth
+        name: '',
         rating: 0,
         title: '',
         comment: '',
         resultsTime: '1 week',
         skinType: 'Combination',
         recommend: 'Yes',
-        image: null // For simulation
+        image: null
     });
 
     // Rating Breakdown Logic
@@ -45,9 +47,15 @@ export default function ProductReviews({ productId }) {
             return;
         }
 
-        const result = await addReview(productId, newReview);
+        const dataToSubmit = { ...newReview };
+        if (user) {
+            dataToSubmit.name = user.name;
+        }
+
+        const result = await addReview(productId, dataToSubmit);
         if (result.success) {
             setNewReview({
+                name: '',
                 rating: 0,
                 title: '',
                 comment: '',
@@ -65,10 +73,6 @@ export default function ProductReviews({ productId }) {
     const handleImageUpload = (e) => {
         const file = e.target.files[0];
         if (file) {
-            // For this demo, we can't actually upload. 
-            // We'll just pretend by setting a placeholder or reading local URL if we implemented FileReader.
-            // For now, let's just ignore or set a flag.
-            // Simulating file attach
             setNewReview({ ...newReview, image: 'attached' });
         }
     };
@@ -152,7 +156,7 @@ export default function ProductReviews({ productId }) {
                                     </button>
                                 ))}
                             </div>
-                            <p className="text-sm text-primary font-medium mt-2 h-5">
+                            <p className="text-sm text-primary font-medium mt-2 h-5 text-center">
                                 {hoverRating === 1 && "Poor"}
                                 {hoverRating === 2 && "Fair"}
                                 {hoverRating === 3 && "Average"}
@@ -161,7 +165,22 @@ export default function ProductReviews({ productId }) {
                             </p>
                         </div>
 
-                        {/* Title - Name Removed as it is auth based */}
+                        {/* Name Field (Hidden if logged in) */}
+                        {!user && (
+                            <div>
+                                <label className="block text-sm font-medium text-primary mb-2">Your Name</label>
+                                <input
+                                    required
+                                    type="text"
+                                    className="input-field"
+                                    value={newReview.name}
+                                    onChange={(e) => setNewReview({ ...newReview, name: e.target.value })}
+                                    placeholder="Enter your name"
+                                />
+                            </div>
+                        )}
+
+                        {/* Title */}
                         <div>
                             <label className="block text-sm font-medium text-primary mb-2">Review Title</label>
                             <input
@@ -304,7 +323,7 @@ export default function ProductReviews({ productId }) {
 
                                     {/* Author & Date */}
                                     <div className="text-sm text-neutral-gray flex items-center gap-2 mb-4">
-                                        <span className="font-semibold">{review.user?.name || 'Customer'}</span>
+                                        <span className="font-semibold">{review.name || 'Anonymous'}</span>
                                         <span className="w-1 h-1 bg-neutral-gray rounded-full"></span>
                                         <span>Verified Buyer</span>
                                         <span className="w-1 h-1 bg-neutral-gray rounded-full"></span>

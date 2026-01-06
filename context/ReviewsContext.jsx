@@ -28,7 +28,6 @@ export function ReviewsProvider({ children }) {
     const addReview = async (productId, reviewData) => {
         // reviewData contains rating, comment, title, resultsTime, skinType, recommend
         const token = localStorage.getItem("token");
-        if (!token) return { success: false, message: "Please login to review" };
 
         try {
             const payload = {
@@ -40,7 +39,7 @@ export function ReviewsProvider({ children }) {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
+                    ...(token ? { 'Authorization': `Bearer ${token}` } : {})
                 },
                 body: JSON.stringify(payload)
             });
