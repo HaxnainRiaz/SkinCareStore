@@ -142,10 +142,56 @@ export function StoreAuthProvider({ children }) {
             const data = await res.json();
             if (data.success) {
                 setUser(prev => ({ ...prev, addresses: data.data }));
+                addToast("Address added successfully", 'success');
                 return true;
             }
         } catch (err) {
             console.error(err);
+        }
+        return false;
+    };
+
+    const deleteAddress = async (addressId) => {
+        const token = localStorage.getItem("token");
+        try {
+            const res = await fetch(`${API_URL}/users/addresses/${addressId}`, {
+                method: 'DELETE',
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            const data = await res.json();
+            if (data.success) {
+                setUser(prev => ({ ...prev, addresses: data.data }));
+                addToast("Address removed", 'info');
+                return true;
+            }
+        } catch (err) {
+            console.error(err);
+        }
+        return false;
+    };
+
+    const updateProfile = async (profileData) => {
+        const token = localStorage.getItem("token");
+        try {
+            const res = await fetch(`${API_URL}/users/profile`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify(profileData)
+            });
+            const data = await res.json();
+            if (data.success) {
+                setUser(data.data);
+                addToast("Profile updated successfully", 'success');
+                return true;
+            } else {
+                addToast(data.message || "Failed to update profile", 'error');
+            }
+        } catch (err) {
+            console.error(err);
+            addToast("Server error updating profile", 'error');
         }
         return false;
     };
@@ -165,7 +211,18 @@ export function StoreAuthProvider({ children }) {
     };
 
     return (
-        <StoreAuthContext.Provider value={{ user, loading, login, register, logout, toggleWishlist, addAddress, getOrders }}>
+        <StoreAuthContext.Provider value={{
+            user,
+            loading,
+            login,
+            register,
+            logout,
+            toggleWishlist,
+            addAddress,
+            deleteAddress,
+            getOrders,
+            updateProfile
+        }}>
             {children}
         </StoreAuthContext.Provider>
     );
