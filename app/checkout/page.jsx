@@ -167,10 +167,17 @@ export default function CheckoutPage() {
                         </Link>
                         {user ? (
                             <Link href="/account" className="block w-full text-sm font-bold text-secondary-dark hover:underline">
-                                View Order History
+                                View Order History & Track Status
                             </Link>
                         ) : (
-                            <p className="text-xs text-neutral-400">A confirmation email will be sent to {formData.email}</p>
+                            <div className="bg-secondary/5 p-6 rounded-2xl border border-secondary/20 mt-8 animate-pulse">
+                                <p className="text-sm font-bold text-primary mb-2 italic">Want to track your order in real-time?</p>
+                                <p className="text-xs text-neutral-gray mb-4">Create an account now to see live status updates, management tools, and earn reward points on this purchase.</p>
+                                <Link href="/account/login?mode=signup">
+                                    <Button variant="secondary" className="w-full py-3 text-[10px] uppercase tracking-widest">Sign Up Now & Track Order</Button>
+                                </Link>
+                                <p className="text-[10px] text-neutral-400 mt-4 italic">A confirmation email will also be sent to {formData.email}</p>
+                            </div>
                         )}
                     </div>
                 </div>

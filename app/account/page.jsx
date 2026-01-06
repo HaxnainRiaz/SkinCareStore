@@ -187,10 +187,16 @@ export default function AccountPage() {
                                                             <td className="p-6 pl-8 font-mono font-bold text-primary text-[11px]">#{order._id.substring(18).toUpperCase()}</td>
                                                             <td className="p-6 text-neutral-gray">{new Date(order.createdAt).toLocaleDateString()}</td>
                                                             <td className="p-6">
-                                                                <span className="px-3 py-1 bg-secondary/20 text-primary rounded-full text-[9px] font-bold uppercase tracking-widest">{order.orderStatus}</span>
+                                                                <span className={`px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest shadow-sm border ${order.orderStatus === 'delivered' ? 'bg-green-50 text-green-700 border-green-100' :
+                                                                        order.orderStatus === 'cancelled' ? 'bg-red-50 text-red-700 border-red-100' :
+                                                                            order.orderStatus === 'shipped' ? 'bg-blue-50 text-blue-700 border-blue-100' :
+                                                                                'bg-secondary/20 text-primary border-secondary/30'
+                                                                    }`}>
+                                                                    {order.orderStatus}
+                                                                </span>
                                                             </td>
                                                             <td className="p-6 font-bold text-primary font-heading italic text-base">{formatPrice(order.totalAmount)}</td>
-                                                            <td className="p-6 text-right pr-8"><button className="text-xs font-bold text-secondary-dark hover:underline">Track</button></td>
+                                                            <td className="p-6 text-right pr-8"><button className="text-[10px] font-bold text-secondary-dark hover:text-primary transition-all uppercase tracking-widest border-b border-secondary-dark/30 pb-0.5">Track Live</button></td>
                                                         </tr>
                                                     ))}
                                                 </tbody>
@@ -216,18 +222,30 @@ export default function AccountPage() {
                                                     <div className="flex items-center gap-6 flex-1">
                                                         <div className="w-16 h-16 bg-neutral-beige rounded-2xl flex items-center justify-center shrink-0 shadow-inner"><Package className="text-primary" size={24} /></div>
                                                         <div>
-                                                            <h4 className="font-bold text-primary font-heading italic text-lg">Order #{order._id.substring(18).toUpperCase()}</h4>
+                                                            <div className="flex items-center gap-3 mb-1">
+                                                                <h4 className="font-bold text-primary font-heading italic text-lg hover:text-secondary-dark transition-colors cursor-pointer">Order #{order._id.substring(18).toUpperCase()}</h4>
+                                                                <div className={`w-2 h-2 rounded-full animate-pulse ${order.orderStatus === 'delivered' ? 'bg-green-500' :
+                                                                        order.orderStatus === 'cancelled' ? 'bg-red-500' :
+                                                                            'bg-secondary'
+                                                                    }`} />
+                                                            </div>
                                                             <p className="text-xs text-neutral-gray font-medium">{new Date(order.createdAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</p>
                                                         </div>
                                                     </div>
                                                     <div className="flex items-center gap-12">
                                                         <div className="text-right">
-                                                            <p className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest mb-1">Status</p>
-                                                            <span className="text-xs font-bold text-primary uppercase">{order.orderStatus}</span>
+                                                            <p className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest mb-2 font-body">Current Milestone</p>
+                                                            <span className={`px-5 py-2 rounded-full text-[11px] font-bold uppercase tracking-[0.2em] shadow-lg ${order.orderStatus === 'delivered' ? 'bg-green-600 text-white' :
+                                                                    order.orderStatus === 'cancelled' ? 'bg-red-600 text-white' :
+                                                                        order.orderStatus === 'shipped' ? 'bg-blue-600 text-white' :
+                                                                            'bg-secondary text-primary'
+                                                                }`}>
+                                                                {order.orderStatus}
+                                                            </span>
                                                         </div>
                                                         <div className="text-right border-l border-neutral-beige pl-12">
-                                                            <p className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest mb-1 font-body">Investment</p>
-                                                            <span className="text-xl font-bold text-primary font-heading italic">{formatPrice(order.totalAmount)}</span>
+                                                            <p className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest mb-2 font-body">Total Investment</p>
+                                                            <span className="text-2xl font-bold text-primary font-heading italic">{formatPrice(order.totalAmount)}</span>
                                                         </div>
                                                     </div>
                                                 </div>
