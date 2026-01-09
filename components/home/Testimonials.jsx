@@ -43,10 +43,10 @@ export default function Testimonials() {
         <section className="section-padding bg-white">
             <Container>
                 <div className="text-center mb-12">
-                    <h2 className="text-4xl text-[#0b2f26] md:text-5xl font-heading font-bold text-primary mb-4">
+                    <h2 className="text-4xl text-[#0B2F26] md:text-5xl font-heading font-bold mb-4">
                         What Our Customers Say
                     </h2>
-                    <p className="text-lg text-neutral-gray max-w-2xl mx-auto">
+                    <p className="text-lg text-[#6B6B6B] max-w-2xl mx-auto">
                         Real results from real people
                     </p>
                 </div>
@@ -66,18 +66,18 @@ export default function Testimonials() {
                             ))}
                         </div>
 
-                        <p className="text-xl md:text-2xl text-neutral-gray text-center mb-8 italic">
+                        <p className="text-xl md:text-2xl text-[#6B6B6B] text-center mb-8 italic">
                             "{testimonials[currentIndex].text}"
                         </p>
 
                         <div className="text-center">
-                            <p className="font-heading text-lg font-semibold text-primary">
+                            <p className="font-heading text-lg font-semibold text-[#0B2F26]">
                                 {testimonials[currentIndex].name}
                             </p>
-                            <p className="text-neutral-gray">
+                            <p className="text-[#6B6B6B]">
                                 {testimonials[currentIndex].location}
                             </p>
-                            <p className="text-sm text-secondary-dark mt-2">
+                            <p className="text-sm text-[#B8A68A] mt-2">
                                 Verified Purchase: {testimonials[currentIndex].product}
                             </p>
                         </div>
@@ -86,7 +86,7 @@ export default function Testimonials() {
                     <div className="flex items-center justify-center gap-4 mt-8">
                         <button
                             onClick={prev}
-                            className="w-12 h-12 rounded-full border-2 border-primary text-primary hover:bg-primary hover:text-white transition-colors flex items-center justify-center"
+                            className="w-12 h-12 rounded-full border-2 border-[#0B2F26] text-[#0B2F26] hover:bg-[#0B2F26] hover:text-white transition-colors flex items-center justify-center"
                             aria-label="Previous testimonial"
                         >
                             ←
@@ -97,7 +97,7 @@ export default function Testimonials() {
                                 <button
                                     key={index}
                                     onClick={() => setCurrentIndex(index)}
-                                    className={`w-2 h-2 rounded-full transition-all ${index === currentIndex ? 'bg-primary w-8' : 'bg-neutral-beige'
+                                    className={`w-2 h-2 rounded-full transition-all ${index === currentIndex ? 'bg-[#0B2F26] w-8' : 'bg-[#F5F3F0]'
                                         }`}
                                     aria-label={`Go to testimonial ${index + 1}`}
                                 />
@@ -106,7 +106,7 @@ export default function Testimonials() {
 
                         <button
                             onClick={next}
-                            className="w-12 h-12 rounded-full border-2 border-primary text-primary hover:bg-primary hover:text-white transition-colors flex items-center justify-center"
+                            className="w-12 h-12 rounded-full border-2 border-[#0B2F26] text-[#0B2F26] hover:bg-[#0B2F26] hover:text-white transition-colors flex items-center justify-center"
                             aria-label="Next testimonial"
                         >
                             →

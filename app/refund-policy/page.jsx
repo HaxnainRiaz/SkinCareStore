@@ -15,27 +15,25 @@ export default function RefundPolicyPage() {
 
             <Container className="py-16">
                 <div className="max-w-4xl mx-auto">
-                    <h2 className="text-2xl font-heading font-bold text-primary mb-4">30-Day Money-Back Guarantee</h2>
+                    <h2 className="text-2xl font-heading font-bold text-primary mb-4">Exchanges & Refunds</h2>
                     <p className="text-neutral-gray mb-8">
-                        We stand behind the quality of our products. If you're not completely satisfied with your purchase, you may return it within 30 days of delivery for a full refund.
+                        We offer a 3-day exchange window from the date of delivery. Refunds or exchanges are only eligible for damaged, defective, or incorrect products.
                     </p>
 
-                    <h2 className="text-2xl font-heading font-bold text-primary mb-4">Return Conditions</h2>
-                    <p className="text-neutral-gray mb-4">To be eligible for a return:</p>
+                    <h2 className="text-2xl font-heading font-bold text-primary mb-4">Eligibility Conditions</h2>
+                    <p className="text-neutral-gray mb-4">To be eligible for an exchange or refund:</p>
                     <ul className="list-disc list-inside text-neutral-gray mb-8 space-y-2">
-                        <li>Products must be returned within 30 days of delivery</li>
-                        <li>Items must be in original packaging</li>
-                        <li>Products should be at least 50% full</li>
-                        <li>Proof of purchase is required</li>
+                        <li>Products must be reported within 3 days of delivery</li>
+                        <li>Items must be damaged, defective, or incorrect upon arrival</li>
+                        <li>Proof of purchase and photos of the issue are required</li>
                     </ul>
 
-                    <h2 className="text-2xl font-heading font-bold text-primary mb-4">How to Return</h2>
-                    <p className="text-neutral-gray mb-4">To initiate a return:</p>
+                    <h2 className="text-2xl font-heading font-bold text-primary mb-4">How to Request</h2>
+                    <p className="text-neutral-gray mb-4">To initiate a request:</p>
                     <ol className="list-decimal list-inside text-neutral-gray mb-8 space-y-2">
-                        <li>Contact our customer service team at returns@luxebotanica.com</li>
-                        <li>Provide your order number and reason for return</li>
-                        <li>We'll send you a prepaid return label</li>
-                        <li>Pack items securely and ship them back</li>
+                        <li>Contact us via email at riazmaria458@gmail.com or WhatsApp at 03174120567</li>
+                        <li>Provide your order number and clear photos of the damage/defect</li>
+                        <li>Our team will review your request and get back to you within 24–48 hours</li>
                     </ol>
 
                     <h2 className="text-2xl font-heading font-bold text-primary mb-4">Refund Processing</h2>
@@ -50,7 +48,7 @@ export default function RefundPolicyPage() {
 
                     <h2 className="text-2xl font-heading font-bold text-primary mb-4">Questions?</h2>
                     <p className="text-neutral-gray">
-                        If you have any questions about our refund policy, please contact us at support@luxebotanica.com
+                        If you have any questions about our policies, please contact us at riazmaria458@gmail.com or WhatsApp: 03174120567
                     </p>
                 </div>
             </Container>

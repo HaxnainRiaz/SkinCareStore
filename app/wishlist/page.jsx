@@ -5,22 +5,35 @@ import Link from 'next/link';
 import { Container } from '@/components/ui/Container';
 import { Button } from '@/components/ui/Button';
 import ProductCard from '@/components/commerce/ProductCard';
-import { getWishlist } from '@/lib/cart';
-import { getProductById } from '@/lib/products';
+import { useStoreAuth } from '@/context/StoreAuthContext';
+import { useCore } from '@/context/CoreContext';
 
 export default function WishlistPage() {
+    const { user, loading: authLoading } = useStoreAuth();
+    const { products, loading: productsLoading } = useCore();
     const [wishlistProducts, setWishlistProducts] = useState([]);
-    const [isClient, setIsClient] = useState(false);
 
     useEffect(() => {
-        setIsClient(true);
-        const wishlistIds = getWishlist();
-        const products = wishlistIds.map(id => getProductById(id)).filter(Boolean);
-        setWishlistProducts(products);
-    }, []);
+        if (!authLoading && !productsLoading && user && products) {
+            const savedIds = user.wishlist || [];
+            const filtered = products.filter(p => savedIds.includes(p._id));
+            setWishlistProducts(filtered);
+        }
+    }, [user, products, authLoading, productsLoading]);
 
-    if (!isClient) {
-        return null;
+    if (authLoading || productsLoading) {
+        return <div className="py-24 text-center">Loading Wishlist...</div>;
+    }
+
+    if (!user) {
+        return (
+            <Container className="py-24 text-center">
+                <h1 className="text-3xl font-heading font-bold text-primary mb-4">Please log in to see your wishlist</h1>
+                <Link href="/account/login">
+                    <Button>Sign In</Button>
+                </Link>
+            </Container>
+        );
     }
 
     return (

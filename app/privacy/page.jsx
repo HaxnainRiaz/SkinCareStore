@@ -49,7 +49,7 @@ export default function PrivacyPage() {
 
                     <h2 className="text-2xl font-heading font-bold text-primary mt-8 mb-4">Contact Us</h2>
                     <p className="text-neutral-gray">
-                        If you have questions about this Privacy Policy, please contact us at privacy@luxebotanica.com
+                        If you have questions about this Privacy Policy, please contact us at riazmaria458@gmail.com
                     </p>
                 </div>
             </Container>

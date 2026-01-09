@@ -8,7 +8,7 @@ const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/api`;
 
 export function CoreProvider({ children }) {
     const [settings, setSettings] = useState({
-        announcementBarText: "Free Shipping on Orders Over $75",
+        announcementBarText: "Free Shipping on Orders Over Rs. 5,000",
         showNewsletterSection: true,
         showFeaturedCollection: true,
         showBlogSection: true

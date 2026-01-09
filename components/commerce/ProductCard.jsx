@@ -90,11 +90,11 @@ export default function ProductCard({ product }) {
                 </div>
 
                 <div className="p-4">
-                    <h3 className="font-heading text-lg font-semibold text-primary mb-2 group-hover:text-primary-light transition-colors">
+                    <h3 className="font-heading text-lg font-semibold text-[#0B2F26] mb-2 group-hover:text-[#0F3A2F] transition-colors">
                         {product.title}
                     </h3>
 
-                    <p className="text-sm text-neutral-gray mb-3 line-clamp-2">
+                    <p className="text-sm text-[#6B6B6B] mb-3 line-clamp-2">
                         {product.description}
                     </p>
 
@@ -112,18 +112,18 @@ export default function ProductCard({ product }) {
                                 </svg>
                             ))}
                         </div>
-                        <span className="text-sm text-neutral-gray">
+                        <span className="text-sm text-[#6B6B6B]">
                             {product.rating} ({product.totalReviews || 0})
                         </span>
                     </div>
 
                     {/* Price */}
                     <div className="flex items-center gap-2">
-                        <span className="text-xl font-semibold text-primary">
+                        <span className="text-xl font-semibold text-[#0B2F26]">
                             {formatPrice(displayPrice)}
                         </span>
                         {product.salePrice && (
-                            <span className="text-sm text-neutral-gray line-through">
+                            <span className="text-sm text-[#6B6B6B] line-through">
                                 {formatPrice(product.price)}
                             </span>
                         )}

@@ -1,10 +1,14 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Container } from '@/components/ui/Container';
 import { Button } from '@/components/ui/Button';
+import { useStoreAuth } from '@/context/StoreAuthContext';
+
+const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/api`;
 
 export default function ContactPage() {
+    const { user } = useStoreAuth();
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -12,12 +16,45 @@ export default function ContactPage() {
         message: '',
     });
     const [status, setStatus] = useState('');
+    const [loading, setLoading] = useState(false);
 
-    const handleSubmit = (e) => {
+    // Prefill user data
+    useEffect(() => {
+        if (user) {
+            setFormData(prev => ({ ...prev, name: user.name, email: user.email }));
+        }
+    }, [user]);
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        setStatus('success');
-        setFormData({ name: '', email: '', subject: '', message: '' });
-        setTimeout(() => setStatus(''), 3000);
+        setLoading(true);
+        setStatus('');
+
+        try {
+            const token = localStorage.getItem('token');
+            const headers = { 'Content-Type': 'application/json' };
+            if (token) headers['Authorization'] = `Bearer ${token}`;
+
+            const res = await fetch(`${API_URL}/support-tickets`, {
+                method: 'POST',
+                headers,
+                body: JSON.stringify(formData)
+            });
+            const data = await res.json();
+
+            if (data.success) {
+                setStatus('success');
+                setFormData({ name: user?.name || '', email: user?.email || '', subject: '', message: '' });
+                // Reset success message after 5 seconds
+                setTimeout(() => setStatus(''), 5000);
+            } else {
+                setStatus('error');
+            }
+        } catch (err) {
+            setStatus('error');
+        } finally {
+            setLoading(false);
+        }
     };
 
     const handleChange = (e) => {
@@ -42,7 +79,7 @@ export default function ContactPage() {
                         </p>
 
                         <div className="space-y-6">
-                            <div className="flex items-start gap-4">
+                            <div className="flex items-start gap-4 text-xs md:text-sm">
                                 <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
                                     <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -50,24 +87,24 @@ export default function ContactPage() {
                                 </div>
                                 <div>
                                     <h3 className="font-semibold text-primary mb-1">Email</h3>
-                                    <p className="text-neutral-gray">support@luxebotanica.com</p>
+                                    <p className="text-neutral-gray">riazmaria458@gmail.com</p>
                                 </div>
                             </div>
 
-                            <div className="flex items-start gap-4">
+                            <div className="flex items-start gap-4 text-xs md:text-sm">
                                 <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
                                     <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                                     </svg>
                                 </div>
                                 <div>
-                                    <h3 className="font-semibold text-primary mb-1">Phone</h3>
-                                    <p className="text-neutral-gray">1-800-LUXE-SKIN</p>
-                                    <p className="text-sm text-neutral-gray">Mon-Fri, 9am-6pm EST</p>
+                                    <h3 className="font-semibold text-primary mb-1">WhatsApp</h3>
+                                    <p className="text-neutral-gray">03174120567</p>
+                                    <p className="text-xs text-neutral-gray italic">Available 9am-6pm</p>
                                 </div>
                             </div>
 
-                            <div className="flex items-start gap-4">
+                            <div className="flex items-start gap-4 text-xs md:text-sm">
                                 <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
                                     <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
@@ -75,10 +112,9 @@ export default function ContactPage() {
                                     </svg>
                                 </div>
                                 <div>
-                                    <h3 className="font-semibold text-primary mb-1">Address</h3>
-                                    <p className="text-neutral-gray">
-                                        123 Botanical Avenue<br />
-                                        New York, NY 10001
+                                    <h3 className="font-semibold text-primary mb-1">Location</h3>
+                                    <p className="text-neutral-gray italic">
+                                        Crafted with care and nature's finest ingredients.
                                     </p>
                                 </div>
                             </div>
@@ -89,14 +125,22 @@ export default function ContactPage() {
                         <h2 className="text-2xl font-heading font-bold text-primary mb-6">Send us a Message</h2>
 
                         {status === 'success' && (
-                            <div className="mb-6 p-4 bg-green-50 text-green-800 rounded-lg">
-                                ✓ Thank you! We'll get back to you soon.
+                            <div className="mb-6 p-4 bg-green-50 text-green-800 rounded-lg border border-green-100 flex items-center gap-2 animate-fadeIn">
+                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                                <span>Message sent! We'll track this in your account support tickets.</span>
+                            </div>
+                        )}
+
+                        {status === 'error' && (
+                            <div className="mb-6 p-4 bg-red-50 text-red-800 rounded-lg border border-red-100 flex items-center gap-2 animate-fadeIn">
+                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+                                <span>Failed to send message. Please try again.</span>
                             </div>
                         )}
 
                         <form onSubmit={handleSubmit} className="space-y-4">
                             <div>
-                                <label htmlFor="name" className="block text-sm font-medium text-primary mb-2">
+                                <label htmlFor="name" className="block text-xs font-bold text-primary mb-2 uppercase tracking-widest">
                                     Name *
                                 </label>
                                 <input
@@ -106,12 +150,13 @@ export default function ContactPage() {
                                     value={formData.name}
                                     onChange={handleChange}
                                     required
+                                    placeholder="Your full name"
                                     className="input-field"
                                 />
                             </div>
 
                             <div>
-                                <label htmlFor="email" className="block text-sm font-medium text-primary mb-2">
+                                <label htmlFor="email" className="block text-xs font-bold text-primary mb-2 uppercase tracking-widest">
                                     Email *
                                 </label>
                                 <input
@@ -121,12 +166,13 @@ export default function ContactPage() {
                                     value={formData.email}
                                     onChange={handleChange}
                                     required
+                                    placeholder="you@example.com"
                                     className="input-field"
                                 />
                             </div>
 
                             <div>
-                                <label htmlFor="subject" className="block text-sm font-medium text-primary mb-2">
+                                <label htmlFor="subject" className="block text-xs font-bold text-primary mb-2 uppercase tracking-widest">
                                     Subject *
                                 </label>
                                 <input
@@ -136,12 +182,13 @@ export default function ContactPage() {
                                     value={formData.subject}
                                     onChange={handleChange}
                                     required
+                                    placeholder="How can we help?"
                                     className="input-field"
                                 />
                             </div>
 
                             <div>
-                                <label htmlFor="message" className="block text-sm font-medium text-primary mb-2">
+                                <label htmlFor="message" className="block text-xs font-bold text-primary mb-2 uppercase tracking-widest">
                                     Message *
                                 </label>
                                 <textarea
@@ -150,13 +197,19 @@ export default function ContactPage() {
                                     value={formData.message}
                                     onChange={handleChange}
                                     required
-                                    rows={6}
+                                    rows={5}
+                                    placeholder="Tell us more about your inquiry..."
                                     className="input-field resize-none"
                                 />
                             </div>
 
-                            <Button type="submit" className="w-full" size="lg">
-                                Send Message
+                            <Button type="submit" className="w-full h-14 rounded-xl text-sm font-bold uppercase tracking-widest shadow-xl shadow-primary/10 transition-all hover:scale-[1.01] active:scale-[0.99]" disabled={loading}>
+                                {loading ? (
+                                    <div className="flex items-center gap-2">
+                                        <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                                        <span>Dispatching...</span>
+                                    </div>
+                                ) : 'Send Message'}
                             </Button>
                         </form>
                     </div>

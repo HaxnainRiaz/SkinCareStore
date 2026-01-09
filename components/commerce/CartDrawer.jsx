@@ -33,17 +33,17 @@ export default function CartDrawer({ isOpen, onClose }) {
             />
 
             {/* Drawer */}
-            <div className="fixed inset-y-0 right-0 w-full sm:w-96 bg-white z-50 shadow-large overflow-y-auto">
+            <div className="fixed inset-y-0 right-0 w-full sm:w-96 bg-white z-50 shadow-[0_16px_60px_#0B2F2626] overflow-y-auto">
                 <div className="flex flex-col h-full">
                     {/* Header */}
-                    <div className="p-6 border-b border-neutral-beige">
+                    <div className="p-6 border-b border-[#F5F3F0]">
                         <div className="flex items-center justify-between">
-                            <h2 className="text-2xl font-heading font-semibold text-primary">
+                            <h2 className="text-2xl font-heading font-semibold text-[#0B2F26]">
                                 Shopping Cart ({itemCount})
                             </h2>
                             <button
                                 onClick={onClose}
-                                className="p-2 text-primary hover:bg-primary/10 rounded-lg transition-colors"
+                                className="p-2 text-[#0B2F26] hover:bg-[#0B2F261A] rounded-lg transition-colors"
                                 aria-label="Close cart"
                             >
                                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -57,10 +57,10 @@ export default function CartDrawer({ isOpen, onClose }) {
                     <div className="flex-1 overflow-y-auto p-6">
                         {cart.length === 0 ? (
                             <div className="text-center py-12">
-                                <svg className="w-16 h-16 mx-auto text-neutral-gray/30 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg className="w-16 h-16 mx-auto text-[#6B6B6B4C] mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                                 </svg>
-                                <p className="text-neutral-gray mb-4">Your cart is empty</p>
+                                <p className="text-[#6B6B6B] mb-4">Your cart is empty</p>
                                 <Button onClick={onClose} variant="primary">
                                     Continue Shopping
                                 </Button>
@@ -68,7 +68,7 @@ export default function CartDrawer({ isOpen, onClose }) {
                         ) : (
                             <div className="space-y-4">
                                 {cart.map((item) => (
-                                    <div key={item.id} className="flex gap-4 p-4 bg-neutral-cream rounded-lg">
+                                    <div key={item.id} className="flex gap-4 p-4 bg-[#FDFCFB] rounded-lg">
                                         <div className="relative w-20 h-20 flex-shrink-0 bg-white rounded-lg overflow-hidden">
                                             <Image
                                                 src={item.image || `https://placehold.co/200x200/E5D5C2/0B2F26?text=${encodeURIComponent(item.title)}`}
@@ -83,19 +83,19 @@ export default function CartDrawer({ isOpen, onClose }) {
                                             <Link
                                                 href={`/product/${item.slug}`}
                                                 onClick={onClose}
-                                                className="font-medium text-primary hover:text-primary-light transition-colors line-clamp-1"
+                                                className="font-medium text-[#0B2F26] hover:text-[#0F3A2F] transition-colors line-clamp-1"
                                             >
                                                 {item.title}
                                             </Link>
 
-                                            <p className="text-sm text-neutral-gray mt-1">
+                                            <p className="text-sm text-[#6B6B6B] mt-1">
                                                 {formatPrice(item.price)}
                                             </p>
 
                                             <div className="flex items-center gap-2 mt-2">
                                                 <button
                                                     onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                                                    className="w-7 h-7 flex items-center justify-center border border-neutral-beige rounded hover:bg-primary hover:text-white hover:border-primary transition-colors"
+                                                    className="w-7 h-7 flex items-center justify-center border border-[#F5F3F0] rounded hover:bg-[#0B2F26] hover:text-white hover:border-[#0B2F26] transition-colors"
                                                     aria-label="Decrease quantity"
                                                 >
                                                     −
@@ -103,7 +103,7 @@ export default function CartDrawer({ isOpen, onClose }) {
                                                 <span className="w-8 text-center">{item.quantity}</span>
                                                 <button
                                                     onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                                                    className="w-7 h-7 flex items-center justify-center border border-neutral-beige rounded hover:bg-primary hover:text-white hover:border-primary transition-colors"
+                                                    className="w-7 h-7 flex items-center justify-center border border-[#F5F3F0] rounded hover:bg-[#0B2F26] hover:text-white hover:border-[#0B2F26] transition-colors"
                                                     aria-label="Increase quantity"
                                                 >
                                                     +
@@ -124,13 +124,13 @@ export default function CartDrawer({ isOpen, onClose }) {
 
                     {/* Footer */}
                     {cart.length > 0 && (
-                        <div className="border-t border-neutral-beige p-6 space-y-4">
+                        <div className="border-t border-[#F5F3F0] p-6 space-y-4">
                             <div className="flex justify-between text-lg font-semibold">
                                 <span>Subtotal:</span>
-                                <span className="text-primary">{formatPrice(total)}</span>
+                                <span className="text-[#0B2F26]">{formatPrice(total)}</span>
                             </div>
 
-                            <p className="text-sm text-neutral-gray">
+                            <p className="text-sm text-[#6B6B6B]">
                                 Shipping and taxes calculated at checkout
                             </p>
 

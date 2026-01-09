@@ -16,18 +16,15 @@ export default function ShippingPolicyPage() {
             <Container className="py-16">
                 <div className="max-w-4xl mx-auto">
                     <h2 className="text-2xl font-heading font-bold text-primary mb-4">Shipping Methods & Costs</h2>
-                    <p className="text-neutral-gray mb-6">
-                        We offer several shipping options to meet your needs:
-                    </p>
                     <ul className="list-disc list-inside text-neutral-gray mb-8 space-y-2">
-                        <li><strong>Standard Shipping (5-7 business days):</strong> $10 - FREE on orders over $75</li>
-                        <li><strong>Express Shipping (2-3 business days):</strong> $20</li>
-                        <li><strong>Overnight Shipping (1 business day):</strong> $35</li>
+                        <li><strong>Standard Delivery:</strong> 3–7 business days</li>
+                        <li><strong>Processing Time:</strong> 1–2 business days</li>
+                        <li><strong>Shipping Charges:</strong> Calculated at checkout</li>
                     </ul>
 
-                    <h2 className="text-2xl font-heading font-bold text-primary mb-4">Processing Time</h2>
+                    <h2 className="text-2xl font-heading font-bold text-primary mb-4">Delivery Timeline</h2>
                     <p className="text-neutral-gray mb-8">
-                        Orders are processed within 1-2 business days. Orders placed on weekends or holidays will be processed the next business day.
+                        Once your order is processed (1–2 business days), delivery typicaly takes 3–7 business days depending on your location.
                     </p>
 
                     <h2 className="text-2xl font-heading font-bold text-primary mb-4">International Shipping</h2>
@@ -42,7 +39,7 @@ export default function ShippingPolicyPage() {
 
                     <h2 className="text-2xl font-heading font-bold text-primary mb-4">Delivery Issues</h2>
                     <p className="text-neutral-gray">
-                        If your order hasn't arrived within the estimated delivery time, please contact us at support@luxebotanica.com and we'll help resolve the issue.
+                        If your order hasn't arrived within the estimated delivery time, please contact us at riazmaria458@gmail.com and we'll help resolve the issue.
                     </p>
                 </div>
             </Container>

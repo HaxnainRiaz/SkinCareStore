@@ -161,9 +161,10 @@ export default function ProductPage() {
                             )}
                         </div>
 
-                        <p className="text-lg text-neutral-gray mb-6">
-                            {product.longDescription || product.description}
-                        </p>
+                        <div
+                            className="text-lg text-neutral-gray mb-6 leading-relaxed"
+                            dangerouslySetInnerHTML={{ __html: product.longDescription || product.description }}
+                        />
 
                         {/* Stock */}
                         {product.stock > 0 ? (

@@ -33,7 +33,7 @@ export default function CheckoutPage() {
         city: '',
         state: '',
         zipCode: '',
-        country: 'United States',
+        country: 'Pakistan',
         phone: '',
     });
 

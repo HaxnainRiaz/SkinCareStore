@@ -54,7 +54,7 @@ export default function TermsPage() {
 
                     <h2 className="text-2xl font-heading font-bold text-primary mt-8 mb-4">8. Contact Information</h2>
                     <p className="text-neutral-gray">
-                        For questions about these Terms of Service, please contact us at legal@luxebotanica.com
+                        For questions about these Terms of Service, please contact us at riazmaria458@gmail.com
                     </p>
                 </div>
             </Container>

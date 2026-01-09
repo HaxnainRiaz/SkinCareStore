@@ -14,10 +14,10 @@ export default function FeaturedProducts() {
         <section className="section-padding bg-white">
             <Container>
                 <div className="text-center mb-12">
-                    <h2 className="text-4xl text-[#0b2f26] md:text-5xl font-heading font-bold text-primary mb-4">
+                    <h2 className="text-4xl md:text-5xl font-heading font-bold text-[#0B2F26] mb-4">
                         Featured Collection
                     </h2>
-                    <p className="text-lg text-neutral-gray max-w-2xl mx-auto">
+                    <p className="text-lg text-[#6B6B6B] max-w-2xl mx-auto">
                         Discover our handpicked selection of premium skincare essentials, carefully formulated to transform your skin.
                     </p>
                 </div>

@@ -20,20 +20,26 @@ const cormorant = Cormorant_Garamond({
 });
 
 export const metadata = {
-    title: 'Luminelle Organics - Premium Luxury Skincare',
-    description: 'Discover our collection of premium, botanical-infused skincare products. Luxury formulations for radiant, healthy skin.',
-    keywords: 'luxury skincare, premium skincare, botanical skincare, natural beauty, anti-aging, serums, moisturizers',
+    metadataBase: new URL('https://luminelle.org'),
+    title: 'Luminelle Organics - Heal. Glow. Naturally',
+    description: 'Proven organic skincare for radiant, healthy skin. Crafted with nature’s finest ingredients.',
+    keywords: 'organic soap, natural skincare, botanical beauty, kalonji soap, neem soap, kojic acid, healthy skin, radiant glow',
     openGraph: {
-        title: 'Luminelle Organics - Premium Luxury Skincare',
-        description: 'Discover our collection of premium, botanical-infused skincare products.',
+        title: 'Luminelle Organics - Heal. Glow. Naturally',
+        description: 'Proven organic skincare for radiant, healthy skin. Crafted with nature’s finest ingredients.',
+        url: 'https://luminelle.org',
         type: 'website',
         locale: 'en_US',
         siteName: 'Luminelle Organics',
     },
     twitter: {
         card: 'summary_large_image',
-        title: 'Luminelle Organics - Premium Luxury Skincare',
-        description: 'Discover our collection of premium, botanical-infused skincare products.',
+        title: 'Luminelle Organics - Heal. Glow. Naturally',
+        description: 'Proven organic skincare for radiant, healthy skin. Crafted with nature’s finest ingredients.',
+    },
+    icons: {
+        icon: '/favicon.png',
+        apple: '/favicon.png',
     },
 };
 

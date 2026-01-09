@@ -17,13 +17,13 @@ export default function AboutPage() {
             <Container className="py-16">
                 <div className="max-w-4xl mx-auto space-y-12">
                     <section id="story">
-                        <h2 className="text-3xl font-heading font-bold text-primary mb-6">Our Story</h2>
+                        <h2 className="text-3xl font-heading font-bold text-primary mb-6">Who We Are</h2>
                         <div className="space-y-4 text-lg text-neutral-gray">
                             <p>
-                                At Luminelle we believe that healthy, radiant skin comes from nature, not chemicals. Every soap we craft is carefully formulated with natural, plant-based ingredients like Aloe Vera, Neem, Kalonji, Carrot Seed Oil, Licorice Root, Witch Hazel, and Kojic Acid — chosen for their proven benefits in cleansing, nourishing, and rejuvenating skin.
-                                Our mission is simple: to empower people to care for their skin naturally. We don’t just create soap — we provide educational, value-driven solutions that help our customers understand their skin, address their concerns, and achieve youthful, glowing, and healthy skin safely.
-                                At Luminelle, quality, transparency, and trust guide everything we do. We combine nature’s best ingredients with modern knowledge to craft products that are gentle, effective, and good for your skin — every day.
-
+                                At Luminelle, we believe healthy, radiant skin comes from nature, not chemicals. We craft organic soaps using Aloe Vera, Neem, Kalonji, Carrot Seed Oil, Licorice Root, Witch Hazel, and Kojic Acid — combining nature’s best with modern knowledge.
+                            </p>
+                            <p>
+                                We were tired of complicated skincare routines and chemical-filled promises. After a year of experimenting with Neem, Kalonji, Aloe Vera, and essential oils, we created soaps that truly work. Each bar is crafted with care, research, and passion — nature simplified, made effective, and made for you.
                             </p>
                         </div>
                     </section>

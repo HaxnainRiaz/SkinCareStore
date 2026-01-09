@@ -108,8 +108,22 @@ export function StoreAuthProvider({ children }) {
     // --- Wishlist & Addresses ---
 
     const toggleWishlist = async (productId) => {
+        if (!user) {
+            router.push('/account/login');
+            return false;
+        }
+
         const token = localStorage.getItem("token");
         const isWishlisted = user?.wishlist?.includes(productId);
+
+        // Optimistic update
+        const previousWishlist = [...(user.wishlist || [])];
+        const newWishlist = isWishlisted
+            ? previousWishlist.filter(id => id !== productId)
+            : [...previousWishlist, productId];
+
+        setUser(prev => ({ ...prev, wishlist: newWishlist }));
+
         const method = isWishlisted ? 'DELETE' : 'POST';
 
         try {
@@ -119,11 +133,18 @@ export function StoreAuthProvider({ children }) {
             });
             const data = await res.json();
             if (data.success) {
+                // Confirm with server's data
                 setUser(prev => ({ ...prev, wishlist: data.data }));
                 return true;
+            } else {
+                // Revert if error
+                setUser(prev => ({ ...prev, wishlist: previousWishlist }));
+                addToast(data.message || "Failed to update wishlist", 'error');
             }
         } catch (err) {
             console.error(err);
+            setUser(prev => ({ ...prev, wishlist: previousWishlist }));
+            addToast("Connection error. Wishlist not synced.", 'error');
         }
         return false;
     };

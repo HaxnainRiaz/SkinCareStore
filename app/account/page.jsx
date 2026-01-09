@@ -3,7 +3,7 @@
 import { useStoreAuth } from '@/context/StoreAuthContext';
 import { Container } from '@/components/ui/Container';
 import { Button } from '@/components/ui/Button';
-import { ShoppingBag, Star, Heart, Settings, LogOut, Package, CreditCard, ChevronRight, MapPin, Trash2, Edit3, Save, X, Plus } from 'lucide-react';
+import { ShoppingBag, Star, Heart, Settings, LogOut, Package, CreditCard, ChevronRight, MapPin, Trash2, Edit3, Save, X, Plus, LifeBuoy, Send, MessageSquare, ShieldCheck, User } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
@@ -116,6 +116,7 @@ export default function AccountPage() {
                                     { id: 'Orders', icon: ShoppingBag },
                                     { id: 'Addresses', icon: MapPin },
                                     { id: 'Wishlist', icon: Heart },
+                                    { id: 'Support', icon: LifeBuoy },
                                     { id: 'Settings', icon: Settings },
                                 ].map((item) => (
                                     <button
@@ -188,9 +189,9 @@ export default function AccountPage() {
                                                             <td className="p-6 text-neutral-gray">{new Date(order.createdAt).toLocaleDateString()}</td>
                                                             <td className="p-6">
                                                                 <span className={`px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest shadow-sm border ${order.orderStatus === 'delivered' ? 'bg-green-50 text-green-700 border-green-100' :
-                                                                        order.orderStatus === 'cancelled' ? 'bg-red-50 text-red-700 border-red-100' :
-                                                                            order.orderStatus === 'shipped' ? 'bg-blue-50 text-blue-700 border-blue-100' :
-                                                                                'bg-secondary/20 text-primary border-secondary/30'
+                                                                    order.orderStatus === 'cancelled' ? 'bg-red-50 text-red-700 border-red-100' :
+                                                                        order.orderStatus === 'shipped' ? 'bg-blue-50 text-blue-700 border-blue-100' :
+                                                                            'bg-secondary/20 text-primary border-secondary/30'
                                                                     }`}>
                                                                     {order.orderStatus}
                                                                 </span>
@@ -225,8 +226,8 @@ export default function AccountPage() {
                                                             <div className="flex items-center gap-3 mb-1">
                                                                 <h4 className="font-bold text-primary font-heading italic text-lg hover:text-secondary-dark transition-colors cursor-pointer">Order #{order._id.substring(18).toUpperCase()}</h4>
                                                                 <div className={`w-2 h-2 rounded-full animate-pulse ${order.orderStatus === 'delivered' ? 'bg-green-500' :
-                                                                        order.orderStatus === 'cancelled' ? 'bg-red-500' :
-                                                                            'bg-secondary'
+                                                                    order.orderStatus === 'cancelled' ? 'bg-red-500' :
+                                                                        'bg-secondary'
                                                                     }`} />
                                                             </div>
                                                             <p className="text-xs text-neutral-gray font-medium">{new Date(order.createdAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</p>
@@ -236,9 +237,9 @@ export default function AccountPage() {
                                                         <div className="text-right">
                                                             <p className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest mb-2 font-body">Current Milestone</p>
                                                             <span className={`px-5 py-2 rounded-full text-[11px] font-bold uppercase tracking-[0.2em] shadow-lg ${order.orderStatus === 'delivered' ? 'bg-green-600 text-white' :
-                                                                    order.orderStatus === 'cancelled' ? 'bg-red-600 text-white' :
-                                                                        order.orderStatus === 'shipped' ? 'bg-blue-600 text-white' :
-                                                                            'bg-secondary text-primary'
+                                                                order.orderStatus === 'cancelled' ? 'bg-red-600 text-white' :
+                                                                    order.orderStatus === 'shipped' ? 'bg-blue-600 text-white' :
+                                                                        'bg-secondary text-primary'
                                                                 }`}>
                                                                 {order.orderStatus}
                                                             </span>
@@ -326,6 +327,18 @@ export default function AccountPage() {
                             </div>
                         )}
 
+                        {activeTab === 'Support' && (
+                            <div className="bg-white rounded-[2.5rem] shadow-soft border border-neutral-beige overflow-hidden">
+                                <div className="p-8 border-b border-neutral-beige flex items-center justify-between">
+                                    <h3 className="font-heading font-bold text-2xl text-primary italic">Support Concierge</h3>
+                                    <Link href="/contact"><Button size="sm" variant="outline" className="rounded-xl text-[10px] uppercase font-bold tracking-widest px-8">New Inquiry</Button></Link>
+                                </div>
+                                <div className="p-8 space-y-6">
+                                    <SupportTicketsSection />
+                                </div>
+                            </div>
+                        )}
+
                         {activeTab === 'Settings' && (
                             <div className="bg-white rounded-[2.5rem] shadow-soft border border-neutral-beige overflow-hidden">
                                 <div className="p-8 border-b border-neutral-beige"><h3 className="font-heading font-bold text-2xl text-primary italic">Profile Architecture</h3></div>
@@ -362,6 +375,151 @@ export default function AccountPage() {
                     </div>
                 </div>
             </Container>
+        </div>
+    );
+}
+
+function SupportTicketsSection() {
+    const [tickets, setTickets] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [selectedTicket, setSelectedTicket] = useState(null);
+    const [reply, setReply] = useState("");
+    const [sending, setSending] = useState(false);
+    const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/api`;
+
+    const fetchTickets = async () => {
+        const token = localStorage.getItem('token');
+        try {
+            const res = await fetch(`${API_URL}/support-tickets/my-tickets`, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            const data = await res.json();
+            if (data.success) setTickets(data.data);
+        } catch (err) {
+            console.error(err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchTickets();
+    }, []);
+
+    const handleReply = async (e) => {
+        e.preventDefault();
+        if (!reply.trim()) return;
+        setSending(true);
+        const token = localStorage.getItem('token');
+        try {
+            const res = await fetch(`${API_URL}/support-tickets/${selectedTicket._id}/reply`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify({ message: reply })
+            });
+            const data = await res.json();
+            if (data.success) {
+                setSelectedTicket(data.data);
+                setReply("");
+                fetchTickets();
+            }
+        } catch (err) {
+            console.error(err);
+        } finally {
+            setSending(false);
+        }
+    };
+
+    if (loading) return <div className="text-center py-10 italic">Loading transmissions...</div>;
+
+    if (selectedTicket) {
+        return (
+            <div className="space-y-6 animate-fadeIn">
+                <button onClick={() => setSelectedTicket(null)} className="text-[10px] font-bold text-neutral-400 hover:text-primary uppercase tracking-widest flex items-center gap-2 mb-4">
+                    ← Return to Overview
+                </button>
+                <div className="bg-neutral-beige/10 p-6 rounded-3xl border border-neutral-beige">
+                    <h4 className="font-heading font-bold text-xl text-primary italic mb-1">{selectedTicket.subject}</h4>
+                    <p className="text-[10px] text-neutral-400 font-bold uppercase tracking-widest">Ticket #{selectedTicket._id.substring(18).toUpperCase()}</p>
+                </div>
+
+                <div className="space-y-6 max-h-[400px] overflow-y-auto p-4 custom-scrollbar">
+                    <div className="flex gap-4">
+                        <div className="w-10 h-10 rounded-xl bg-secondary/30 flex items-center justify-center shrink-0">
+                            <User size={18} className="text-primary" />
+                        </div>
+                        <div className="bg-white p-4 rounded-2xl rounded-tl-none border border-neutral-100 shadow-sm text-sm italic text-primary">
+                            {selectedTicket.message}
+                        </div>
+                    </div>
+
+                    {selectedTicket.replies?.map((r, i) => (
+                        <div key={i} className={`flex gap-4 ${r.sender === 'admin' ? 'flex-row-reverse' : ''}`}>
+                            <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${r.sender === 'admin' ? 'bg-primary text-secondary' : 'bg-secondary/30 text-primary'}`}>
+                                {r.sender === 'admin' ? <ShieldCheck size={18} /> : <User size={18} />}
+                            </div>
+                            <div className={`p-4 rounded-2xl border shadow-sm text-sm italic ${r.sender === 'admin' ? 'bg-primary text-secondary rounded-tr-none' : 'bg-white text-primary rounded-tl-none'}`}>
+                                {r.message}
+                            </div>
+                        </div>
+                    ))}
+                </div>
+
+                {selectedTicket.status !== 'resolved' ? (
+                    <form onSubmit={handleReply} className="flex gap-3">
+                        <input
+                            value={reply}
+                            onChange={e => setReply(e.target.value)}
+                            placeholder="Type your message..."
+                            className="flex-1 bg-neutral-50 border border-neutral-beige rounded-2xl px-6 py-4 text-sm focus:outline-none focus:ring-1 focus:ring-primary"
+                        />
+                        <Button type="submit" disabled={sending} className="rounded-2xl px-6">
+                            {sending ? <div className="w-4 h-4 border-2 border-secondary/30 border-t-secondary rounded-full animate-spin" /> : <Send size={18} />}
+                        </Button>
+                    </form>
+                ) : (
+                    <div className="text-center p-6 bg-green-50 text-green-700 rounded-2xl text-xs font-bold uppercase tracking-widest border border-green-100">
+                        This inquiry has been resolved.
+                    </div>
+                )}
+            </div>
+        );
+    }
+
+    return (
+        <div className="space-y-4">
+            {tickets.length === 0 ? (
+                <div className="text-center py-20 bg-neutral-beige/5 rounded-3xl border border-dashed border-neutral-beige">
+                    <p className="text-neutral-gray italic text-sm">No active support transmissions.</p>
+                </div>
+            ) : (
+                tickets.map(t => (
+                    <div
+                        key={t._id}
+                        onClick={() => setSelectedTicket(t)}
+                        className="p-6 border border-neutral-beige rounded-3xl hover:border-secondary transition-all cursor-pointer group flex items-center justify-between"
+                    >
+                        <div className="flex items-center gap-6">
+                            <div className={`w-12 h-12 rounded-2xl flex items-center justify-center ${t.status === 'open' ? 'bg-secondary/20 text-primary' : t.status === 'in-progress' ? 'bg-blue-50 text-blue-600' : 'bg-green-50 text-green-600'}`}>
+                                <MessageSquare size={20} />
+                            </div>
+                            <div>
+                                <h4 className="font-bold text-primary italic mb-0.5">{t.subject}</h4>
+                                <div className="flex items-center gap-3">
+                                    <span className="text-[9px] font-bold text-neutral-400 uppercase tracking-widest">#{t._id.substring(18).toUpperCase()}</span>
+                                    <span className={`px-2 py-0.5 rounded-full text-[8px] font-bold uppercase tracking-widest ${t.status === 'open' ? 'bg-yellow-50 text-yellow-700' : t.status === 'in-progress' ? 'bg-blue-50 text-blue-700' : 'bg-green-50 text-green-700'}`}>
+                                        {t.status}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <ChevronRight size={16} className="text-neutral-200 group-hover:text-primary transition-colors" />
+                    </div>
+                ))
+            )}
         </div>
     );
 }
