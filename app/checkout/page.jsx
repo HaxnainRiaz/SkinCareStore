@@ -288,9 +288,8 @@ export default function CheckoutPage() {
                             {/* Payment Method Stub */}
                             <div className="bg-white p-6 rounded-2xl shadow-[0_4px_20px_rgba(11,47,38,0.08)]">
                                 <h2 className="text-2xl font-heading font-semibold text-[#0a4019] mb-6">Payment</h2>
-                                <p className="text-sm text-[#6B6B6B] mb-4">Payment integration would go here (Stripe/PayPal).</p>
                                 <div className="bg-[#F5F3F0]/30 p-4 rounded-lg border border-[#F5F3F0] text-sm text-[#0a4019]">
-                                    Cash on Delivery selected for demo.
+                                    Cash on Delivery selected.
                                 </div>
                             </div>
 
