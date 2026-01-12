@@ -4,7 +4,7 @@ export const metadata = {
     title: 'About Us - Luminelle',
     description: 'Learn about our mission to create premium, ethical skincare products.',
 };
-
+//hs
 export default function AboutPage() {
     return (
         <div className="min-h-screen bg-[#FDFCFB]">

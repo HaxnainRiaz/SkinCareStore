@@ -572,6 +572,8 @@ function SupportTicketsSection() {
 
     useEffect(() => {
         fetchTickets();
+        const interval = setInterval(fetchTickets, 30000);
+        return () => clearInterval(interval);
     }, []);
 
     const handleReply = async (e) => {
