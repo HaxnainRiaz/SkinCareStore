@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useStoreAuth } from '@/context/StoreAuthContext';
 import { Container } from '@/components/ui/Container';
 import { Button } from '@/components/ui/Button';
+import { Input } from '@/components/ui/Input';
 import Link from 'next/link';
 import { Mail, Lock, User, ArrowRight } from 'lucide-react';
 
@@ -37,14 +38,14 @@ export default function RegisterPage() {
     };
 
     return (
-        <div className="bg-neutral-beige/30 min-h-[80vh] flex items-center">
-            <Container className="max-w-md py-12">
-                <div className="bg-white p-10 rounded-[2rem] shadow-soft border border-neutral-beige relative overflow-hidden">
-                    <div className="absolute top-0 left-0 w-full h-1 bg-primary/20" />
+        <div className="bg-[#F5F3F0]/30 min-h-[80vh] flex items-center">
+            <Container className="max-w-[500px] w-full mx-auto">
+                <div className="bg-white p-10 rounded-[2rem] shadow-[0_4px_20px_rgba(11,47,38,0.08)] border border-[#F5F3F0] relative overflow-hidden">
+                    <div className="absolute top-0 left-0 w-full h-1 bg-[#0a4019]/20" />
 
-                    <div className="text-center mb-8">
-                        <h1 className="text-3xl font-heading font-bold text-primary mb-2">Create Account</h1>
-                        <p className="text-sm text-neutral-gray">Join the Luminelle Organics family</p>
+                    <div className="text-center mb-4">
+                        <h1 className="text-3xl font-heading font-bold text-[#0a4019] mb-2">Create Account</h1>
+                        <p className="text-sm text-[#6B6B6B]">Join the Luminelle family</p>
                     </div>
 
                     <form onSubmit={handleSubmit} className="space-y-5">
@@ -54,79 +55,58 @@ export default function RegisterPage() {
                             </div>
                         )}
 
-                        <div>
-                            <label className="block text-xs font-bold text-primary uppercase tracking-widest mb-2 ml-1">Full Name</label>
-                            <div className="relative">
-                                <User className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-300" size={18} />
-                                <input
-                                    name="name"
-                                    type="text"
-                                    required
-                                    value={formData.name}
-                                    onChange={handleChange}
-                                    className="w-full pl-12 pr-4 py-4 bg-neutral-50 border border-neutral-beige rounded-2xl focus:ring-1 focus:ring-primary focus:outline-none transition-all"
-                                    placeholder="Jane Doe"
-                                />
-                            </div>
-                        </div>
+                        <Input
+                            label="Full Name"
+                            name="name"
+                            required
+                            value={formData.name}
+                            onChange={handleChange}
+                            placeholder="Jane Doe"
+                            icon={User}
+                        />
 
-                        <div>
-                            <label className="block text-xs font-bold text-primary uppercase tracking-widest mb-2 ml-1">Email</label>
-                            <div className="relative">
-                                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-300" size={18} />
-                                <input
-                                    name="email"
-                                    type="email"
-                                    required
-                                    value={formData.email}
-                                    onChange={handleChange}
-                                    className="w-full pl-12 pr-4 py-4 bg-neutral-50 border border-neutral-beige rounded-2xl focus:ring-1 focus:ring-primary focus:outline-none transition-all"
-                                    placeholder="jane@example.com"
-                                />
-                            </div>
-                        </div>
+                        <Input
+                            label="Email"
+                            name="email"
+                            type="email"
+                            required
+                            value={formData.email}
+                            onChange={handleChange}
+                            placeholder="jane@example.com"
+                            icon={Mail}
+                        />
 
-                        <div>
-                            <label className="block text-xs font-bold text-primary uppercase tracking-widest mb-2 ml-1">Password</label>
-                            <div className="relative">
-                                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-300" size={18} />
-                                <input
-                                    name="password"
-                                    type="password"
-                                    required
-                                    value={formData.password}
-                                    onChange={handleChange}
-                                    className="w-full pl-12 pr-4 py-4 bg-neutral-50 border border-neutral-beige rounded-2xl focus:ring-1 focus:ring-primary focus:outline-none transition-all"
-                                    placeholder="••••••••"
-                                />
-                            </div>
-                        </div>
+                        <Input
+                            label="Password"
+                            name="password"
+                            type="password"
+                            required
+                            value={formData.password}
+                            onChange={handleChange}
+                            placeholder="••••••••"
+                            icon={Lock}
+                        />
 
-                        <div>
-                            <label className="block text-xs font-bold text-primary uppercase tracking-widest mb-2 ml-1">Confirm Password</label>
-                            <div className="relative">
-                                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-300" size={18} />
-                                <input
-                                    name="confirmPassword"
-                                    type="password"
-                                    required
-                                    value={formData.confirmPassword}
-                                    onChange={handleChange}
-                                    className="w-full pl-12 pr-4 py-4 bg-neutral-50 border border-neutral-beige rounded-2xl focus:ring-1 focus:ring-primary focus:outline-none transition-all"
-                                    placeholder="••••••••"
-                                />
-                            </div>
-                        </div>
+                        <Input
+                            label="Confirm Password"
+                            name="confirmPassword"
+                            type="password"
+                            required
+                            value={formData.confirmPassword}
+                            onChange={handleChange}
+                            placeholder="••••••••"
+                            icon={Lock}
+                        />
 
-                        <Button type="submit" className="w-full rounded-2xl py-6 text-base font-bold shadow-lg shadow-primary/10 mt-2">
+                        <Button type="submit" className="w-full rounded-2xl py-3 text-base font-bold shadow-lg shadow-[#0a4019]/10 mt-2">
                             Create Account
                         </Button>
                     </form>
 
-                    <div className="mt-8 pt-8 border-t border-neutral-beige text-center">
-                        <p className="text-sm text-neutral-gray mb-4">Already have an account?</p>
+                    <div className="pt-8 border-t border-[#F5F3F0] text-center">
+                        <p className="text-sm text-[#6B6B6B] mb-4">Already have an account?</p>
                         <Link href="/account/login">
-                            <button className="flex items-center gap-2 mx-auto text-primary font-bold hover:gap-3 transition-all">
+                            <button className="flex items-center gap-2 mx-auto text-[#0a4019] font-bold hover:gap-3 transition-all">
                                 Sign In Instead <ArrowRight size={16} />
                             </button>
                         </Link>

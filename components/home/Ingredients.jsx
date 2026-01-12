@@ -39,7 +39,7 @@ export default function Ingredients() {
             <Container>
                 <div className="grid lg:grid-cols-2 gap-12 items-center">
                     <div>
-                        <h2 className="text-4xl md:text-5xl font-heading font-bold text-[#0B2F26] mb-6">
+                        <h2 className="text-4xl md:text-5xl font-heading font-bold text-[#0a4019] mb-6">
                             Powered by Nature's Finest
                         </h2>
                         <p className="text-lg text-[#6B6B6B] mb-8">
@@ -48,8 +48,8 @@ export default function Ingredients() {
 
                         <div className="space-y-6">
                             {ingredients.map((ingredient) => (
-                                <div key={ingredient.name} className="border-l-4 border-[#D1BFA3] pl-6">
-                                    <h3 className="text-xl font-heading font-semibold text-[#0B2F26] mb-1">
+                                <div key={ingredient.name} className="border-l-4 border-[#d3d3d3] pl-6">
+                                    <h3 className="text-xl font-heading font-semibold text-[#0a4019] mb-1">
                                         {ingredient.name}
                                     </h3>
                                     <p className="text-[#B8A68A] font-medium mb-2">
@@ -64,15 +64,15 @@ export default function Ingredients() {
                     </div>
 
                     <div className="relative">
-                        <div className="aspect-square bg-[linear-gradient(135deg,#D1BFA31A_0%,#0B2F260D_100%)] rounded-3xl p-8 flex items-center justify-center">
+                        <div className="aspect-square bg-[linear-gradient(135deg,#d3d3d31A_0%,#0a40190D_100%)] rounded-3xl p-8 flex items-center justify-center">
                             <div className="text-center">
                                 <div className="flex justify-center mb-6">
-                                    <svg className="w-16 h-16 text-[#0B2F26]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg className="w-16 h-16 text-[#0a4019]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M12 5c-3.866 0-7 3.134-7 7s3.134 7 7 7 7-3.134 7-7-3.134-7-7-7z" />
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4z" />
                                     </svg>
                                 </div>
-                                <p className="text-2xl font-heading font-semibold text-[#0B2F26] mb-2">
+                                <p className="text-2xl font-heading font-semibold text-[#0a4019] mb-2">
                                     100% Natural Ingredients
                                 </p>
                                 <p className="text-[#6B6B6B]">

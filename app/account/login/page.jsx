@@ -4,12 +4,13 @@ import { useState } from 'react';
 import { useStoreAuth } from '@/context/StoreAuthContext';
 import { Container } from '@/components/ui/Container';
 import { Button } from '@/components/ui/Button';
+import { Input } from '@/components/ui/Input';
 import Link from 'next/link';
 import { Mail, Lock, ArrowRight } from 'lucide-react';
 
 export default function StoreLoginPage() {
-    const [email, setEmail] = useState('elena@example.com');
-    const [password, setPassword] = useState('password123');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const { login } = useStoreAuth();
 
@@ -23,14 +24,14 @@ export default function StoreLoginPage() {
     };
 
     return (
-        <div className="bg-neutral-beige/30 min-h-[80vh] flex items-center">
-            <Container className="max-w-md py-12">
-                <div className="bg-white p-10 rounded-[2rem] shadow-soft border border-neutral-beige relative overflow-hidden">
-                    <div className="absolute top-0 left-0 w-full h-1 bg-primary/20" />
+        <div className="bg-[#F5F3F0]/30 flex items-center">
+            <Container className="py-3 md:py-6 max-w-[500px] w-full mx-auto lg:py-8">
+                <div className="bg-white p-4 rounded-[2rem] shadow-[0_4px_20px_rgba(11,47,38,0.08)] border border-[#F5F3F0] relative overflow-hidden">
+                    <div className="absolute top-0 left-0 w-full h-1 bg-[#0a4019]/20" />
 
-                    <div className="text-center mb-8">
-                        <h1 className="text-3xl font-heading font-bold text-primary mb-2">Welcome Back</h1>
-                        <p className="text-sm text-neutral-gray">Sign in to your Luminelle account</p>
+                    <div className="text-center">
+                        <h1 className="text-3xl font-heading font-bold text-[#0a4019]">Welcome Back</h1>
+                        <p className="text-sm text-[#6B6B6B]">Sign in to your Luminelle account</p>
                     </div>
 
                     <form onSubmit={handleSubmit} className="space-y-6">
@@ -40,49 +41,39 @@ export default function StoreLoginPage() {
                             </div>
                         )}
 
-                        <div>
-                            <label className="block text-xs font-bold text-primary uppercase tracking-widest mb-2 ml-1">Email</label>
-                            <div className="relative">
-                                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-300" size={18} />
-                                <input
-                                    type="email"
-                                    required
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    className="w-full pl-12 pr-4 py-4 bg-neutral-50 border border-neutral-beige rounded-2xl focus:ring-1 focus:ring-primary focus:outline-none transition-all placeholder:text-neutral-300"
-                                    placeholder="elena@example.com"
-                                />
-                            </div>
-                        </div>
+                        <Input
+                            label="Email"
+                            type="email"
+                            required
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            placeholder="name@example.com"
+                            icon={Mail}
+                        />
 
-                        <div>
-                            <label className="block text-xs font-bold text-primary uppercase tracking-widest mb-2 ml-1">Password</label>
-                            <div className="relative">
-                                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-300" size={18} />
-                                <input
-                                    type="password"
-                                    required
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    className="w-full pl-12 pr-4 py-4 bg-neutral-50 border border-neutral-beige rounded-2xl focus:ring-1 focus:ring-primary focus:outline-none transition-all placeholder:text-neutral-300"
-                                    placeholder="••••••••"
-                                />
-                            </div>
-                        </div>
+                        <Input
+                            label="Password"
+                            type="password"
+                            required
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            placeholder="••••••••"
+                            icon={Lock}
+                        />
 
                         <div className="flex justify-end">
-                            <button type="button" className="text-xs text-secondary-dark font-medium hover:underline">Forgot password?</button>
+                            <button type="button" className="text-xs text-[#5e5e5d] font-medium hover:underline">Forgot password?</button>
                         </div>
 
-                        <Button type="submit" className="w-full rounded-2xl py-6 text-base font-bold shadow-lg shadow-primary/10">
+                        <Button type="submit" className="w-full rounded-2xl py-3 text-base font-bold shadow-lg shadow-[#0a4019]/10">
                             Sign In
                         </Button>
                     </form>
 
-                    <div className="mt-8 pt-8 border-t border-neutral-beige text-center">
-                        <p className="text-sm text-neutral-gray mb-4">Don't have an account?</p>
+                    <div className="mt-8 pt-8 border-t border-[#F5F3F0] text-center">
+                        <p className="text-sm text-[#6B6B6B] mb-4">Don't have an account?</p>
                         <Link href="/account/register">
-                            <button className="flex items-center gap-2 mx-auto text-primary font-bold hover:gap-3 transition-all">
+                            <button className="flex items-center gap-2 mx-auto text-[#0a4019] font-bold hover:gap-3 transition-all">
                                 Create Account <ArrowRight size={16} />
                             </button>
                         </Link>

@@ -1,110 +1,108 @@
 @import "tailwindcss";
 
-
-
 @layer base {
-  :root {
-    --font-inter: 'Inter', sans-serif;
-    --font-cormorant: 'Cormorant Garamond', serif;
-  }
-
-  * {
-    border-color: #F5F3F0;
-  }
-
-  body {
-    background-color: #FDFCFB;
-    color: #6B6B6B;
-    font-family: var(--font-body);
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    font-family: var(--font-heading);
-    color: #0B2F26;
-  }
+    :root {
+        --font-heading: inherit;
+        --font-body: inherit;
+    }
 }
 
-@layer components {
-  .btn-primary {
-    @apply bg-[#0B2F26] text-white px-6 py-3 rounded-lg font-medium transition-all duration-200 hover:bg-[#051712] focus:outline-none focus:ring-2 focus:ring-[#0B2F26] focus:ring-offset-2;
-  }
-
-  .btn-secondary {
-    @apply bg-[#D1BFA3] text-[#0B2F26] px-6 py-3 rounded-lg font-medium transition-all duration-200 hover:bg-[#B8A68A] focus:outline-none focus:ring-2 focus:ring-[#D1BFA3] focus:ring-offset-2;
-  }
-
-  .input-field {
-    @apply w-full px-4 py-3 border border-[#F5F3F0] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0B2F26] focus:border-transparent transition-all duration-200;
-  }
-
-  .section-padding {
-    @apply py-16 md:py-24;
-  }
-
-  .gradient-organic {
-    background: linear-gradient(135deg, #D1BFA31A 0%, #0B2F260D 100%);
-  }
-}
-
-/* Custom animations */
+/* Custom animations and global styles that don't depend on Tailwind theme variables */
 @keyframes float {
 
-  0%,
-  100% {
-    transform: translateY(0px);
-  }
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
 
-  50% {
-    transform: translateY(-20px);
-  }
+    50% {
+        transform: translateY(-20px);
+    }
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
 
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-/* Smooth scrolling */
+@keyframes slideDown {
+    from {
+        transform: translateY(-100%);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+
 html {
-  scroll-behavior: smooth;
+    scroll-behavior: smooth;
 }
 
-/* Selection color */
 ::selection {
-  background-color: #D1BFA34D;
-  color: #0B2F26;
+    background-color: rgba(209, 191, 163, 0.3);
+    color: #0a4019;
 }
 
-@utility animate-slideInRight {
-  animation: slideInRight 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-@keyframes slideInRight {
-  from {
-    opacity: 0;
-    transform: translateX(100%);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-/* Focus visible */
 :focus-visible {
-  outline: 2px solid #0B2F26;
-  outline-offset: 2px;
+    outline: 2px solid #0a4019;
+    outline-offset: 2px;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #FDFCFB;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #d3d3d3;
+    border-radius: 10px;
+    border: 2px solid #FDFCFB;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #B8A68A;
+}
+
+/* Custom Horizontal Scrollbar for Tables */
+.custom-scrollbar-x {
+    scrollbar-width: thin;
+    scrollbar-color: #d3d3d3 #FDFCFB;
+}
+
+.custom-scrollbar-x::-webkit-scrollbar {
+    height: 6px;
+}
+
+.custom-scrollbar-x::-webkit-scrollbar-track {
+    background: rgba(245, 243, 240, 0.5);
+    /* Slightly darker than page bg */
+    border-radius: 10px;
+}
+
+.custom-scrollbar-x::-webkit-scrollbar-thumb {
+    background: #d3d3d3;
+    border-radius: 10px;
+}
+
+.custom-scrollbar-x::-webkit-scrollbar-thumb:hover {
+    background: #0a4019;
+}
+
+/* Ensure scrollbar is visible on mobile devices where it might be hidden by default */
+@media (max-width: 768px) {
+    .custom-scrollbar-x {
+        -webkit-overflow-scrolling: touch;
+    }
 }

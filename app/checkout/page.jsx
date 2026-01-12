@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Container } from '@/components/ui/Container';
 import { Button } from '@/components/ui/Button';
+import { Input } from '@/components/ui/Input';
 import { useCart } from '@/hooks/useCart';
 import { formatPrice } from '@/lib/utils';
 import { useStoreAuth } from '@/context/StoreAuthContext';
@@ -157,22 +158,22 @@ export default function CheckoutPage() {
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                         </svg>
                     </div>
-                    <h1 className="text-4xl font-heading font-bold text-primary mb-4">Order Confirmed</h1>
-                    <p className="text-neutral-gray mb-8">
-                        Thank you for your purchase. Your order <span className="text-primary font-bold">#{orderId.substring(18).toUpperCase()}</span> has been placed successfully and is being processed.
+                    <h1 className="text-4xl font-heading font-bold text-[#0a4019] mb-4">Order Confirmed</h1>
+                    <p className="text-[#6B6B6B] mb-8">
+                        Thank you for your purchase. Your order <span className="text-[#0a4019] font-bold">#{orderId.substring(18).toUpperCase()}</span> has been placed successfully and is being processed.
                     </p>
                     <div className="space-y-4">
                         <Link href="/shop" className="block w-full">
                             <Button className="w-full">Continue Shopping</Button>
                         </Link>
                         {user ? (
-                            <Link href="/account" className="block w-full text-sm font-bold text-secondary-dark hover:underline">
+                            <Link href="/account" className="block w-full text-sm font-bold text-[#B8A68A] hover:underline">
                                 View Order History & Track Status
                             </Link>
                         ) : (
-                            <div className="bg-secondary/5 p-6 rounded-2xl border border-secondary/20 mt-8 animate-pulse">
-                                <p className="text-sm font-bold text-primary mb-2 italic">Want to track your order in real-time?</p>
-                                <p className="text-xs text-neutral-gray mb-4">Create an account now to see live status updates, management tools, and earn reward points on this purchase.</p>
+                            <div className="bg-[#d3d3d3]/5 p-6 rounded-2xl border border-[#d3d3d3]/20 mt-8 animate-pulse">
+                                <p className="text-sm font-bold text-[#0a4019] mb-2 italic">Want to track your order in real-time?</p>
+                                <p className="text-xs text-[#6B6B6B] mb-4">Create an account now to see live status updates, management tools, and earn reward points on this purchase.</p>
                                 <Link href="/account/login?mode=signup">
                                     <Button variant="secondary" className="w-full py-3 text-[10px] uppercase tracking-widest">Sign Up Now & Track Order</Button>
                                 </Link>
@@ -189,7 +190,7 @@ export default function CheckoutPage() {
     if (cart.length === 0) {
         return (
             <Container className="py-24 text-center">
-                <h1 className="text-3xl font-heading font-bold text-primary mb-4">Your cart is empty</h1>
+                <h1 className="text-3xl font-heading font-bold text-[#0a4019] mb-4">Your cart is empty</h1>
                 <Link href="/shop">
                     <Button>Continue Shopping</Button>
                 </Link>
@@ -216,55 +217,79 @@ export default function CheckoutPage() {
     const estimatedTotal = Math.max(0, total - discount);
 
     return (
-        <div className="min-h-screen bg-neutral-cream">
+        <div className="min-h-screen bg-[#FDFCFB]">
             <Container className="py-12">
-                <h1 className="text-4xl font-heading font-bold text-primary mb-8">Checkout</h1>
+                <h1 className="text-4xl font-heading font-bold text-[#0a4019] mb-8">Checkout</h1>
 
                 <div className="grid lg:grid-cols-3 gap-8">
                     <div className="lg:col-span-2">
                         <form onSubmit={handleSubmit} className="space-y-8">
                             {/* Contact Information */}
-                            <div className="bg-white p-6 rounded-2xl shadow-soft">
-                                <h2 className="text-2xl font-heading font-semibold text-primary mb-6">
+                            <div className="bg-white p-6 rounded-2xl shadow-[0_4px_20px_rgba(11,47,38,0.08)]">
+                                <h2 className="text-2xl font-heading font-semibold text-[#0a4019] mb-6">
                                     Shipping Information
                                 </h2>
                                 <div className="grid md:grid-cols-2 gap-4">
-                                    <div>
-                                        <label className="block text-sm font-medium text-primary mb-2">First Name</label>
-                                        <input type="text" name="firstName" value={formData.firstName} onChange={handleChange} required className="input-field" />
-                                    </div>
-                                    <div>
-                                        <label className="block text-sm font-medium text-primary mb-2">Last Name</label>
-                                        <input type="text" name="lastName" value={formData.lastName} onChange={handleChange} required className="input-field" />
-                                    </div>
-                                    <div className="md:col-span-2">
-                                        <label className="block text-sm font-medium text-primary mb-2">Address</label>
-                                        <input type="text" name="address" value={formData.address} onChange={handleChange} required className="input-field" />
-                                    </div>
-                                    <div>
-                                        <label className="block text-sm font-medium text-primary mb-2">City</label>
-                                        <input type="text" name="city" value={formData.city} onChange={handleChange} required className="input-field" />
-                                    </div>
-                                    <div>
-                                        <label className="block text-sm font-medium text-primary mb-2">State</label>
-                                        <input type="text" name="state" value={formData.state} onChange={handleChange} required className="input-field" />
-                                    </div>
-                                    <div>
-                                        <label className="block text-sm font-medium text-primary mb-2">ZIP Code</label>
-                                        <input type="text" name="zipCode" value={formData.zipCode} onChange={handleChange} required className="input-field" />
-                                    </div>
-                                    <div className="md:col-span-2">
-                                        <label className="block text-sm font-medium text-primary mb-2">Phone</label>
-                                        <input type="tel" name="phone" value={formData.phone} onChange={handleChange} required className="input-field" />
-                                    </div>
+                                    <Input
+                                        label="First Name"
+                                        name="firstName"
+                                        value={formData.firstName}
+                                        onChange={handleChange}
+                                        required
+                                    />
+                                    <Input
+                                        label="Last Name"
+                                        name="lastName"
+                                        value={formData.lastName}
+                                        onChange={handleChange}
+                                        required
+                                    />
+                                    <Input
+                                        label="Address"
+                                        name="address"
+                                        value={formData.address}
+                                        onChange={handleChange}
+                                        required
+                                        className="md:col-span-2"
+                                    />
+                                    <Input
+                                        label="City"
+                                        name="city"
+                                        value={formData.city}
+                                        onChange={handleChange}
+                                        required
+                                    />
+                                    <Input
+                                        label="State"
+                                        name="state"
+                                        value={formData.state}
+                                        onChange={handleChange}
+                                        required
+                                    />
+                                    <Input
+                                        label="ZIP Code"
+                                        name="zipCode"
+                                        value={formData.zipCode}
+                                        onChange={handleChange}
+                                        required
+                                    />
+                                    <Input
+                                        label="Phone"
+                                        type="tel"
+                                        name="phone"
+                                        value={formData.phone}
+                                        onChange={handleChange}
+                                        required
+                                        className="md:col-span-2"
+                                    />
                                 </div>
                             </div>
 
                             {/* Payment Method Stub */}
-                            <div className="bg-white p-6 rounded-2xl shadow-soft">
-                                <h2 className="text-2xl font-heading font-semibold text-primary mb-6">Payment</h2>
-                                <p className="text-sm text-neutral-gray mb-4">Payment integration would go here (Stripe/PayPal).</p>
-                                <div className="bg-neutral-beige/30 p-4 rounded-lg border border-neutral-beige text-sm text-primary">
+                            <div className="bg-white p-6 rounded-2xl shadow-[0_4px_20px_rgba(11,47,38,0.08)]">
+                                <h2 className="text-2xl font-heading font-semibold text-[#0a4019] mb-6">Payment</h2>
+                                <p className="text-sm text-[#6B6B6B] mb-4">Payment integration would go here (Stripe/PayPal).</p>
+                                <div className="bg-[#F5F3F0]/30 p-4 rounded-lg border border-[#F5F3F0] text-sm text-[#0a4019]">
                                     Cash on Delivery selected for demo.
                                 </div>
                             </div>
@@ -283,37 +308,36 @@ export default function CheckoutPage() {
 
                     {/* Order Summary */}
                     <div className="lg:col-span-1">
-                        <div className="bg-white p-6 rounded-2xl shadow-soft sticky top-24">
-                            <h2 className="text-2xl font-heading font-bold text-primary mb-6">Order Summary</h2>
+                        <div className="bg-white p-6 rounded-2xl shadow-[0_4px_20px_rgba(11,47,38,0.08)] sticky top-24">
+                            <h2 className="text-2xl font-heading font-bold text-[#0a4019] mb-6">Order Summary</h2>
                             <div className="space-y-4 mb-6">
                                 {cart.map((item) => (
                                     <div key={item.id} className="flex gap-3">
-                                        <div className="w-16 h-16 bg-neutral-beige rounded-xl overflow-hidden shrink-0">
+                                        <div className="w-16 h-16 bg-[#F5F3F0] rounded-xl overflow-hidden shrink-0">
                                             <img src={item.image} alt={item.title} className="w-full h-full object-cover" />
                                         </div>
                                         <div className="flex-1 min-w-0">
-                                            <p className="font-medium text-primary text-sm line-clamp-1">{item.title}</p>
-                                            <p className="text-sm text-neutral-gray font-medium">Qty: {item.quantity}</p>
+                                            <p className="font-medium text-[#0a4019] text-sm line-clamp-1">{item.title}</p>
+                                            <p className="text-sm text-[#6B6B6B] font-medium">Qty: {item.quantity}</p>
                                         </div>
-                                        <p className="font-bold text-primary text-sm">{formatPrice(item.price * item.quantity)}</p>
+                                        <p className="font-bold text-[#0a4019] text-sm">{formatPrice(item.price * item.quantity)}</p>
                                     </div>
                                 ))}
                             </div>
 
                             {/* Coupont Input */}
-                            <div className="mb-6 pt-6 border-t border-neutral-beige/50">
+                            <div className="mb-6 pt-6 border-t border-[#F5F3F0]/50">
                                 <div className="flex gap-2">
-                                    <input
-                                        type="text"
+                                    <Input
                                         placeholder="Promo Code"
-                                        className="flex-1 px-3 py-2 text-sm border border-neutral-beige rounded-xl uppercase font-bold"
+                                        className="flex-1"
                                         value={couponInput}
                                         onChange={(e) => setCouponInput(e.target.value)}
                                     />
                                     <button
                                         type="button"
                                         onClick={handleApplyCoupon}
-                                        className="px-4 py-2 bg-primary text-white text-xs font-bold rounded-xl active:scale-95 transition-transform"
+                                        className="px-4 py-2 bg-[#0a4019] text-white text-xs font-bold rounded-xl active:scale-95 transition-transform"
                                     >
                                         Apply
                                     </button>
@@ -330,9 +354,9 @@ export default function CheckoutPage() {
                                 )}
                             </div>
 
-                            <div className="border-t border-neutral-beige pt-4 space-y-2">
+                            <div className="border-t border-[#F5F3F0] pt-4 space-y-2">
                                 <div className="flex justify-between text-sm">
-                                    <span className="text-neutral-gray font-medium">Subtotal</span>
+                                    <span className="text-[#6B6B6B] font-medium">Subtotal</span>
                                     <span className="font-bold">{formatPrice(total)}</span>
                                 </div>
                                 {discount > 0 && (
@@ -341,9 +365,9 @@ export default function CheckoutPage() {
                                         <span>-{formatPrice(discount)}</span>
                                     </div>
                                 )}
-                                <div className="flex justify-between text-xl font-heading font-bold pt-4 border-t border-neutral-beige mt-4">
-                                    <span className="text-primary">Total</span>
-                                    <span className="text-primary">{formatPrice(estimatedTotal)}</span>
+                                <div className="flex justify-between text-xl font-heading font-bold pt-4 border-t border-[#F5F3F0] mt-4">
+                                    <span className="text-[#0a4019]">Total</span>
+                                    <span className="text-[#0a4019]">{formatPrice(estimatedTotal)}</span>
                                 </div>
                             </div>
                         </div>

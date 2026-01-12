@@ -60,33 +60,44 @@ export default function Benefits() {
     ];
 
     return (
-        <section className="section-padding bg-[#0B2F26] text-white">
-            <Container>
-                <div className="text-center mb-16">
-                    <h2 className="text-3xl md:text-5xl font-heading font-bold mb-4 text-white">
-                        The Luminelle Organics Difference
-                    </h2>
-                    <p className="text-lg text-white/70 max-w-2xl mx-auto font-light">
-                        More than skincare—a commitment to your skin, our planet, and ethical beauty.
-                    </p>
-                </div>
+        <section className="py-3 md:py-6 lg:py-8 bg-[#0a4019] text-white overflow-hidden relative">
+            {/* Ambient Background Decoration */}
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full opacity-10 pointer-events-none overflow-hidden">
+                <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-white rounded-full blur-[150px] -translate-x-1/2 -translate-y-1/2" />
+                <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-[#d3d3d3] rounded-full blur-[150px] translate-x-1/2 translate-y-1/2" />
+            </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-16">
-                    {benefits.map((benefit) => (
-                        <div key={benefit.title} className="flex flex-col items-center text-center group">
-                            <div className="w-20 h-20 bg-white/10 rounded-full flex items-center justify-center mb-6 group-hover:bg-white group-hover:text-[#0B2F26] transition-all duration-500 shadow-lg">
-                                {benefit.icon}
+            <Container className="relative z-10">
+                <div className="space-y-3 md:space-y-6 lg:space-y-8">
+                    <div className="text-center space-y-4">
+                        <h2 className="text-white [font-size:clamp(1.875rem,1.5rem+2vw,3.5rem)] leading-tight">
+                            The Luminelle Difference
+                        </h2>
+                        <p className="text-base md:text-lg text-white/70 max-w-2xl mx-auto font-light leading-relaxed">
+                            More than skincare—a commitment to your skin, our planet, and ethical beauty.
+                        </p>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-3 md:gap-x-6 lg:gap-x-8 gap-y-3 md:gap-y-6 lg:gap-y-8">
+                        {benefits.map((benefit) => (
+                            <div key={benefit.title} className="flex flex-col items-center text-center group space-y-6">
+                                <div className="w-20 h-20 bg-white/5 rounded-full flex items-center justify-center group-hover:bg-white group-hover:text-[#0a4019] transition-all duration-500 shadow-xl border border-white/10 group-hover:border-white">
+                                    {benefit.icon}
+                                </div>
+                                <div className="space-y-3">
+                                    <h3 className="text-xl font-heading font-semibold text-white tracking-wide">
+                                        {benefit.title}
+                                    </h3>
+                                    <p className="text-white/60 leading-relaxed font-light text-sm md:text-base">
+                                        {benefit.description}
+                                    </p>
+                                </div>
                             </div>
-                            <h3 className="text-xl font-heading font-semibold mb-3 text-white tracking-wide">
-                                {benefit.title}
-                            </h3>
-                            <p className="text-white/70 leading-relaxed font-light">
-                                {benefit.description}
-                            </p>
-                        </div>
-                    ))}
+                        ))}
+                    </div>
                 </div>
             </Container>
         </section>
+
     );
 }

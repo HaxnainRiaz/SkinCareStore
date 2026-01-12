@@ -17,15 +17,17 @@ export function CoreProvider({ children }) {
     const [banners, setBanners] = useState([]);
     const [products, setProducts] = useState([]);
     const [categories, setCategories] = useState([]);
+    const [blogs, setBlogs] = useState([]);
     const [loading, setLoading] = useState(true);
 
     const fetchData = useCallback(async () => {
         try {
-            const [resProd, resCat, resBanners, resSettings] = await Promise.all([
+            const [resProd, resCat, resBanners, resSettings, resBlogs] = await Promise.all([
                 fetch(`${API_URL}/products`, { cache: 'no-store' }),
                 fetch(`${API_URL}/categories`, { cache: 'no-store' }),
                 fetch(`${API_URL}/banners`, { cache: 'no-store' }),
-                fetch(`${API_URL}/settings`, { cache: 'no-store' })
+                fetch(`${API_URL}/settings`, { cache: 'no-store' }),
+                fetch(`${API_URL}/blogs`, { cache: 'no-store' })
             ]);
 
             const dataProd = await resProd.json();
@@ -39,6 +41,9 @@ export function CoreProvider({ children }) {
 
             const dataSettings = await resSettings.json();
             if (dataSettings.success) setSettings(dataSettings.data);
+
+            const dataBlogs = await resBlogs.json();
+            if (dataBlogs.success) setBlogs(dataBlogs.data);
 
             setLoading(false);
         } catch (error) {
@@ -79,15 +84,38 @@ export function CoreProvider({ children }) {
         }
     };
 
+    const addBlogComment = async (blogId, commentData) => {
+        try {
+            const res = await fetch(`${API_URL}/blogs/${blogId}/comments`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(commentData)
+            });
+            const data = await res.json();
+            if (data.success) {
+                // Update local state for immediate feedback
+                setBlogs(prev => prev.map(b => b._id === blogId ? {
+                    ...b,
+                    comments: [data.data, ...(b.comments || [])]
+                } : b));
+            }
+            return data;
+        } catch (err) {
+            return { success: false, message: 'Server error' };
+        }
+    };
+
     return (
         <CoreContext.Provider value={{
             settings,
             banners,
             products,
             categories,
+            blogs,
             loading,
             subscribeNewsletter,
             submitSupportTicket,
+            addBlogComment,
             refreshData: fetchData
         }}>
             {children}

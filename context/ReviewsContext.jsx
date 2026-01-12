@@ -32,8 +32,10 @@ export function ReviewsProvider({ children }) {
         try {
             const payload = {
                 product: productId,
-                ...reviewData
+                ...reviewData,
+                images: reviewData.image ? [reviewData.image] : []
             };
+            delete payload.image;
 
             const res = await fetch(`${API_URL}/reviews`, {
                 method: 'POST',

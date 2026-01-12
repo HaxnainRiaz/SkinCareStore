@@ -3,7 +3,7 @@ import { Card } from '@/components/ui/Card';
 import Link from 'next/link';
 
 export const metadata = {
-    title: 'Collections - Luminelle Organics',
+    title: 'Collections - Luminelle',
 };
 
 export default function CollectionsPage() {
@@ -47,8 +47,8 @@ export default function CollectionsPage() {
     ];
 
     return (
-        <div className="min-h-screen bg-neutral-cream">
-            <div className="bg-primary text-white py-16">
+        <div className="min-h-screen bg-[#FDFCFB]">
+            <div className="bg-[#0a4019] text-white py-16">
                 <Container>
                     <h1 className="text-4xl text-white md:text-5xl font-heading font-bold mb-4">
                         Shop by Collection
@@ -65,10 +65,10 @@ export default function CollectionsPage() {
                         <Link key={collection.slug} href={`/collections/${collection.slug}`}>
                             <Card hover className="text-center p-8 h-full">
                                 <div className="text-6xl mb-4">{collection.icon}</div>
-                                <h2 className="text-2xl font-heading font-semibold text-primary mb-2">
+                                <h2 className="text-2xl font-heading font-semibold text-[#0a4019] mb-2">
                                     {collection.title}
                                 </h2>
-                                <p className="text-neutral-gray">
+                                <p className="text-[#6B6B6B]">
                                     {collection.description}
                                 </p>
                             </Card>

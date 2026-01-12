@@ -33,17 +33,17 @@ export default function CartDrawer({ isOpen, onClose }) {
             />
 
             {/* Drawer */}
-            <div className="fixed inset-y-0 right-0 w-full sm:w-96 bg-white z-50 shadow-[0_16px_60px_#0B2F2626] overflow-y-auto">
+            <div className="fixed inset-y-0 right-0 w-full sm:w-96 bg-white z-50 shadow-[0_16px_60px_#0a401926] overflow-y-auto">
                 <div className="flex flex-col h-full">
                     {/* Header */}
                     <div className="p-6 border-b border-[#F5F3F0]">
                         <div className="flex items-center justify-between">
-                            <h2 className="text-2xl font-heading font-semibold text-[#0B2F26]">
+                            <h2 className="text-2xl font-heading font-semibold text-[#0a4019]">
                                 Shopping Cart ({itemCount})
                             </h2>
                             <button
                                 onClick={onClose}
-                                className="p-2 text-[#0B2F26] hover:bg-[#0B2F261A] rounded-lg transition-colors"
+                                className="p-2 text-[#0a4019] hover:bg-[#0a40191A] rounded-lg transition-colors"
                                 aria-label="Close cart"
                             >
                                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -83,7 +83,7 @@ export default function CartDrawer({ isOpen, onClose }) {
                                             <Link
                                                 href={`/product/${item.slug}`}
                                                 onClick={onClose}
-                                                className="font-medium text-[#0B2F26] hover:text-[#0F3A2F] transition-colors line-clamp-1"
+                                                className="font-medium text-[#0a4019] hover:text-[#0F3A2F] transition-colors line-clamp-1"
                                             >
                                                 {item.title}
                                             </Link>
@@ -95,7 +95,7 @@ export default function CartDrawer({ isOpen, onClose }) {
                                             <div className="flex items-center gap-2 mt-2">
                                                 <button
                                                     onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                                                    className="w-7 h-7 flex items-center justify-center border border-[#F5F3F0] rounded hover:bg-[#0B2F26] hover:text-white hover:border-[#0B2F26] transition-colors"
+                                                    className="w-7 h-7 flex items-center justify-center border border-[#F5F3F0] rounded hover:bg-[#0a4019] hover:text-white hover:border-[#0a4019] transition-colors"
                                                     aria-label="Decrease quantity"
                                                 >
                                                     −
@@ -103,7 +103,7 @@ export default function CartDrawer({ isOpen, onClose }) {
                                                 <span className="w-8 text-center">{item.quantity}</span>
                                                 <button
                                                     onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                                                    className="w-7 h-7 flex items-center justify-center border border-[#F5F3F0] rounded hover:bg-[#0B2F26] hover:text-white hover:border-[#0B2F26] transition-colors"
+                                                    className="w-7 h-7 flex items-center justify-center border border-[#F5F3F0] rounded hover:bg-[#0a4019] hover:text-white hover:border-[#0a4019] transition-colors"
                                                     aria-label="Increase quantity"
                                                 >
                                                     +
@@ -127,7 +127,7 @@ export default function CartDrawer({ isOpen, onClose }) {
                         <div className="border-t border-[#F5F3F0] p-6 space-y-4">
                             <div className="flex justify-between text-lg font-semibold">
                                 <span>Subtotal:</span>
-                                <span className="text-[#0B2F26]">{formatPrice(total)}</span>
+                                <span className="text-[#0a4019]">{formatPrice(total)}</span>
                             </div>
 
                             <p className="text-sm text-[#6B6B6B]">

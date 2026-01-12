@@ -1,9 +1,8 @@
-'use client';
-
 import { useState, useEffect } from 'react';
 import { useReviews } from '@/context/ReviewsContext';
-import { Button } from '@/components/ui/Button';
+import { Button, Input, Dropdown } from '@/components/ui';
 import { useStoreAuth } from '@/context/StoreAuthContext';
+import { Star, MessageSquare, Plus, CheckCircle, Image as ImageIcon, ThumbsUp, Calendar, User, UserCheck, Quote, ChevronDown, Award, PenLine, User as UserIcon, Clock, Sparkles, X } from 'lucide-react';
 
 export default function ProductReviews({ productId }) {
     const { getReviews, addReview, fetchReviews, isClient } = useReviews();
@@ -73,298 +72,326 @@ export default function ProductReviews({ productId }) {
     const handleImageUpload = (e) => {
         const file = e.target.files[0];
         if (file) {
-            setNewReview({ ...newReview, image: 'attached' });
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setNewReview({ ...newReview, image: reader.result });
+            };
+            reader.readAsDataURL(file);
         }
     };
 
     if (!isClient) return null;
 
     return (
-        <section className="py-12 border-t border-neutral-beige mt-12 scroll-mt-24" id="reviews">
-            <h2 className="text-3xl font-heading font-bold text-primary mb-8 text-center">Customer Reviews</h2>
-
-            {/* Summary Section */}
-            <div className="grid md:grid-cols-3 gap-8 mb-12 bg-white p-8 rounded-2xl shadow-soft">
-                {/* Average Rating */}
-                <div className="text-center md:text-left flex flex-col justify-center border-b md:border-b-0 md:border-r border-neutral-beige pb-6 md:pb-0">
-                    <div className="text-6xl font-heading font-bold text-primary mb-2">{averageRating}</div>
-                    <div className="flex justify-center md:justify-start text-yellow-400 mb-2 space-x-1">
-                        {[...Array(5)].map((_, i) => (
-                            <svg key={i} className={`w-6 h-6 ${i < Math.round(averageRating) ? 'fill-current' : 'text-gray-300'}`} viewBox="0 0 20 20" fill="currentColor">
-                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
-                        ))}
-                    </div>
-                    <p className="text-neutral-gray">Based on {reviews.length} reviews</p>
+        <section className="py-16 border-t border-[#F5F3F0] mt-16 scroll-mt-24" id="reviews">
+            <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6">
+                <div className="space-y-2">
+                    <span className="text-[10px] font-bold text-[#d3d3d3] uppercase tracking-[0.3em]">Community Feedback</span>
+                    <h2 className="text-4xl font-heading font-bold text-[#0a4019] italic leading-none">Customer Voices</h2>
                 </div>
-
-                {/* Rating Distribution */}
-                <div className="space-y-2 col-span-1 md:col-span-2 flex flex-col justify-center">
-                    {[5, 4, 3, 2, 1].map((star) => (
-                        <div key={star} className="flex items-center gap-3">
-                            <span className="text-sm font-medium w-12 text-primary">{star} Stars</span>
-                            <div className="flex-1 h-3 bg-neutral-beige rounded-full overflow-hidden">
-                                <div
-                                    className="h-full bg-yellow-400 rounded-full"
-                                    style={{ width: `${reviews.length ? (ratingCounts[star] / reviews.length) * 100 : 0}%` }}
-                                ></div>
-                            </div>
-                            <span className="text-sm text-neutral-gray w-8 text-right">{ratingCounts[star]}</span>
-                        </div>
-                    ))}
-                </div>
-            </div>
-
-            {/* Write Review Button */}
-            <div className="text-center mb-12">
                 {!showForm && (
-                    <Button size="lg" onClick={() => setShowForm(true)}>
-                        Write a Review
+                    <Button
+                        onClick={() => setShowForm(true)}
+                        className="rounded-full px-8 py-4 h-auto text-[10px] font-bold uppercase tracking-widest shadow-lg shadow-[#0a4019]/10"
+                    >
+                        <Plus size={14} className="mr-2" /> Add Your Review
                     </Button>
                 )}
             </div>
 
-            {/* Enhanced Review Form */}
-            {showForm && (
-                <div className="bg-white p-8 rounded-2xl shadow-medium mb-16 animate-fadeIn max-w-3xl mx-auto border border-neutral-beige">
-                    <h3 className="text-2xl font-heading font-semibold text-primary mb-6 text-center">Share Your Experience</h3>
-
-                    <form onSubmit={handleSubmit} className="space-y-6">
-
-                        {/* Star Rating Interactive */}
-                        <div className="text-center mb-6">
-                            <label className="block text-sm font-medium text-neutral-gray mb-3">Rate your experience</label>
-                            <div className="flex justify-center gap-2">
-                                {[1, 2, 3, 4, 5].map((star) => (
-                                    <button
-                                        key={star}
-                                        type="button"
-                                        onMouseEnter={() => setHoverRating(star)}
-                                        onMouseLeave={() => setHoverRating(0)}
-                                        onClick={() => setNewReview({ ...newReview, rating: star })}
-                                        className="focus:outline-none transition-transform hover:scale-110"
-                                    >
-                                        <svg
-                                            className={`w-10 h-10 ${(hoverRating || newReview.rating) >= star
-                                                ? 'text-yellow-400 fill-current'
-                                                : 'text-gray-200 fill-current'
-                                                }`}
-                                            viewBox="0 0 20 20"
-                                        >
-                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                        </svg>
-                                    </button>
-                                ))}
-                            </div>
-                            <p className="text-sm text-primary font-medium mt-2 h-5 text-center">
-                                {hoverRating === 1 && "Poor"}
-                                {hoverRating === 2 && "Fair"}
-                                {hoverRating === 3 && "Average"}
-                                {hoverRating === 4 && "Good"}
-                                {hoverRating === 5 && "Excellent!"}
-                            </p>
+            {/* Compact Dashboard */}
+            <div className="bg-white rounded-[2.5rem] border border-[#F5F3F0] overflow-hidden shadow-sm mb-12">
+                <div className="grid md:grid-cols-12">
+                    {/* Score Summary */}
+                    <div className="md:col-span-4 p-10 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-[#F5F3F0] bg-[#FDFCFB]/50">
+                        <div className="text-7xl font-heading font-bold text-[#0a4019] mb-2 italic tracking-tighter">{averageRating}</div>
+                        <div className="flex gap-0.5 text-[#D4AF37] mb-4">
+                            {[...Array(5)].map((_, i) => (
+                                <Star key={i} size={20} className={i < Math.round(averageRating) ? 'fill-[#D4AF37]' : 'text-neutral-200'} />
+                            ))}
                         </div>
+                        <p className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest">
+                            Based on {reviews.length} Witnesses
+                        </p>
+                    </div>
 
-                        {/* Name Field (Hidden if logged in) */}
-                        {!user && (
-                            <div>
-                                <label className="block text-sm font-medium text-primary mb-2">Your Name</label>
-                                <input
-                                    required
-                                    type="text"
-                                    className="input-field"
-                                    value={newReview.name}
-                                    onChange={(e) => setNewReview({ ...newReview, name: e.target.value })}
-                                    placeholder="Enter your name"
-                                />
-                            </div>
-                        )}
-
-                        {/* Title */}
-                        <div>
-                            <label className="block text-sm font-medium text-primary mb-2">Review Title</label>
-                            <input
-                                required
-                                type="text"
-                                className="input-field"
-                                value={newReview.title}
-                                onChange={(e) => setNewReview({ ...newReview, title: e.target.value })}
-                                placeholder="Amazing glow results!"
-                            />
-                        </div>
-
-                        {/* Dropdowns */}
-                        <div className="grid md:grid-cols-2 gap-6">
-                            <div>
-                                <label className="block text-sm font-medium text-primary mb-2">How soon did you see results?</label>
-                                <select
-                                    className="input-field"
-                                    value={newReview.resultsTime}
-                                    onChange={(e) => setNewReview({ ...newReview, resultsTime: e.target.value })}
-                                >
-                                    <option value="1 week">1 week</option>
-                                    <option value="2 weeks">2 weeks</option>
-                                    <option value="3–4 weeks">3–4 weeks</option>
-                                    <option value="More than a month">More than a month</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label className="block text-sm font-medium text-primary mb-2">Your Skin Type</label>
-                                <select
-                                    className="input-field"
-                                    value={newReview.skinType}
-                                    onChange={(e) => setNewReview({ ...newReview, skinType: e.target.value })}
-                                >
-                                    <option value="Oily">Oily</option>
-                                    <option value="Dry">Dry</option>
-                                    <option value="Combination">Combination</option>
-                                    <option value="Sensitive">Sensitive</option>
-                                    <option value="Normal">Normal</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        {/* Comment */}
-                        <div>
-                            <label className="block text-sm font-medium text-primary mb-2">Share your experience</label>
-                            <textarea
-                                required
-                                className="input-field min-h-[120px]"
-                                value={newReview.comment}
-                                onChange={(e) => setNewReview({ ...newReview, comment: e.target.value })}
-                                placeholder="Tell us about your glow, dark spot reduction, hydration, texture changes, etc."
-                            />
-                            <p className="text-xs text-neutral-gray mt-2">
-                                Tip: Describe real visible changes and mention timeframe of results.
-                            </p>
-                        </div>
-
-                        {/* Media & Recommend */}
-                        <div className="grid md:grid-cols-2 gap-6">
-                            <div>
-                                <label className="block text-sm font-medium text-primary mb-2">Add photos/videos (Optional)</label>
-                                <input
-                                    type="file"
-                                    accept="image/*,video/*"
-                                    onChange={handleImageUpload}
-                                    className="block w-full text-sm text-neutral-gray
-                                      file:mr-4 file:py-2 file:px-4
-                                      file:rounded-full file:border-0
-                                      file:text-sm file:font-semibold
-                                      file:bg-secondary file:text-primary
-                                      hover:file:bg-secondary-dark
-                                      cursor-pointer"
-                                />
-                            </div>
-                            <div>
-                                <label className="block text-sm font-medium text-primary mb-2">Would you recommend this product?</label>
-                                <div className="flex gap-4 mt-2">
-                                    <label className="flex items-center gap-2 cursor-pointer">
-                                        <input
-                                            type="radio"
-                                            name="recommend"
-                                            value="Yes"
-                                            checked={newReview.recommend === 'Yes'}
-                                            onChange={(e) => setNewReview({ ...newReview, recommend: e.target.value })}
-                                            className="accent-primary w-4 h-4"
-                                        />
-                                        <span className="text-neutral-gray">Yes</span>
-                                    </label>
-                                    <label className="flex items-center gap-2 cursor-pointer">
-                                        <input
-                                            type="radio"
-                                            name="recommend"
-                                            value="No"
-                                            checked={newReview.recommend === 'No'}
-                                            onChange={(e) => setNewReview({ ...newReview, recommend: e.target.value })}
-                                            className="accent-primary w-4 h-4"
-                                        />
-                                        <span className="text-neutral-gray">No</span>
-                                    </label>
+                    {/* Compact Bars */}
+                    <div className="md:col-span-8 p-10 space-y-3 flex flex-col justify-center">
+                        {[5, 4, 3, 2, 1].map((star) => (
+                            <div key={star} className="flex items-center gap-4 group">
+                                <span className="text-[10px] font-bold text-[#0a4019] w-12 uppercase tracking-widest">{star} <Star size={8} className="inline mb-1 fill-current" /></span>
+                                <div className="flex-1 h-1.5 bg-neutral-50 rounded-full overflow-hidden border border-[#F5F3F0]">
+                                    <div
+                                        className="h-full bg-[#D4AF37] rounded-full transition-all duration-1000 group-hover:brightness-110"
+                                        style={{ width: `${reviews.length ? (ratingCounts[star] / reviews.length) * 100 : 0}%` }}
+                                    ></div>
                                 </div>
+                                <span className="text-[10px] font-bold text-neutral-400 w-8 tabular-nums">{ratingCounts[star]}</span>
                             </div>
-                        </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
 
-                        {/* Actions */}
-                        <div className="flex justify-end gap-3 pt-4 border-t border-neutral-beige">
-                            <Button variant="outline" type="button" onClick={() => setShowForm(false)}>
-                                Cancel
-                            </Button>
-                            <Button type="submit">
-                                Submit Review
-                            </Button>
+            {/* Premium Review Portal (Modal) */}
+            {showForm && (
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6">
+                    {/* Backdrop */}
+                    <div
+                        className="absolute inset-0 bg-[#0a4019]/60 backdrop-blur-sm animate-fadeIn"
+                        onClick={() => setShowForm(false)}
+                    />
+
+                    {/* Modal Content */}
+                    <div className="relative w-full max-w-2xl bg-[#FDFCFB] rounded-[2.5rem] shadow-[0_30px_100px_rgba(11,47,38,0.25)] overflow-hidden animate-slideUp border border-[#F5F3F0]">
+                        {/* Header Image/Pattern Overlay */}
+                        <div className="absolute top-0 left-0 w-full h-32 bg-[url('https://www.transparenttextures.com/patterns/natural-paper.png')] opacity-10 pointer-events-none" />
+
+                        <div className="p-8 sm:p-12 relative">
+                            <div className="flex justify-between items-start space-y-3">
+                                <div className='space-y-2'>
+                                    <h3 className="text-3xl font-heading font-bold text-[#0a4019] italic">Share Your Transformation</h3>
+                                    <p className="text-xs text-[#6B6B6B] font-medium uppercase tracking-[0.2em] opacity-70">Archive your experience with the botanical collection</p>
+                                </div>
+                                <button
+                                    onClick={() => setShowForm(false)}
+                                    className="p-2 hover:bg-[#F5F3F0] rounded-full transition-colors text-[#0a4019]"
+                                >
+                                    <X size={24} />
+                                </button>
+                            </div>
+
+                            <form onSubmit={handleSubmit} className="">
+                                <div className="flex w-full gap-4">
+                                    {/* Left Column: Rating & Identity */}
+                                    <div className="space-y-3 w-full">
+                                        <div className="p-3 bg-white rounded-2xl border border-[#F5F3F0] shadow-sm">
+                                            <p className="text-[10px] font-bold text-neutral-400 uppercase tracking-[0.2em] text-center">Overall Performance</p>
+                                            <div className="flex justify-center gap-2">
+                                                {[1, 2, 3, 4, 5].map((star) => (
+                                                    <button
+                                                        key={star}
+                                                        type="button"
+                                                        onClick={() => setNewReview({ ...newReview, rating: star })}
+                                                        onMouseEnter={() => setHoverRating(star)}
+                                                        onMouseLeave={() => setHoverRating(0)}
+                                                        className="transition-all duration-300 hover:scale-125 hover:-translate-y-1"
+                                                    >
+                                                        <Star
+                                                            size={32}
+                                                            className={`transition-colors duration-300 ${(hoverRating || newReview.rating) >= star ? 'text-[#D4AF37] fill-[#D4AF37]' : 'text-neutral-100'}`}
+                                                        />
+                                                    </button>
+                                                ))}
+                                            </div>
+                                        </div>
+                                        {!user && (
+                                            <Input
+                                                label="Signature Name"
+                                                required
+                                                value={newReview.name}
+                                                onChange={(e) => setNewReview({ ...newReview, name: e.target.value })}
+                                                placeholder="Identity"
+                                                icon={UserIcon}
+                                            />
+                                        )}
+                                        <Input
+                                            label="Your Comment"
+                                            required
+                                            value={newReview.title}
+                                            onChange={(e) => setNewReview({ ...newReview, title: e.target.value })}
+                                            placeholder="Brief Summary"
+                                            icon={PenLine}
+                                        />
+                                        <div className="space-y-6">
+                                            <div className="flex gap-4">
+                                                <Dropdown
+                                                    label="Visible Transition"
+                                                    icon={Clock}
+                                                    value={newReview.resultsTime}
+                                                    onChange={(e) => setNewReview({ ...newReview, resultsTime: e.target.value })}
+                                                    options={[
+                                                        { value: '1 week', label: '1 WEEK' },
+                                                        { value: '2 weeks', label: '2 WEEKS' },
+                                                        { value: '3–4 weeks', label: '3-4 WEEKS' },
+                                                        { value: 'More than a month', label: '1 MONTH+' },
+                                                    ]}
+                                                />
+                                                <Dropdown
+                                                    label="Skin Type"
+                                                    icon={Sparkles}
+                                                    value={newReview.skinType}
+                                                    onChange={(e) => setNewReview({ ...newReview, skinType: e.target.value })}
+                                                    options={[
+                                                        { value: 'Oily', label: 'OILY' },
+                                                        { value: 'Dry', label: 'DRY' },
+                                                        { value: 'Combination', label: 'COMBO' },
+                                                        { value: 'Sensitive', label: 'SENSITIVE' },
+                                                    ]}
+                                                />
+                                            </div>
+                                            <div className="space-y-2">
+                                                <label className="text-[10px] font-bold text-[#0a4019] uppercase ml-1 tracking-widest">Narrative</label>
+                                                <textarea
+                                                    required
+                                                    className="w-full px-6 py-5 bg-white border border-[#F5F3F0] rounded-[1.5rem] text-sm italic min-h-[110px] resize-none focus:outline-none focus:ring-2 focus:ring-[#d3d3d3]/30 shadow-sm hover:shadow-md transition-all duration-300 placeholder:opacity-30"
+                                                    placeholder="Detail your transition with the formula..."
+                                                    value={newReview.comment}
+                                                    onChange={(e) => setNewReview({ ...newReview, comment: e.target.value })}
+                                                />
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+                                    {/* Right Column: Details & Narrative */}
+                                    {/* <div className="space-y-6">
+                                        <div className="flex gap-4">
+                                            <Dropdown
+                                                label="Visible Transition"
+                                                icon={Clock}
+                                                value={newReview.resultsTime}
+                                                onChange={(e) => setNewReview({ ...newReview, resultsTime: e.target.value })}
+                                                options={[
+                                                    { value: '1 week', label: '1 WEEK' },
+                                                    { value: '2 weeks', label: '2 WEEKS' },
+                                                    { value: '3–4 weeks', label: '3-4 WEEKS' },
+                                                    { value: 'More than a month', label: '1 MONTH+' },
+                                                ]}
+                                            />
+                                            <Dropdown
+                                                label="Skin Type"
+                                                icon={Sparkles}
+                                                value={newReview.skinType}
+                                                onChange={(e) => setNewReview({ ...newReview, skinType: e.target.value })}
+                                                options={[
+                                                    { value: 'Oily', label: 'OILY' },
+                                                    { value: 'Dry', label: 'DRY' },
+                                                    { value: 'Combination', label: 'COMBO' },
+                                                    { value: 'Sensitive', label: 'SENSITIVE' },
+                                                ]}
+                                            />
+                                        </div>
+                                        <div className="space-y-2">
+                                            <label className="text-[10px] font-bold text-[#0a4019] uppercase ml-1 tracking-widest">Narrative</label>
+                                            <textarea
+                                                required
+                                                className="w-full px-6 py-5 bg-white border border-[#F5F3F0] rounded-[1.5rem] text-sm italic min-h-[140px] resize-none focus:outline-none focus:ring-2 focus:ring-[#d3d3d3]/30 shadow-sm hover:shadow-md transition-all duration-300 placeholder:opacity-30"
+                                                placeholder="Detail your transition with the formula..."
+                                                value={newReview.comment}
+                                                onChange={(e) => setNewReview({ ...newReview, comment: e.target.value })}
+                                            />
+                                        </div>
+                                    </div> */}
+                                </div>
+
+                                <div className="flex justify-end gap-4 pt-8 border-t border-[#F5F3F0]">
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowForm(false)}
+                                        className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-400 hover:text-[#0a4019] transition-colors px-6"
+                                    >
+                                        Discard
+                                    </button>
+                                    <Button
+                                        type="submit"
+                                        className="rounded-full px-12 py-4 h-auto text-[10px] font-bold uppercase tracking-[0.2em] shadow-xl shadow-[#0a4019]/20 bg-[#0a4019] text-[#d3d3d3] hover:scale-105 active:scale-95 transition-all duration-300"
+                                    >
+                                        Archive Reflection
+                                    </Button>
+                                </div>
+                            </form>
                         </div>
-                    </form>
+                    </div>
                 </div>
             )}
 
-            {/* Reviews List */}
-            <div className="space-y-8">
+            {/* High-Density Narrative Stream */}
+            <div className="grid gap-6">
                 {reviews.length === 0 ? (
-                    <p className="text-neutral-gray text-center py-12 bg-neutral-beige/30 rounded-2xl">
-                        No reviews yet. Be the first to share your glow journey!
-                    </p>
+                    <div className="text-center py-20 bg-[#FDFCFB]/50 rounded-[2.5rem] border border-dashed border-[#F5F3F0]">
+                        <p className="text-[#0a4019]/40 font-heading italic text-lg">No narratives documented yet.</p>
+                    </div>
                 ) : (
                     reviews.map((review) => (
-                        <div key={review._id || review.id} className="bg-white p-8 rounded-2xl shadow-sm border border-neutral-beige/50">
-                            <div className="flex flex-col md:flex-row justify-between items-start mb-4 gap-4">
-                                <div className="flex-1">
-                                    {/* Stars */}
-                                    <div className="flex text-yellow-400 mb-2">
-                                        {[...Array(5)].map((_, i) => (
-                                            <svg key={i} className={`w-5 h-5 ${i < review.rating ? 'fill-current' : 'text-gray-300'}`} viewBox="0 0 20 20" fill="currentColor">
-                                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                            </svg>
-                                        ))}
+                        <div key={review._id || review.id} className="group bg-white p-8 rounded-[2.5rem] shadow-sm border border-[#F5F3F0] transition-all duration-500 hover:shadow-[0_20px_50px_rgba(11,47,38,0.05)] hover:-translate-y-1">
+                            <div className="grid lg:grid-cols-12 gap-8">
+                                {/* Left Column: Identity & Metadata (Compact) */}
+                                <div className="lg:col-span-3 space-y-4 pt-1">
+                                    <div className="flex items-center gap-3">
+                                        <div className="w-10 h-10 rounded-xl bg-[#d3d3d3]/20 flex items-center justify-center text-[#0a4019]">
+                                            <User size={18} />
+                                        </div>
+                                        <div>
+                                            <div className="flex items-center gap-1.5">
+                                                <p className="font-bold text-[#0a4019] text-xs leading-none">{review.name || 'Anonymous'}</p>
+                                                <UserCheck size={12} className="text-[#D4AF37]" />
+                                            </div>
+                                            <p className="text-[9px] font-bold text-neutral-400 uppercase tracking-widest mt-1">Verified Buyer</p>
+                                        </div>
                                     </div>
 
-                                    {/* Title */}
-                                    <h4 className="text-lg font-bold text-primary mb-1">{review.title}</h4>
-
-                                    {/* Author & Date */}
-                                    <div className="text-sm text-neutral-gray flex items-center gap-2 mb-4">
-                                        <span className="font-semibold">{review.name || 'Anonymous'}</span>
-                                        <span className="w-1 h-1 bg-neutral-gray rounded-full"></span>
-                                        <span>Verified Buyer</span>
-                                        <span className="w-1 h-1 bg-neutral-gray rounded-full"></span>
-                                        <span>{new Date(review.createdAt || review.date).toLocaleDateString()}</span>
-                                    </div>
-
-                                    {/* Review Text */}
-                                    <p className="text-neutral-gray leading-relaxed mb-6">
-                                        {review.comment}
-                                    </p>
-
-                                    {/* Review Metadata Chips */}
-                                    <div className="flex flex-wrap gap-3 mb-6">
+                                    <div className="space-y-1.5 pt-2 border-t border-[#F5F3F0]/50">
+                                        <div className="flex justify-between items-center">
+                                            <span className="text-[9px] font-bold text-neutral-300 uppercase tracking-widest">Date</span>
+                                            <span className="text-[9px] font-bold text-[#0a4019] uppercase">{new Date(review.createdAt || review.date).toLocaleDateString(undefined, { month: 'short', year: 'numeric' })}</span>
+                                        </div>
                                         {review.skinType && (
-                                            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-neutral-beige text-primary">
-                                                Skin Type: {review.skinType}
-                                            </span>
+                                            <div className="flex justify-between items-center">
+                                                <span className="text-[9px] font-bold text-neutral-300 uppercase tracking-widest">Type</span>
+                                                <span className="text-[9px] font-bold text-[#0a4019] uppercase">{review.skinType}</span>
+                                            </div>
                                         )}
                                         {review.resultsTime && (
-                                            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-neutral-beige text-primary">
-                                                Results in: {review.resultsTime}
-                                            </span>
+                                            <div className="flex justify-between items-center">
+                                                <span className="text-[9px] font-bold text-neutral-300 uppercase tracking-widest">Result</span>
+                                                <span className="text-[9px] font-bold text-[#0a4019] uppercase">{review.resultsTime}</span>
+                                            </div>
                                         )}
+                                    </div>
+                                </div>
+
+                                {/* Right Column: Content (Focused) */}
+                                <div className="lg:col-span-9 space-y-4">
+                                    <div className="flex items-center justify-between">
+                                        <div className="flex gap-0.5 text-[#D4AF37]">
+                                            {[...Array(5)].map((_, i) => (
+                                                <Star key={i} size={14} className={i < review.rating ? 'fill-[#D4AF37]' : 'text-neutral-100'} />
+                                            ))}
+                                        </div>
                                         {review.recommend === 'Yes' && (
-                                            <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold bg-green-50 text-green-700 border border-green-100">
-                                                <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                                                </svg>
-                                                Recommends
+                                            <span className="flex items-center gap-1.5 text-[9px] font-bold text-green-700 bg-green-50 px-3 py-1 rounded-full uppercase tracking-tighter">
+                                                <CheckCircle size={10} /> Highly Recommended
                                             </span>
                                         )}
                                     </div>
 
-                                    {/* Admin Reply */}
+                                    <div className="space-y-2">
+                                        <h4 className="text-xl font-heading font-bold text-[#0a4019] leading-tight italic">{review.title}</h4>
+                                        <p className="text-[#6B6B6B] leading-[1.6] text-sm italic opacity-90">
+                                            "{review.comment}"
+                                        </p>
+                                    </div>
+
+                                    {/* Small Visual Thumbs */}
+                                    {review.images && review.images.length > 0 && (
+                                        <div className="flex gap-3 pt-2">
+                                            {review.images.map((img, idx) => (
+                                                <div key={idx} className="relative w-16 h-16 rounded-2xl overflow-hidden border border-[#F5F3F0] group/img">
+                                                    <img src={img} alt="Evidence" className="w-full h-full object-cover transition-transform group-hover/img:scale-110" />
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
+
+                                    {/* Compact Protocol Response */}
                                     {review.adminReply && (
-                                        <div className="mt-4 p-6 bg-neutral-beige/50 rounded-2xl border border-primary/5 relative">
-                                            <div className="flex items-center gap-2 mb-3">
-                                                <div className="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
-                                                <span className="text-[10px] font-bold text-primary uppercase tracking-[0.2em]">Curator Response</span>
+                                        <div className="mt-4 p-5 bg-[#FDFCFB] rounded-[2rem] border-l-4 border-[#d3d3d3] relative">
+                                            <div className="flex items-center gap-1.5 mb-1.5">
+                                                <p className="text-[9px] font-bold text-[#0a4019] uppercase tracking-[0.2em] font-heading">Protocol Response</p>
                                             </div>
-                                            <p className="text-sm text-primary font-medium italic leading-relaxed">
+                                            <p className="text-[#6B6B6B] font-medium leading-relaxed italic text-xs">
                                                 {review.adminReply}
                                             </p>
                                         </div>

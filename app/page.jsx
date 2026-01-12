@@ -7,24 +7,29 @@ import Bestsellers from '@/components/home/Bestsellers';
 import Testimonials from '@/components/home/Testimonials';
 import Newsletter from '@/components/home/Newsletter';
 import BrandStory from '@/components/home/BrandStory';
+import LatestBlogs from '@/components/home/LatestBlogs';
 
 export const metadata = {
-    title: 'Luminelle Organics - Heal. Glow. Naturally',
+    title: 'Luminelle - Heal. Glow. Naturally',
     description: 'Proven organic skincare for radiant, healthy skin. Crafted with Kalonji, Neem, and Kojic Acid.',
 };
 
 export default function HomePage() {
     return (
         <>
-            <Hero />
-            <FeaturedProducts />
-            {/* <ShopByConcern /> */}
-            {/* <Ingredients /> */}
-            <Bestsellers />
-            <Benefits />
-            <Testimonials />
-            <BrandStory />
-            <Newsletter />
+            <main>
+                <Hero />
+                <FeaturedProducts />
+                {/* <ShopByConcern /> */}
+                {/* <Ingredients /> */}
+                <Bestsellers />
+                <Benefits />
+                <LatestBlogs />
+                <BrandStory />
+                {/* <Testimonials /> */}
+                <Newsletter />
+            </main>
+
         </>
     );
 }

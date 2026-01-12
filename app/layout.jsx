@@ -21,20 +21,20 @@ const cormorant = Cormorant_Garamond({
 
 export const metadata = {
     metadataBase: new URL('https://luminelle.org'),
-    title: 'Luminelle Organics - Heal. Glow. Naturally',
+    title: 'Luminelle - Heal. Glow. Naturally',
     description: 'Proven organic skincare for radiant, healthy skin. Crafted with nature’s finest ingredients.',
     keywords: 'organic soap, natural skincare, botanical beauty, kalonji soap, neem soap, kojic acid, healthy skin, radiant glow',
     openGraph: {
-        title: 'Luminelle Organics - Heal. Glow. Naturally',
+        title: 'Luminelle - Heal. Glow. Naturally',
         description: 'Proven organic skincare for radiant, healthy skin. Crafted with nature’s finest ingredients.',
         url: 'https://luminelle.org',
         type: 'website',
         locale: 'en_US',
-        siteName: 'Luminelle Organics',
+        siteName: 'Luminelle',
     },
     twitter: {
         card: 'summary_large_image',
-        title: 'Luminelle Organics - Heal. Glow. Naturally',
+        title: 'Luminelle - Heal. Glow. Naturally',
         description: 'Proven organic skincare for radiant, healthy skin. Crafted with nature’s finest ingredients.',
     },
     icons: {
@@ -51,7 +51,7 @@ import { ToastProvider } from '@/context/ToastContext';
 export default function RootLayout({ children }) {
     return (
         <html lang="en" className={`${inter.variable} ${cormorant.variable}`} suppressHydrationWarning>
-            <body className="font-body antialiased bg-neutral-cream text-neutral-gray" suppressHydrationWarning>
+            <body className="font-body antialiased bg-[#FDFCFB] text-[#6B6B6B]" suppressHydrationWarning>
                 <ToastProvider>
                     <StoreAuthProvider>
                         <CoreProvider>

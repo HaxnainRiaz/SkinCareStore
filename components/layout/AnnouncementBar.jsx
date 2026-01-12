@@ -11,7 +11,7 @@ export default function AnnouncementBar() {
     if (!isVisible || !cms?.announcement) return null;
 
     return (
-        <div className="bg-[#0B2F26] text-white py-2 text-xs md:text-sm relative z-50">
+        <div className="bg-[#0a4019] text-white py-2 text-xs md:text-sm relative z-50">
             <Container>
                 <div className="flex items-center justify-center gap-2 px-8">
                     <p className="text-center font-medium tracking-wide">

@@ -27,13 +27,13 @@ export default function MobileMenu({ isOpen, onClose, navigation }) {
             />
 
             {/* Menu */}
-            <div className="fixed inset-y-0 left-0 w-80 bg-white z-50 lg:hidden shadow-large overflow-y-auto">
+            <div className="fixed inset-y-0 left-0 w-80 bg-white z-50 lg:hidden shadow-[0_16px_60px_rgba(11,47,38,0.15)] overflow-y-auto">
                 <div className="p-6">
                     <div className="flex items-center justify-between mb-8">
-                        <h2 className="text-2xl font-heading font-semibold text-primary">Menu</h2>
+                        <h2 className="text-2xl font-heading font-semibold text-[#0a4019]">Menu</h2>
                         <button
                             onClick={onClose}
-                            className="p-2 text-primary hover:bg-primary/10 rounded-lg transition-colors"
+                            className="p-2 text-[#0a4019] hover:bg-[#0a4019]/10 rounded-lg transition-colors"
                             aria-label="Close menu"
                         >
                             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -48,18 +48,18 @@ export default function MobileMenu({ isOpen, onClose, navigation }) {
                                 key={item.name}
                                 href={item.href}
                                 onClick={onClose}
-                                className="block py-3 text-lg text-primary hover:text-primary-light transition-colors font-medium"
+                                className="block py-3 text-lg text-[#0a4019] hover:text-[#0a4019]/70 transition-colors font-medium"
                             >
                                 {item.name}
                             </Link>
                         ))}
 
-                        <hr className="my-4 border-neutral-beige" />
+                        <hr className="my-4 border-[#F5F3F0]" />
 
                         <Link
                             href="/account/login"
                             onClick={onClose}
-                            className="block py-3 text-lg text-primary hover:text-primary-light transition-colors font-medium"
+                            className="block py-3 text-lg text-[#0a4019] hover:text-[#0a4019]/70 transition-colors font-medium"
                         >
                             Account
                         </Link>

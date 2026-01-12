@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, Suspense } from 'react';
-import { Container } from '@/components/ui/Container';
+import { Container, Dropdown } from '@/components/ui';
 import ProductCard from '@/components/commerce/ProductCard';
 import { concerns, sortProducts, filterProducts } from '@/lib/products';
 import { useSearchParams } from 'next/navigation';
@@ -50,7 +50,7 @@ function ShopContent() {
 
     return (
         <>
-            <div className="bg-primary text-white py-16">
+            <div className="bg-[#0a4019] text-white py-16">
                 <Container>
                     <h1 className="text-4xl text-white md:text-5xl font-heading font-bold mb-4">
                         Shop All Products
@@ -63,49 +63,42 @@ function ShopContent() {
 
             <Container className="py-12">
                 {/* Filters */}
-                <div className="mb-8 flex flex-col md:flex-row gap-4 items-start md:items-center justify-between">
-                    <div className="flex flex-col sm:flex-row gap-4 flex-1">
-                        <select
+                <div className="mb-12 flex flex-col md:flex-row gap-6 items-start md:items-center justify-between">
+                    <div className="flex flex-col sm:flex-row gap-4 flex-1 w-full md:w-auto">
+                        <Dropdown
                             value={selectedCategory}
                             onChange={(e) => setSelectedCategory(e.target.value)}
-                            className="px-4 py-2 border border-neutral-beige rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                        >
-                            {categories.map((cat) => (
-                                <option key={cat.value} value={cat.value}>
-                                    {cat.label}
-                                </option>
-                            ))}
-                        </select>
+                            options={categories}
+                            className="min-w-[200px]"
+                        />
 
-                        <select
+                        <Dropdown
                             value={selectedConcern}
                             onChange={(e) => setSelectedConcern(e.target.value)}
-                            className="px-4 py-2 border border-neutral-beige rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                        >
-                            <option value="">All Concerns</option>
-                            {concerns.map((concern) => (
-                                <option key={concern.value} value={concern.value}>
-                                    {concern.label}
-                                </option>
-                            ))}
-                        </select>
+                            options={[
+                                { value: "", label: "All Concerns" },
+                                ...concerns
+                            ]}
+                            className="min-w-[200px]"
+                        />
                     </div>
 
-                    <select
+                    <Dropdown
                         value={sortBy}
                         onChange={(e) => setSortBy(e.target.value)}
-                        className="px-4 py-2 border border-neutral-beige rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                    >
-                        <option value="featured">Featured</option>
-                        <option value="price-asc">Price: Low to High</option>
-                        <option value="price-desc">Price: High to Low</option>
-                        <option value="rating">Highest Rated</option>
-                        <option value="newest">Newest</option>
-                    </select>
+                        options={[
+                            { value: "featured", label: "Featured" },
+                            { value: "price-asc", label: "Price: Low to High" },
+                            { value: "price-desc", label: "Price: High to Low" },
+                            { value: "rating", label: "Highest Rated" },
+                            { value: "newest", label: "Newest" }
+                        ]}
+                        className="min-w-[200px]"
+                    />
                 </div>
 
                 {/* Results count */}
-                <p className="text-neutral-gray mb-6">
+                <p className="text-[#6B6B6B] mb-6">
                     Showing {products.length} {products.length === 1 ? 'product' : 'products'}
                 </p>
 
@@ -118,14 +111,14 @@ function ShopContent() {
 
                 {products.length === 0 && (
                     <div className="text-center py-12">
-                        <p className="text-xl text-neutral-gray mb-4">No products found</p>
+                        <p className="text-xl text-[#6B6B6B] mb-4">No products found</p>
                         <button
                             onClick={() => {
                                 setSelectedCategory('all');
                                 setSelectedConcern('');
                                 setSortBy('featured');
                             }}
-                            className="text-primary hover:underline"
+                            className="text-[#0a4019] hover:underline"
                         >
                             Clear filters
                         </button>
@@ -138,10 +131,10 @@ function ShopContent() {
 
 export default function ShopPage() {
     return (
-        <div className="min-h-screen bg-neutral-cream">
+        <div className="min-h-screen bg-[#FDFCFB]">
             <Suspense fallback={
                 <div className="min-h-screen flex items-center justify-center">
-                    <div className="text-primary">Loading shop...</div>
+                    <div className="text-[#0a4019]">Loading shop...</div>
                 </div>
             }>
                 <ShopContent />

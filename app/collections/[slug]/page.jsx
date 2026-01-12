@@ -69,8 +69,8 @@ export default function CollectionPage() {
     if (!collection) {
         return (
             <Container className="py-24 text-center">
-                <h1 className="text-3xl font-heading font-bold text-primary mb-4">Collection Not Found</h1>
-                <p className="text-neutral-gray mb-8">
+                <h1 className="text-3xl font-heading font-bold text-[#0a4019] mb-4">Collection Not Found</h1>
+                <p className="text-[#6B6B6B] mb-8">
                     The collection you are looking for does not exist.
                 </p>
                 <Link href="/shop">
@@ -85,8 +85,8 @@ export default function CollectionPage() {
         .map(id => collection.products.find(p => p.id === id));
 
     return (
-        <div className="min-h-screen bg-neutral-cream">
-            <div className="bg-primary text-white py-16">
+        <div className="min-h-screen bg-[#FDFCFB]">
+            <div className="bg-[#0a4019] text-white py-16">
                 <Container>
                     <h1 className="text-4xl text-white md:text-5xl font-heading font-bold mb-4">
                         {collection.title}
@@ -98,7 +98,7 @@ export default function CollectionPage() {
             </div>
 
             <Container className="py-12">
-                <p className="text-neutral-gray mb-6">
+                <p className="text-[#6B6B6B] mb-6">
                     Showing {uniqueProducts.length} {uniqueProducts.length === 1 ? 'product' : 'products'}
                 </p>
 
@@ -110,7 +110,7 @@ export default function CollectionPage() {
                     </div>
                 ) : (
                     <div className="text-center py-12">
-                        <p className="text-xl text-neutral-gray mb-4">No products found in this collection</p>
+                        <p className="text-xl text-[#6B6B6B] mb-4">No products found in this collection</p>
                         <Link href="/shop">
                             <Button variant="outline">Browse All Products</Button>
                         </Link>

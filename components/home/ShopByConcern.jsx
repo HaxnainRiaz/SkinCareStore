@@ -49,13 +49,13 @@ export default function ShopByConcern() {
     ];
 
     return (
-        <section className="section-padding bg-neutral-cream">
+        <section className="section-padding bg-[#FDFCFB]">
             <Container>
                 <div className="text-center mb-12">
-                    <h2 className="text-4xl text-white md:text-5xl font-heading font-bold text-primary mb-4">
+                    <h2 className="text-4xl md:text-5xl font-heading font-bold text-[#0a4019] mb-4">
                         Shop by Concern
                     </h2>
-                    <p className="text-lg text-neutral-gray max-w-2xl mx-auto">
+                    <p className="text-lg text-[#6B6B6B] max-w-2xl mx-auto">
                         Find the perfect solution for your unique skin needs
                     </p>
                 </div>
@@ -67,10 +67,10 @@ export default function ShopByConcern() {
                                 <div className={`w-16 h-16 ${concern.color} rounded-full flex items-center justify-center text-3xl mx-auto mb-4`}>
                                     {concern.icon}
                                 </div>
-                                <h3 className="text-xl font-heading font-semibold text-primary mb-2">
+                                <h3 className="text-xl font-heading font-semibold text-[#0a4019] mb-2">
                                     {concern.title}
                                 </h3>
-                                <p className="text-neutral-gray">
+                                <p className="text-[#6B6B6B]">
                                     {concern.description}
                                 </p>
                             </Card>

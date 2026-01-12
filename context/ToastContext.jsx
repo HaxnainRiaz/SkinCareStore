@@ -30,9 +30,9 @@ export function ToastProvider({ children }) {
                         key={toast.id}
                         className={`
                             pointer-events-auto flex items-center justify-between p-4 rounded-2xl shadow-xl border animate-slideInRight
-                            ${toast.type === 'success' ? 'bg-primary text-secondary border-primary/20' : ''}
+                            ${toast.type === 'success' ? 'bg-[#0a4019] text-[#d3d3d3] border-[#0a4019]/20' : ''}
                             ${toast.type === 'error' ? 'bg-red-600 text-white border-red-500' : ''}
-                            ${toast.type === 'info' ? 'bg-secondary text-primary border-secondary/20' : ''}
+                            ${toast.type === 'info' ? 'bg-[#d3d3d3] text-[#0a4019] border-[#d3d3d3]/20' : ''}
                         `}
                     >
                         <div className="flex items-center gap-3">

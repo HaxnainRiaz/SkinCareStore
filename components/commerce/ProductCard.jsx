@@ -32,7 +32,7 @@ export default function ProductCard({ product }) {
     return (
         <Card hover className="group relative">
             <Link href={`/product/${product.slug}`} className="block">
-                <div className="relative aspect-square overflow-hidden bg-neutral-beige">
+                <div className="relative aspect-square overflow-hidden bg-[#F5F3F0]">
                     <Image
                         src={imageError ? `https://placehold.co/600x600/E5D5C2/0B2F26?text=${encodeURIComponent(product.title)}` : product.images[0]}
                         alt={product.title}
@@ -70,8 +70,8 @@ export default function ProductCard({ product }) {
                         </div>
                     )}
 
-                    {/* Hover Overlay with Buttons */}
-                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center gap-3 p-4">
+                    {/* Hover Overlay with Buttons - Hidden on touch devices */}
+                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden md:flex flex-col items-center justify-center gap-3 p-4">
                         <Button
                             variant="secondary"
                             className="w-full max-w-[180px] shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300"
@@ -90,7 +90,7 @@ export default function ProductCard({ product }) {
                 </div>
 
                 <div className="p-4">
-                    <h3 className="font-heading text-lg font-semibold text-[#0B2F26] mb-2 group-hover:text-[#0F3A2F] transition-colors">
+                    <h3 className="font-heading text-lg font-semibold text-[#0a4019] mb-2 group-hover:text-[#0F3A2F] transition-colors">
                         {product.title}
                     </h3>
 
@@ -117,16 +117,36 @@ export default function ProductCard({ product }) {
                         </span>
                     </div>
 
-                    {/* Price */}
-                    <div className="flex items-center gap-2">
-                        <span className="text-xl font-semibold text-[#0B2F26]">
-                            {formatPrice(displayPrice)}
-                        </span>
-                        {product.salePrice && (
-                            <span className="text-sm text-[#6B6B6B] line-through">
-                                {formatPrice(product.price)}
+                    {/* Price & Quick Add */}
+                    <div className="flex items-center justify-between gap-2 mt-2">
+                        <div className="flex items-center gap-2">
+                            <span className="text-xl font-semibold text-[#0a4019]">
+                                {formatPrice(displayPrice)}
                             </span>
-                        )}
+                            {product.salePrice && (
+                                <span className="text-sm text-[#6B6B6B] line-through">
+                                    {formatPrice(product.price)}
+                                </span>
+                            )}
+                        </div>
+
+                        {/* Mobile Quick Add */}
+                        <button
+                            onClick={handleAddToCart}
+                            disabled={product.stock === 0}
+                            className="md:hidden w-10 h-10 rounded-full bg-[#0a4019] text-white flex items-center justify-center shadow-md active:scale-95 transition-all disabled:opacity-50 disabled:bg-gray-400"
+                            aria-label="Quick add to cart"
+                        >
+                            {isAdding ? (
+                                <svg className="w-5 h-5 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                </svg>
+                            ) : (
+                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                                </svg>
+                            )}
+                        </button>
                     </div>
                 </div>
             </Link>

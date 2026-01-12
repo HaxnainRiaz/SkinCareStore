@@ -6,22 +6,23 @@ export function Button({
     size = 'md',
     className,
     disabled,
+    icon: Icon,
     ...props
 }) {
-    const baseStyles = 'inline-flex items-center justify-center font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed';
+    const baseStyles = 'inline-flex items-center justify-center font-medium transition-all duration-300 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed uppercase tracking-wider';
 
     const variants = {
-        primary: 'bg-[#0B2F26] text-white hover:bg-[#051712] focus:ring-[#0B2F26]',
-        secondary: 'bg-[#D1BFA3] text-[#0B2F26] hover:bg-[#B8A68A] focus:ring-[#D1BFA3]',
-        outline: 'border-2 border-[#0B2F26] text-[#0B2F26] hover:bg-[#0B2F26] hover:text-white focus:ring-[#0B2F26]',
-        ghost: 'text-[#0B2F26] hover:bg-[#0B2F261A] focus:ring-[#0B2F26]',
-        link: 'text-[#0B2F26] underline-offset-4 hover:underline',
+        primary: 'bg-[#0a4019] text-white hover:bg-[#08241d] shadow-md hover:shadow-lg',
+        secondary: 'bg-[#d3d3d3] text-[#0a4019] hover:bg-[#aba9a9] shadow-sm hover:shadow-md',
+        outline: 'border-2 border-[#0a4019] text-[#0a4019] hover:bg-[#0a4019] hover:text-white',
+        ghost: 'text-[#0a4019] hover:bg-[#F5F3F0]',
+        link: 'text-[#0a4019] underline-offset-4 hover:underline lowercase tracking-normal',
     };
 
     const sizes = {
-        sm: 'px-4 py-2 text-sm rounded-md',
-        md: 'px-6 py-3 text-base rounded-lg',
-        lg: 'px-8 py-4 text-lg rounded-lg',
+        sm: 'px-6 py-2 text-xs rounded-full',
+        md: 'px-8 py-3 text-sm rounded-full',
+        lg: 'px-10 py-4 text-sm rounded-full',
     };
 
     return (
@@ -30,6 +31,7 @@ export function Button({
             disabled={disabled}
             {...props}
         >
+            {Icon && <Icon className="mr-2 w-4 h-4" />}
             {children}
         </button>
     );
