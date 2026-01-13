@@ -1,5 +1,5 @@
 'use client';
-
+//testing
 import { useState } from 'react';
 import { useStoreAuth } from '@/context/StoreAuthContext';
 import { Container } from '@/components/ui/Container';
@@ -60,7 +60,6 @@ export default function StoreLoginPage() {
                             placeholder="••••••••"
                             icon={Lock}
                         />
-
                         <div className="flex justify-end">
                             <button type="button" className="text-xs text-[#5e5e5d] font-medium hover:underline">Forgot password?</button>
                         </div>
