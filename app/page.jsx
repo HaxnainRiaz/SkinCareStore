@@ -10,7 +10,7 @@ import BrandStory from '@/components/home/BrandStory';
 import LatestBlogs from '@/components/home/LatestBlogs';
 
 export const metadata = {
-    title: 'Luminelle - Heal. Glow. Naturally',
+    title: 'Luminelle - Your Skin Deserves Better',
     description: 'Proven organic skincare for radiant, healthy skin. Crafted with Kalonji, Neem, and Kojic Acid.',
 };
 

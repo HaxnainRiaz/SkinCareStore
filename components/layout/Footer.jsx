@@ -119,7 +119,7 @@ export default function Footer() {
                         </div>
 
                         <div className="text-[10px] font-bold text-white/20 uppercase tracking-[0.3em] italic">
-                            Heal. Glow. Naturally.
+                            Your Skin Deserves Better.
                         </div>
                     </div>
                 </div>

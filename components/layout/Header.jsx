@@ -54,7 +54,7 @@ export default function Header() {
                         {/* Logo */}
                         <Link href="/" className="flex items-center">
                             <span><img className="w-8 h-8" src="/logo.png" /></span>
-                            <h1 className="text-2xl md:text-3xl text-[#0a4019] font-heading font-semibold">
+                            <h1 className="text-2xl md:text-3xl text-[#0a4019] font-heading font-Carien font-semibold">
                                 Luminelle
                             </h1>
                         </Link>

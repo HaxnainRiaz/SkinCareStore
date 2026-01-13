@@ -21,11 +21,11 @@ const cormorant = Cormorant_Garamond({
 
 export const metadata = {
     metadataBase: new URL('https://luminelle.org'),
-    title: 'Luminelle - Heal. Glow. Naturally',
+    title: 'Luminelle - Your Skin Deserves Better',
     description: 'Proven organic skincare for radiant, healthy skin. Crafted with nature’s finest ingredients.',
     keywords: 'organic soap, natural skincare, botanical beauty, kalonji soap, neem soap, kojic acid, healthy skin, radiant glow',
     openGraph: {
-        title: 'Luminelle - Heal. Glow. Naturally',
+        title: 'Luminelle - Your Skin Deserves Better',
         description: 'Proven organic skincare for radiant, healthy skin. Crafted with nature’s finest ingredients.',
         url: 'https://luminelle.org',
         type: 'website',
@@ -34,7 +34,7 @@ export const metadata = {
     },
     twitter: {
         card: 'summary_large_image',
-        title: 'Luminelle - Heal. Glow. Naturally',
+        title: 'Luminelle - Your Skin Deserves Better',
         description: 'Proven organic skincare for radiant, healthy skin. Crafted with nature’s finest ingredients.',
     },
     icons: {

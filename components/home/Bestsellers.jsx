@@ -30,7 +30,7 @@ export default function Bestsellers() {
                             Best Sellers
                         </h2>
                         <p className="text-base md:text-lg text-[#6B6B6B] max-w-2xl mx-auto leading-relaxed">
-                            Our most-loved products, trusted by thousands for transformative results
+                            Get our carefully Curated Organic soap today
                         </p>
                     </div>
 
